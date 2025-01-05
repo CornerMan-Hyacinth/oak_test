@@ -2,14 +2,23 @@
 
 import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
+import { LoadingModal } from "@/components/LazyLoading";
 import Picker from "@/components/Picker";
 import { CenterTitleComponent } from "@/components/Title";
 import { positionData } from "@/lib/positionData";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 const Apply = () => {
+  return (
+    <Suspense fallback={<LoadingModal />}>
+      <ApplyPage />
+    </Suspense>
+  );
+};
+
+const ApplyPage = () => {
   const searchParams = useSearchParams();
   const position = searchParams.get("position");
 
