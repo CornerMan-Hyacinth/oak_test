@@ -3,7 +3,7 @@ import { model, models, Schema } from "mongoose";
 const orderSchema = new Schema(
   {
     customerName: { type: String, required: true },
-    customerEmail: { typee: String, required: true },
+    customerEmail: { type: String, required: true },
     customerPhone: { type: String, required: true },
     recipientName: { type: String, required: true },
     recipientEmail: { type: String, required: true },
