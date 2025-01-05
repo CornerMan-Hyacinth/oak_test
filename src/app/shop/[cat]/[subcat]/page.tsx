@@ -3,14 +3,27 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import { NetworkErrorModal } from "@/components/ErrorModals";
 import { PriceFilter } from "@/components/Filter";
+import { LoadingModal } from "@/components/LazyLoading";
 import PaginatedProducts from "@/components/PaginatedProducts";
 import Portal from "@/components/Portal";
 import { CenterTitleComponent } from "@/components/Title";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const SubCategory = ({ params }: { params: Promise<{ subcat: string }> }) => {
+  return (
+    <Suspense fallback={<LoadingModal />}>
+      <SubCategoryPage params={params} />
+    </Suspense>
+  );
+};
+
+const SubCategoryPage = ({
+  params,
+}: {
+  params: Promise<{ subcat: string }>;
+}) => {
   const searchParams = useSearchParams();
   const priceRange = searchParams.get("priceRange");
 

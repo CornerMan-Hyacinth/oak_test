@@ -3,6 +3,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import { NetworkErrorModal } from "@/components/ErrorModals";
 import { ShopFilter } from "@/components/Filter";
+import { LoadingModal } from "@/components/LazyLoading";
 import PaginatedProducts from "@/components/PaginatedProducts";
 import Portal from "@/components/Portal";
 import { BodyText } from "@/components/Text";
@@ -11,9 +12,17 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const ShopPage = () => {
+  return (
+    <Suspense fallback={<LoadingModal />}>
+      <Shop />
+    </Suspense>
+  );
+};
+
+const Shop = () => {
   const searchParams = useSearchParams();
   const priceRange = searchParams.get("priceRange");
   const brand = searchParams.get("brand");
