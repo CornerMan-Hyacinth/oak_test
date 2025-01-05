@@ -101,7 +101,9 @@ const Signin = () => {
           <Button text="Sign in" isDark handleClick={handleLogin} />
 
           <div className="w-full flex items-center space-x-2 mt-5">
-            <span className="text-sm text-black">Don't have an account?</span>
+            <span className="text-sm text-black">
+              Don&apos;t have an account?
+            </span>
             <Link
               href={"/register"}
               className="text-sm text-my-blue hover:underline"

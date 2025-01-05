@@ -52,7 +52,7 @@ const ReceiptPage = () => {
           </div>
 
           {[...Array(2)].map((_, index) => (
-            <div className="flex items-center justify-between mb-5">
+            <div key={index} className="flex items-center justify-between mb-5">
               <div className="flex items-center space-x-4">
                 <div className="h-10 w-10 rounded-md overflow-hidden relative border border-black border-opacity-50">
                   <Image

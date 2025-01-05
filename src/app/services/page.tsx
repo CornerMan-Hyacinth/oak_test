@@ -16,9 +16,9 @@ const ServicesPage = () => {
       </div>
 
       <p className="lg:w-2/3 md:w-3/4 w-full text-lg text-black opacity-70 text-center self-center mt-20">
-        We're committed to excellence in scientific and educational endeavors.
-        Our diverse range of services caters to the ever-evolving needs of
-        research, education, and quality control sectors.
+        We&apos;re committed to excellence in scientific and educational
+        endeavors. Our diverse range of services caters to the ever-evolving
+        needs of research, education, and quality control sectors.
         <br />
         Discover a world where reliability meets innovation, and every service
         is a step towards achieving remarkable scientific breakthroughs
