@@ -65,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inriaBold.variable} ${inriaRegular.variable} ${inriaLight.variable} ${interLight.variable} ${interRegular.variable} ${interBold.variable} ${interMedium.variable} antialiased`}
+        className={`${inriaBold.variable} ${inriaRegular.variable} ${inriaLight.variable} ${interLight.variable} ${interRegular.variable} ${interBold.variable} ${interMedium.variable} antialiased bg-white`}
       >
         <ToastProvider>
           <Nav />
