@@ -14,8 +14,6 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IoHelpCircleOutline } from "react-icons/io5";
 import { ToolTip } from "./ToolTip";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 
 export const ShopFilter = () => {
   const router = useRouter();
