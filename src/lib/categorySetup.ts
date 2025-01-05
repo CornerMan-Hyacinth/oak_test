@@ -1,0 +1,27 @@
+export const categoryData = {
+  "Science Laboratory": [
+    "Chemistry",
+    "Chemistry (Meters)",
+    "Chemistry Models",
+    "Biology",
+    "Physics",
+    "Physics Laboratory Equipment (Meters)",
+    "Physics Laboratory Equipment(Lights & Optic)",
+    "Physics Laboratory Equipment (Prop & Matter)",
+    "Physics Laboratory Equipment (Applied Mech)",
+    "Distillers and Mixers",
+    "Laboratory Consumables",
+    "General School Laboratory Equipment",
+    "Laboratory Chemicals",
+  ],
+  Agriculture: ["Agricultural Testing Machines", "Agriculture Chemicals"],
+  Geology: ["Geology"],
+  "Research & Analytics": ["Research & Analytics", "Lab Sampling Equipment"],
+  "Industrial Laboratory": [
+    "Scientific Laboratory Equipment",
+    "Precision Laboratory Equipment",
+    "Microwave",
+  ],
+  "Training Manikins": ["Training Manikins & Simulators"],
+  Others: ["Measuring", "Overhead Projector", "Mathematics"],
+};

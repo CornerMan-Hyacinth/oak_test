@@ -1,0 +1,732 @@
+"use client";
+
+import Image from "next/image";
+import { BodyText, TitleText } from "@/components/Text";
+import { useEffect, useRef, useState } from "react";
+import { Button, TextLink } from "@/components/Button";
+import { CenterTitleComponent, TitleComponent } from "@/components/Title";
+import { FaHandshakeSimple } from "react-icons/fa6";
+import { PiBuildingOfficeFill } from "react-icons/pi";
+import { MdOutlineEngineering } from "react-icons/md";
+import { NCard, NPCard, NPDCard } from "@/components/ProductCard";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import FaqBox from "@/components/FaqBox";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { CardLoading } from "@/components/LazyLoading";
+import BlogCard from "@/components/BlogCard";
+import { Faq } from "@/components/Faq";
+
+export default function Home() {
+  const router = useRouter();
+  const featuredRef = useRef<HTMLDivElement>(null);
+
+  const [slider, setSlider] = useState(0);
+  const [countValues, setCountValues] = useState({
+    first: 0,
+    second: 0,
+    third: 0,
+  });
+
+  const [topProducts, setTopProducts] = useState<any[]>([]);
+  const [agricProducts, setAgricProducts] = useState<any[]>([]);
+  const [labProducts, setLabProducts] = useState<any[]>([]);
+  const [featuredProducts, setFeaturedProucts] = useState<any[]>([]);
+
+  const [isFetching, setFetching] = useState(true);
+  const [isErrorSet, setErrorSet] = useState(false);
+
+  const scrollLeft = () => {
+    if (featuredRef.current) {
+      featuredRef.current.scrollBy({
+        left: -200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (featuredRef.current) {
+      featuredRef.current.scrollBy({
+        left: 200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const fetchData = async () => {
+    setFetching(true);
+
+    try {
+      const topResponse = await axios.get(`/api/product?top=${4}`);
+      const agricResponse = await axios.get("/api/product?cat=agric");
+      const labResponse = await axios.get("/api/product?cat=lab");
+      const featuredResponse = await axios.get("/api/product?featured=yes");
+
+      if (topResponse.data.success) setTopProducts(topResponse.data.products);
+      if (agricResponse.data.success)
+        setAgricProducts(agricResponse.data.products);
+      if (labResponse.data.success) setLabProducts(labResponse.data.products);
+      if (featuredResponse.data.success)
+        setFeaturedProucts(featuredResponse.data.products);
+    } catch (error) {
+      setErrorSet(true);
+    }
+  };
+
+  useEffect(() => {
+    const duration = 300,
+      max = 100;
+    const stepTime = Math.floor(duration / max);
+    let current = 0;
+
+    const interval = setInterval(() => {
+      current += 1;
+      current < 10 && setCountValues((prev) => ({ ...prev, first: current }));
+      current < 50 && setCountValues((prev) => ({ ...prev, second: current }));
+      current < 100 && setCountValues((prev) => ({ ...prev, third: current }));
+
+      if (current >= max) {
+        clearInterval(interval); // Stop the interval once the max value is reached
+      }
+    }, stepTime);
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, []);
+
+  useEffect(() => {}, []);
+
+  return (
+    <main className="w-full min-h-screen overflow-x-hidden bg-white">
+      {/** Top Slider */}
+      <div className="w-full h-[80vh] relative">
+        <div className="w-full h-full relative">
+          <Image
+            alt="Electrolyte Analyzer image"
+            src={"/images/electrolyteImg.png"}
+            fill
+            className="object-cover"
+          />
+          <div className="w-full h-full bg-black bg-opacity-50 flex flex-col items-center justify-center absolute">
+            <h1 className="text-white lg:text-5xl md:text-4xl mb-10">
+              <TitleText weight="regular">Electrolyte Analyzer e|1</TitleText>
+            </h1>
+            <p className="text-white lg:text-3xl md:text-2xl lg:w-1/2 md:w-2/3 text-center opacity-90 mb-10">
+              <TitleText weight="light">
+                Electrolyte system for invitro measurements with high accuracy
+                and ease of use.
+              </TitleText>
+            </p>
+            <Button
+              text="Request a Quote"
+              isDark
+              isBig
+              handleClick={() => {}}
+            />
+          </div>
+        </div>
+
+        <div className="absolute lg:top-14 md:top-8 lg:right-20 md:right-10 bg-my-blue h-24 w-24 flex items-center justify-center rounded-full bg-opacity-60">
+          <BodyText weight="regular" className="text-center text-sm text-white">
+            Best
+            <br />
+            Selling
+          </BodyText>
+        </div>
+
+        <div className="absolute bottom-10 right-10 flex items-center space-x-3">
+          {[...Array(4)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setSlider(index)}
+              className={`h-3 w-3 rounded-full border border-my-gray ${
+                slider === index
+                  ? "bg-white opacity-100"
+                  : "bg-my-gray opacity-50"
+              }`}
+            ></button>
+          ))}
+        </div>
+      </div>
+
+      {/** Categories */}
+      <div className="w-full py-24 lg:px-14 md:px-8 px-4">
+        <TitleComponent color="black" title="Solutions we Provide" />
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <Link
+            href={"/shop/science laboratory"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catLab.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                Science Laboratory
+              </BodyText>
+            </div>
+          </Link>
+
+          <Link
+            href={"/shop/agriculture"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catAgric.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                Agriculture
+              </BodyText>
+            </div>
+          </Link>
+
+          <Link
+            href={"/geology"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catGeo.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                Geology
+              </BodyText>
+            </div>
+          </Link>
+
+          <Link
+            href={"/shop/research & analytics"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catRes.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                Research & Analytics
+              </BodyText>
+            </div>
+          </Link>
+        </div>
+
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <Link
+            href={"/shop/industrial laboratory"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catInd.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                Industrial Laboratory
+              </BodyText>
+            </div>
+          </Link>
+
+          <Link
+            href={"/training mannequins"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catMan.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                Training Mannequins
+              </BodyText>
+            </div>
+          </Link>
+
+          <Link
+            href={"/shop/uncategorized"}
+            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+          >
+            <Image
+              alt="a man testing in a laboratory image"
+              src={"/images/catOther.jpg"}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+              <BodyText
+                weight="bold"
+                className="text-white text-lg text-center text-wrap"
+              >
+                General Products
+              </BodyText>
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4 flex items-center justify-center lg:space-x-48 space-x-16">
+        <div className="relative">
+          <div className="lg:w-[35vw] md:w-[45vw] h-[70vh] relative">
+            <div className="absolute w-full h-full rounded-2xl transition-transform lg:-translate-x-8 -translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
+
+            <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-md shadow-black">
+              <Image
+                alt="a man working in the laboratory image"
+                src={"/images/oak_cover.jpg"}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="absolute z-20 bottom-0 right-0 h-40 w-40 transition-transform translate-x-24 translate-y-20">
+            <Image
+              alt="A box image effect"
+              src={"/images/imageEffect.png"}
+              fill
+            />
+          </div>
+        </div>
+
+        <div className="w-[30vw]">
+          <h3 className="text-black lg:text-3xl text-2xl">
+            <TitleText weight="regular">
+              We are committed to Educational & Scientific Excellence
+            </TitleText>
+          </h3>
+          <p className="lg:text-lg md:text-base text-black mt-4 opacity-70">
+            Oak Scientifics is your trusted Partner for quality laboratory,
+            scientific and educational equipments.
+          </p>
+          <Button
+            isDark
+            text="Go to Shop"
+            handleClick={() => router.push("/shop")}
+          />
+        </div>
+      </div>
+
+      <div className="bg-my-blue rounded-t-3xl py-20 lg:px-14 md:px-10 px-4 flex flex-col justify-center items-center">
+        <CenterTitleComponent title="Our Achievements" color="white" />
+
+        <div className="flex items-start justify-center space-x-10 mt-14">
+          <div className="flex flex-col items-center">
+            <div className="h-20 w-20 flex justify-center items-center bg-white rounded-full">
+              <FaHandshakeSimple color="#0F81B0" size={40} />
+            </div>
+            <p className="text-2xl text-white mt-2 mb-1">10+ Years</p>
+            <span className="opacity-80 text-white text-base text-center">
+              in Business
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center px-32">
+            <div className="h-20 w-20 flex justify-center items-center bg-white rounded-full">
+              <PiBuildingOfficeFill color="#0F81B0" size={40} />
+            </div>
+            <p className="text-2xl text-white mt-2 mb-1">50+</p>
+            <span className="opacity-80 text-white text-base text-center">
+              Educational Institutes
+              <br />
+              Served
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <div className="h-20 w-20 flex justify-center items-center bg-white rounded-full">
+              <MdOutlineEngineering color="#0F81B0" size={40} />
+            </div>
+            <p className="text-2xl text-white mt-2 mb-1">100+</p>
+            <span className="opacity-80 text-white text-base text-center">
+              Lab Installations
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center py-28 lg:px-14 md:px-10 px-4 lg:space-x-40 md:space-x-16">
+        <div className="lg:w-[35vw] md:w-[45vw]">
+          <h2 className="text-black lg:text-3xl md:text-2xl mb-2">
+            <TitleText weight="regular">Oak Scientifics at a glance</TitleText>
+          </h2>
+          <p className="text-black mb-4 opacity-70">
+            Founded in 2024, we are fully engaged in the supply, installtion and
+            maintenance of scientific and Agricultural equipments across Africa
+            and beyond.
+          </p>
+          <TitleComponent title="Our Vision" color="black" />
+          <p className="text-black text-base opacity-70 mt-2 mb-4">
+            To become a global leader in scientific innovation, empowering
+            discoveries, advancing education, and promoting sustainability with
+            cutting-edge solutions.
+          </p>
+          <TitleComponent title="Our Mission" color="black" />
+          <p className="text-black text-base opacity-70 mt-2 mb-4">
+            Empowering innovation and discovery by providing precision
+            scientific equipment and tailored solutions.
+          </p>
+
+          <Button
+            text="About Oak Scientifics"
+            isDark
+            handleClick={() => router.push("/about-us")}
+          />
+        </div>
+
+        <div className="relative">
+          <div className="lg:w-[30vw] md:w-[40vw] h-[70vh] relative">
+            <div className="absolute w-full h-full rounded-2xl transition-transform lg:translate-x-8 translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
+            <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-md shadow-my-gray">
+              <Image
+                alt="a man working in the laboratory image"
+                src={"/images/oak_cover3.jpg"}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div className="absolute z-20 bottom-0 left-0 h-40 w-40 transition-transform -translate-x-24 translate-y-20">
+            <Image
+              alt="A box image effect"
+              src={"/images/imageEffect.png"}
+              fill
+            />
+          </div>
+        </div>
+      </div>
+
+      {(isFetching || topProducts.length > 0) && (
+        <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+          <div className="flex justify-center items-center">
+            <CenterTitleComponent title="Top Selling Products" color="black" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-y-3 mt-10 justify-items-center">
+            {isFetching
+              ? [...Array(4)].map((_, index) => (
+                  <CardLoading key={index} className="w-[35vw] h-40" />
+                ))
+              : topProducts.map((product, index) => (
+                  <NPDCard key={index} product={product} />
+                ))}
+          </div>
+        </div>
+      )}
+
+      {(isFetching || agricProducts.length > 0) && (
+        <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+          <div className="flex justify-center items-center relative">
+            <CenterTitleComponent
+              title="Agricultural Equipments"
+              color="black"
+            />
+            <div className="absolute right-0">
+              <TextLink
+                text="View all Products"
+                link="/"
+                isDark={false}
+                className="text-sm tracking-wider"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-x-3 mt-10 justify-items-center">
+            {isFetching
+              ? [...Array(3)].map((_, index) => (
+                  <CardLoading key={index} className="w-[25vw] h-60" />
+                ))
+              : agricProducts.map((product, index) => (
+                  <NPCard key={index} product={product} />
+                ))}
+          </div>
+        </div>
+      )}
+
+      {(isFetching || labProducts.length > 0) && (
+        <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+          <div className="flex justify-center items-center relative">
+            <CenterTitleComponent
+              title="Science Laboratory Equipments"
+              color="black"
+            />
+            <div className="absolute right-0">
+              <TextLink
+                text="View all Products"
+                link="/"
+                isDark={false}
+                className="text-sm tracking-wider"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-x-3 mt-10 justify-items-center">
+            {isFetching
+              ? [...Array(3)].map((_, index) => (
+                  <CardLoading key={index} className="w-[25vw] h-60" />
+                ))
+              : labProducts.map((product, index) => (
+                  <NPCard
+                    key={index}
+                    product={{
+                      name: "Absograph 500",
+                      availabilty: "In stock",
+                      avgRating: 4.3,
+                      price: 1420,
+                    }}
+                  />
+                ))}
+          </div>
+        </div>
+      )}
+
+      {(isFetching || featuredProducts.length > 0) && (
+        <div className="w-full pt-10 pb-20">
+          <div className="lg:px-14 md:px-10 px-4 flex items-center justify-between">
+            <div>
+              <TitleComponent title="Featured Products" color="black" />
+              <p className="text-base w-2/3 lg:w-fit text-black opacity-70 mt-2">
+                These products were carefully selected to showcase the best of
+                our Product lists.
+              </p>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <button
+                className="h-10 w-10 flex items-center justify-center rounded-full bg-my-gray bg-opacity-5 hover:bg-opacity-15 duration-300 ease-in-out"
+                onClick={scrollLeft}
+              >
+                <IoChevronBack color="black" size={18} />
+              </button>
+              <button
+                className="h-10 w-10 flex items-center justify-center rounded-full bg-my-gray bg-opacity-5 hover:bg-opacity-15 duration-300 ease-in-out"
+                onClick={scrollRight}
+              >
+                <IoChevronForward color="black" />
+              </button>
+            </div>
+          </div>
+
+          <div
+            ref={featuredRef}
+            className="w-full overflow-x-auto py-5 lg:px-14 md:px-10 px-4 hide-scrollbar"
+          >
+            <div className="flex space-x-4 min-w-max">
+              {isFetching
+                ? [...Array(4)].map((_, index) => (
+                    <CardLoading key={index} className="w-[25vw] h-60" />
+                  ))
+                : featuredProducts.map((product, index) => (
+                    <NCard
+                      key={index}
+                      product={{
+                        name: "Radiation Alert Inspection Exp+ Insp. Model Rubber Boot, Ls,",
+                      }}
+                    />
+                  ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-my-yellow bg-opacity-60 rounded-t-3xl py-20 lg:px-14 md:px-10 px-4 flex flex-col justify-center items-center">
+        <CenterTitleComponent title="What makes Us the Best" color="black" />
+        <BodyText
+          weight="medium"
+          className="text-lg text-black opacity-70 lg:w-2/3 md:w-3/4 text-center mt-10"
+        >
+          Over the years, Oak Scientifics has been a top-leader in supplying
+          Scientific and laboratory equipments across Africa and beyond.
+        </BodyText>
+
+        <div className="flex items-start justify-center space-x-10 mt-10">
+          <div className="flex flex-col items-center max-w-[20vw]">
+            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+              <Image
+                alt="a black medal achievement icon"
+                src={"/icons/medalIcon.svg"}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+              Quality Assured
+            </p>
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+              Torem ipsum dolor sit amet, consectetur
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center max-w-[20vw]">
+            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+              <Image
+                alt="a black van delivery icon"
+                src={"/icons/vanIcon.svg"}
+                fill
+                className="object-contain"
+              />
+            </div>
+
+            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+              Timely Delivery
+            </p>
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+              Torem ipsum dolor sit amet, consectetur
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center max-w-[20vw]">
+            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+              <Image
+                alt="a black bulb innovative icon"
+                src={"/icons/bulbIcon.svg"}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+              Innovative
+            </p>
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+              Torem ipsum dolor sit amet, consectetur
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center max-w-[20vw]">
+            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+              <Image
+                alt="a black support center logo"
+                src={"/icons/supportIcon.svg"}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+              Expert Support
+            </p>
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+              Torem ipsum dolor sit amet, consectetur
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full py-20 lg:px-14 md:px-10 px-4">
+        <div className="flex flex-col justify-center items-center relative">
+          <CenterTitleComponent
+            title="Our Partners Across the Global"
+            color="black"
+          />
+          <BodyText
+            weight="medium"
+            className="text-lg text-black opacity-70 lg:w-2/3 md:w-4/5 text-center mt-10"
+          >
+            We collaborate with top-notch Manufacturers in the industry to give
+            you the best of our range of scientific and laboratory equipments
+          </BodyText>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <div className="grid lg:grid-cols-[1fr_1fr_auto] md:grid-cols-[1fr_1fr] items-center gap-x-14 gap-y-5 mt-10">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+              <Image
+                alt="oak scientifics partner logo"
+                src={"/images/oak_brand1.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+              <Image
+                alt="oak scientifics partner logo"
+                src={"/images/oak_brand2.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+              <Image
+                alt="oak scientifics partner logo"
+                src={"/images/oak_brand3.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+              <Image
+                alt="oak scientifics partner logo"
+                src={"/images/oak_brand4.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+              <Image
+                alt="oak scientifics partner logo"
+                src={"/images/oak_brand5.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+              <Image
+                alt="oak scientifics partner logo"
+                src={"/images/oak_brand6.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+        <TitleComponent title="Blog Posts" color="black" />
+
+        <div className="flex items-center justify-between mt-10">
+          <BlogCard
+            img="/images/blogImage.png"
+            title="Why Choose Oak Scientifics?"
+            desc="Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+              vulputate libero et velit interdum, ac aliquet odio mattis."
+          />
+        </div>
+      </div>
+
+      <Faq />
+    </main>
+  );
+}

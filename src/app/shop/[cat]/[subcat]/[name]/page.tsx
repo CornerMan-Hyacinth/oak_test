@@ -1,0 +1,288 @@
+"use client";
+
+import Breadcrumb from "@/components/Breadcrumb";
+import { NPCard } from "@/components/ProductCard";
+import ProductDetails from "@/components/ProductDetails";
+import { BodyText, TitleText } from "@/components/Text";
+import { TitleComponent } from "@/components/Title";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { FaCalendarAlt } from "react-icons/fa";
+import { FaMinus, FaPlus } from "react-icons/fa6";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import ReactStars from "react-stars";
+
+const ProductPage = () => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [selectedImg, setSelectedImg] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+  const [details, setDetails] = useState("features");
+
+  const scrollLeft = () => {
+    if (ref.current) {
+      ref.current.scrollBy({
+        left: -200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (ref.current) {
+      ref.current.scrollBy({
+        left: 200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <main className="w-full min-h-screen">
+      <div className="lg:px-14 md:px-10 px-4 pb-20">
+        <Breadcrumb />
+
+        <div className="flex items-start justify-between mt-14">
+          <div className="w-2/5">
+            <div className="w-full h-[70vh] rounded-3xl border border-black relative overflow-hidden">
+              <Image
+                alt="a product image"
+                src={"/images/oakProductImg4.png"}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="flex items-center space-x-4 mt-5">
+              {[...Array(3)].map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-20 h-20 rounded-md border border-black relative overflow-hidden cursor-pointer ${
+                    selectedImg === index ? "opacity-100" : "opacity-40"
+                  }`}
+                  onClick={() => setSelectedImg(index)}
+                >
+                  <Image
+                    alt="a product image"
+                    src={"/images/oakProductImg4.png"}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-2/5">
+            <h1 className="text-black text-xl mb-3">
+              <TitleText weight="bold">Electrolyte Analyzer e|1</TitleText>
+            </h1>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className={`h-1 w-1 rounded-full bg-my-yellow`} />
+                <span className={`text-sm text-my-yellow`}>In stock</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <ReactStars
+                  count={5}
+                  value={4.5}
+                  size={20}
+                  color1="#333333"
+                  color2="#FFCE31"
+                  edit={false}
+                />
+                <span className="text-black text-sm opacity-70">
+                  355 Reviews
+                </span>
+              </div>
+            </div>
+
+            <p className="text-sm text-my-blue mt-3">
+              <BodyText weight="medium" className="text-black">
+                Brand:{" "}
+              </BodyText>
+              EXIAS
+            </p>
+
+            <p className="text-base text-black opacity-70 mt-3 leading-loose">
+              The EXIAS e|1 Analyzer is an electrolyte system intended for
+              in-vitro measurements of Na+, K+, Cl–, Ca2+ as well as pH and Hct,
+              in whole blood, serum, plasma and urine (undiluted).
+              <br />
+              High accuracy, ease of use and the maintenance free system
+              underline the operational functionality and outstanding
+              performance of our e|1 Analyzer.
+            </p>
+
+            <div className="flex items-center justify-between mt-9">
+              <button className="bg-my-gray text-white h-12 px-10 text-sm rounded-md hover:bg-my-blue">
+                Add to cart
+              </button>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 border border-black rounded-full py-2 px-4">
+                  <button
+                    className={`text-black hover:text-my-blue duration-300 ease-in-out ${
+                      quantity === 1
+                        ? "opacity-50 pointer-events-none"
+                        : "opacity-100"
+                    }`}
+                    onClick={() =>
+                      quantity !== 1 && setQuantity((prev) => --prev)
+                    }
+                  >
+                    <FaMinus size={16} />
+                  </button>
+                  <span className="text-black text-sm">{quantity}</span>
+                  <button
+                    className={`text-black hover:text-my-blue duration-300 ease-in-out`}
+                    onClick={() => setQuantity((prev) => ++prev)}
+                  >
+                    <FaPlus size={16} />
+                  </button>
+                </div>
+
+                <BodyText weight="bold" className="text-lg text-my-blue">
+                  $5800
+                </BodyText>
+              </div>
+            </div>
+
+            <p className="mt-6 text-black text-sm opacity-70">
+              SKU - 2784409650
+            </p>
+
+            <div className="flex items-start space-x-4 mt-6">
+              <FaCalendarAlt size={20} color="black" />
+              <div className="flex flex-col space-y-2">
+                <span className="text-black text-sm">Delivery Period:</span>
+                <span className="text-black text-xs opacity-70">
+                  15-21 working days
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-20">
+          <div className="flex items-center w-full border-b border-black border-opacity-10">
+            <button
+              className={`pb-3 w-52 border-b-2 outline-none ${
+                details === "features"
+                  ? "border-my-blue opacity-100"
+                  : "border-transparent opacity-50"
+              }`}
+              onClick={() => setDetails("features")}
+            >
+              <BodyText weight={details === "features" ? "bold" : "regular"}>
+                Features
+              </BodyText>
+            </button>
+            <button
+              className={`pb-3 w-52 border-b-2 outline-none ${
+                details === "specifications"
+                  ? "border-my-blue opacity-100"
+                  : "border-transparent opacity-50"
+              }`}
+              onClick={() => setDetails("specifications")}
+            >
+              <BodyText
+                weight={details === "specifications" ? "bold" : "regular"}
+              >
+                Specifications
+              </BodyText>
+            </button>
+            <button
+              className={`pb-3 w-52 border-b-2 outline-none ${
+                details === "videos"
+                  ? "border-my-blue opacity-100"
+                  : "border-transparent opacity-50"
+              }`}
+              onClick={() => setDetails("videos")}
+            >
+              <BodyText weight={details === "videos" ? "bold" : "regular"}>
+                Videos
+              </BodyText>
+            </button>
+            <button
+              className={`pb-3 w-52 border-b-2 outline-none ${
+                details === "models"
+                  ? "border-my-blue opacity-100"
+                  : "border-transparent opacity-50"
+              }`}
+              onClick={() => setDetails("models")}
+            >
+              <BodyText weight={details === "models" ? "bold" : "regular"}>
+                Models
+              </BodyText>
+            </button>
+            <button
+              className={`pb-3 w-52 border-b-2 outline-none ${
+                details === "catalogue"
+                  ? "border-my-blue opacity-100"
+                  : "border-transparent opacity-50"
+              }`}
+              onClick={() => setDetails("catalogue")}
+            >
+              <BodyText weight={details === "catalogue" ? "bold" : "regular"}>
+                Catalogue
+              </BodyText>
+            </button>
+          </div>
+
+          <ProductDetails
+            detailChoice={details}
+            details={{
+              features: {},
+              specifications: [""],
+              videos: ["mGqE0WcjDjk", "_A3JxpMU63s"],
+              models: {},
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="my-20">
+        <div className="lg:px-14 md:px-10 px-4 flex items-center justify-between">
+          <TitleComponent title="You might also like" color="black" />
+
+          <div className="flex items-center space-x-4">
+            <button
+              className="h-10 w-10 flex items-center justify-center rounded-full bg-my-gray bg-opacity-5 hover:bg-opacity-15 duration-300 ease-in-out"
+              onClick={scrollLeft}
+            >
+              <IoChevronBack color="black" size={18} />
+            </button>
+            <button
+              className="h-10 w-10 flex items-center justify-center rounded-full bg-my-gray bg-opacity-5 hover:bg-opacity-15 duration-300 ease-in-out"
+              onClick={scrollRight}
+            >
+              <IoChevronForward color="black" />
+            </button>
+          </div>
+        </div>
+
+        <div
+          ref={ref}
+          className="w-full overflow-x-auto py-5 lg:px-14 md:px-10 px-4 scrollbar-hide mt-5"
+        >
+          <div className="flex space-x-4 min-w-max">
+            {[...Array(8)].map((product, index) => (
+              <NPCard
+                key={index}
+                isSmall
+                product={{
+                  name: "Absograph 500",
+                  availabilty: "In stock",
+                  avgRating: 4.3,
+                  price: 1420,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default ProductPage;
