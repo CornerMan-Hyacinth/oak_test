@@ -3,14 +3,23 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import { NetworkErrorModal } from "@/components/ErrorModals";
 import { PriceFilter } from "@/components/Filter";
+import { LoadingModal } from "@/components/LazyLoading";
 import PaginatedProducts from "@/components/PaginatedProducts";
 import Portal from "@/components/Portal";
 import { CenterTitleComponent } from "@/components/Title";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const ResultPage = () => {
+  return (
+    <Suspense fallback={<LoadingModal />}>
+      <Result />
+    </Suspense>
+  );
+};
+
+const Result = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
