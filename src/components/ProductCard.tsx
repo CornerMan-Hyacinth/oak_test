@@ -159,7 +159,7 @@ export const NPCard = ({
 
 export const NPDCard = ({ product }: { product: any }) => {
   return (
-    <div className="xl:w-[35vw] lg:w-[40vw] md:w-[42vw] w-full pt-4 pb-7 px-4 flex flex-col md:flex-row md:items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative overflow-hidden">
+    <div className="xl:w-[35vw] lg:w-[40vw] md:w-[42vw] w-full pt-4 pb-7 px-4 flex flex-col md:flex-row items-center md:space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative overflow-hidden">
       <div className="min-h-40 h-full md:w-2/5 w-[100%] rounded-lg overflow-hidden relative">
         <Image
           alt={`${productSample.name} product image`}
