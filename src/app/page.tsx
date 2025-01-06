@@ -126,155 +126,10 @@ export default function Home() {
       </div>
 
       {/** Categories */}
-      <div className="w-full py-24 lg:px-14 md:px-8 px-4">
-        <TitleComponent color="black" title="Solutions we Provide" />
-        <div className="flex w-full justify-center items-center space-x-10 mt-10">
-          <Link
-            href={"/shop/science laboratory"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catLab.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                Science Laboratory
-              </BodyText>
-            </div>
-          </Link>
+      <CatWrapper />
 
-          <Link
-            href={"/shop/agriculture"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catAgric.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                Agriculture
-              </BodyText>
-            </div>
-          </Link>
-
-          <Link
-            href={"/geology"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catGeo.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                Geology
-              </BodyText>
-            </div>
-          </Link>
-
-          <Link
-            href={"/shop/research & analytics"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catRes.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                Research & Analytics
-              </BodyText>
-            </div>
-          </Link>
-        </div>
-
-        <div className="flex w-full justify-center items-center space-x-10 mt-10">
-          <Link
-            href={"/shop/industrial laboratory"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catInd.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                Industrial Laboratory
-              </BodyText>
-            </div>
-          </Link>
-
-          <Link
-            href={"/training mannequins"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catMan.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                Training Mannequins
-              </BodyText>
-            </div>
-          </Link>
-
-          <Link
-            href={"/shop/uncategorized"}
-            className="lg:w-56 md:w-48 h-44 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
-          >
-            <Image
-              alt="a man testing in a laboratory image"
-              src={"/images/catOther.jpg"}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
-              <BodyText
-                weight="bold"
-                className="text-white text-lg text-center text-wrap"
-              >
-                General Products
-              </BodyText>
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4 flex flex-col items-center justify-center lg:space-x-48 space-x-16">
-        <div className="relative">
+      <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4 flex flex-col md:flex-row items-center justify-center lg:space-x-48 md:space-x-16">
+        <div className="relative mb-10 md:mb-0">
           <div className="lg:w-[35vw] md:w-[45vw] w-full md:h-[70vh] h-[50vh] relative">
             <div className="absolute w-full h-full rounded-2xl transition-transform lg:-translate-x-8 -translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
 
@@ -371,7 +226,7 @@ export default function Home() {
           </h2>
           <p className="text-black mb-4 opacity-70 text-base">
             Founded in 2024, we are fully engaged in the supply, installtion and
-            maintenance of scientific and Agricultural equipments across Africa
+            maintenance of Scientific and Agricultural equipments across Africa
             and beyond.
           </p>
           <TitleComponent title="Our Vision" color="black" />
@@ -758,3 +613,191 @@ export default function Home() {
     </main>
   );
 }
+
+const CatWrapper = () => {
+  const MdRender = () => {
+    return (
+      <div className="hidden md:block">
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <CatBox
+            link="/shop/science laboratory"
+            img={{
+              alt: "a black girl working in a laboratory",
+              uri: "/images/catLab.jpg",
+            }}
+            text="Science Laboratory"
+          />
+
+          <CatBox
+            link="/shop/agriculture"
+            img={{
+              alt: "a red tractor tilling a farm field",
+              uri: "/images/catAgric.jpg",
+            }}
+            text="Agriculture"
+          />
+
+          <CatBox
+            link="/shop/geology/geology"
+            img={{
+              alt: "two geologists studying a cave wall",
+              uri: "/images/catGeo.jpg",
+            }}
+            text="Geology"
+          />
+
+          <CatBox
+            link="/shop/research & analytics"
+            img={{
+              alt: "a black man running a test in a laboratory",
+              uri: "/images/catRes.jpg",
+            }}
+            text="Research & Analytics"
+          />
+        </div>
+
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <CatBox
+            link="/shop/industrial laboratory"
+            img={{
+              alt: "a machine drilling into a metal",
+              uri: "/images/catInd.jpg",
+            }}
+            text="Industrial Laboratory"
+          />
+
+          <CatBox
+            link="/shop/training mannequins/training mannequins & simulators"
+            img={{
+              alt: "a mannequin within a green jacket",
+              uri: "/images/catMan.jpg",
+            }}
+            text="Training Mannequins"
+          />
+
+          <CatBox
+            link="/shop/uncategorized"
+            img={{
+              alt: "a set of lab chemicals",
+              uri: "/images/catOther.jpg",
+            }}
+            text="General Products"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const SMRender = () => {
+    return (
+      <div className="md:hidden">
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <CatBox
+            link="/shop/science laboratory"
+            img={{
+              alt: "a black girl working in a laboratory",
+              uri: "/images/catLab.jpg",
+            }}
+            text="Science Laboratory"
+          />
+
+          <CatBox
+            link="/shop/agriculture"
+            img={{
+              alt: "a red tractor tilling a farm field",
+              uri: "/images/catAgric.jpg",
+            }}
+            text="Agriculture"
+          />
+        </div>
+
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <CatBox
+            link="/shop/geology/geology"
+            img={{
+              alt: "two geologists studying a cave wall",
+              uri: "/images/catGeo.jpg",
+            }}
+            text="Geology"
+          />
+
+          <CatBox
+            link="/shop/research & analytics"
+            img={{
+              alt: "a black man running a test in a laboratory",
+              uri: "/images/catRes.jpg",
+            }}
+            text="Research & Analytics"
+          />
+        </div>
+
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <CatBox
+            link="/shop/industrial laboratory"
+            img={{
+              alt: "a machine drilling into a metal",
+              uri: "/images/catInd.jpg",
+            }}
+            text="Industrial Laboratory"
+          />
+
+          <CatBox
+            link="/shop/training mannequins/training mannequins & simulators"
+            img={{
+              alt: "a mannequin within a green jacket",
+              uri: "/images/catMan.jpg",
+            }}
+            text="Training Mannequins"
+          />
+        </div>
+
+        <div className="flex w-full justify-center items-center space-x-10 mt-10">
+          <CatBox
+            link="/shop/uncategorized"
+            img={{
+              alt: "a set of lab chemicals",
+              uri: "/images/catOther.jpg",
+            }}
+            text="General Products"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full py-24 lg:px-14 md:px-8 px-4">
+      <TitleComponent color="black" title="Solutions we Provide" />
+
+      <MdRender />
+      <SMRender />
+    </div>
+  );
+};
+
+const CatBox = ({
+  link,
+  img,
+  text,
+}: {
+  link: string;
+  img: { alt: string; uri: string };
+  text: string;
+}) => {
+  return (
+    <Link
+      href={link}
+      className="lg:w-56 md:w-48 w-40 md:h-44 h-36 rounded-xl relative overflow-hidden hover:scale-110 duration-300 ease-in-out"
+    >
+      <Image alt={img.alt} src={img.uri} fill className="object-cover" />
+      <div className="absolute w-full h-full bg-black bg-opacity-40 flex items-center justify-center px-4 cursor-pointer hover:bg-my-blue hover:bg-opacity-70 duration-300 ease-in-out">
+        <BodyText
+          weight="bold"
+          className="text-white md:text-lg text-base text-center text-wrap"
+        >
+          {text}
+        </BodyText>
+      </div>
+    </Link>
+  );
+};

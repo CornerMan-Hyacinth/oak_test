@@ -42,45 +42,46 @@ const FooterComponent = () => {
             className="object-contain"
           />
           <p className="text-black text-base text-center mt-5 leading-relaxed opacity-70">
-            Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            vulputate libero et velit interdum, ac aliquet odio mattis.
+            Founded in 2024, we are fully engaged in the supply, installtion and
+            maintenance of Scientific and Agricultural equipments across Africa
+            and beyond.
           </p>
           <div className="flex items-center justify-center space-x-4 mt-8 mb-12 lg:mb-0">
             <a
-              href=""
+              href="https://www.linkedin.com/company/105725236"
               target="_blank"
               className="text-black hover:text-my-blue duration-300 ease-in-out"
             >
               <BsLinkedin size={22} />
             </a>
             <a
-              href=""
+              href="https://www.instagram.com/oakscientifics"
               target="_blank"
               className="text-black hover:text-my-blue duration-300 ease-in-out"
             >
               <FaInstagramSquare size={22} />
             </a>
-            <a
+            {/* <a
               href=""
               target="_blank"
               className="text-black hover:text-my-blue duration-300 ease-in-out"
             >
               <FaSquareXTwitter size={22} />
-            </a>
+            </a> */}
             <a
-              href=""
+              href="https://www.facebook.com/profile.php?id=61569571321915"
               target="_blank"
               className="text-black hover:text-my-blue duration-300 ease-in-out"
             >
               <FaFacebook size={22} />
             </a>
-            <a
+            {/* <a
               href=""
               target="_blank"
               className="text-black hover:text-my-blue duration-300 ease-in-out"
             >
               <FaYoutube size={22} />
-            </a>
+            </a> */}
           </div>
         </div>
 
@@ -91,25 +92,25 @@ const FooterComponent = () => {
             </h5>
             <div className="flex flex-col items-center space-y-6">
               <Link
-                href={"/"}
+                href={"/about-us"}
                 className="text-black text-sm opacity-70 hover:opacity-100 hover:text-my-blue hover:underline duration-300 ease-in-out"
               >
                 About Us
               </Link>
               <Link
-                href={"/"}
+                href={"/blog"}
                 className="text-black text-sm opacity-70 hover:opacity-100 hover:text-my-blue hover:underline duration-300 ease-in-out"
               >
                 Blog
               </Link>
               <Link
-                href={"/"}
+                href={"/careers"}
                 className="text-black text-sm opacity-70 hover:opacity-100 hover:text-my-blue hover:underline duration-300 ease-in-out"
               >
                 Careers
               </Link>
               <Link
-                href={"/"}
+                href={"/contact-us"}
                 className="text-black text-sm opacity-70 hover:opacity-100 hover:text-my-blue hover:underline duration-300 ease-in-out"
               >
                 Contact Us
@@ -123,7 +124,7 @@ const FooterComponent = () => {
             </h5>
             <div className="flex flex-col items-center space-y-6">
               <Link
-                href={"/"}
+                href={"/contact-sales"}
                 className="text-black text-sm opacity-70 hover:opacity-100 hover:text-my-blue hover:underline duration-300 ease-in-out"
               >
                 Support
@@ -155,7 +156,63 @@ const FooterComponent = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center max-w-[20vw]">
+          <div className="hiddden md:flex flex-col items-center max-w-[20vw]">
+            <h5 className="text-lg text-black mb-6">
+              <TitleText weight="bold">Contact Us</TitleText>
+            </h5>
+            <div className="flex flex-col items-center space-y-6">
+              <div className="flex items-start space-x-4">
+                <span className="block mt-1">
+                  <MdEmail size={18} color="black" />
+                </span>
+                <div className="flex flex-col space-y-3">
+                  <span className="text-black text-sm opacity-70">
+                    sales@oakscientifics.com
+                  </span>
+                  <hr className="border border-black border-opacity-10" />
+                  <span className="text-black text-sm opacity-70">
+                    info@oakscientifics.com
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <MdLocalPhone size={18} color="black" />
+                <span className="text-black text-sm opacity-70">
+                  +(234) 803 8867 562
+                </span>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <span className="block mt-1">
+                  <FaLocationDot size={18} color="black" />
+                </span>
+                <div className="flex flex-col space-y-3">
+                  <span className="text-black text-sm opacity-70 text-center">
+                    Blk 5, Idah St Area 10 Garki 900246, FCT Abuja Nigeria.
+                  </span>
+                  <hr className="border border-black border-opacity-10" />
+                  <span className="text-black text-sm opacity-70 text-center">
+                    Blk 5, Idah St Area 10 Garki 900246, FCT Abuja Nigeria.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="hidden md:flex flex-col items-center">
+            <h5 className="text-lg text-black mb-6">
+              <TitleText weight="bold">Open Hours</TitleText>
+            </h5>
+            <p className="text-black text-sm opacity-70 mb-3">Mon&ndash;Fri</p>
+            <p className="text-black text-sm opacity-70">
+              8:00&ndash;17:30 WAT
+            </p>
+          </div>
+        </div>
+
+        <div className="w-full flex items-start justify-between md:hidden">
+          <div className="flex flex-col items-center max-w-[35vw]">
             <h5 className="text-lg text-black mb-6">
               <TitleText weight="bold">Contact Us</TitleText>
             </h5>
@@ -200,11 +257,11 @@ const FooterComponent = () => {
           </div>
 
           <div className="flex flex-col items-center">
-            <h5 className="text-lg text-black mb-6">
+            <h5 className="text-lg text-black mb-6 text-nowrap">
               <TitleText weight="bold">Open Hours</TitleText>
             </h5>
             <p className="text-black text-sm opacity-70 mb-3">Mon&ndash;Fri</p>
-            <p className="text-black text-sm opacity-70">
+            <p className="text-black text-sm opacity-70 text-nowrap">
               8:00&ndash;17:30 WAT
             </p>
           </div>
