@@ -127,7 +127,7 @@ export default function Home() {
       {/** Categories */}
       <CatWrapper />
 
-      <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4 flex flex-col md:flex-row items-center justify-center lg:space-x-48 md:space-x-16">
+      <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-8 px-4 flex flex-col md:flex-row items-center justify-center lg:space-x-48 md:space-x-16">
         <div className="relative mb-10 md:mb-0">
           <div className="lg:w-[35vw] md:w-[45vw] w-[85vw] md:h-[70vh] h-[50vh] relative">
             <div className="absolute w-full h-full rounded-2xl transition-transform lg:-translate-x-8 -translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
@@ -270,7 +270,7 @@ export default function Home() {
       </div>
 
       {(isFetching || topProducts.length === 0) && (
-        <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+        <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-10 px-4">
           <div className="flex justify-center items-center">
             <CenterTitleComponent title="Top Selling Products" color="black" />
           </div>
@@ -291,7 +291,7 @@ export default function Home() {
       )}
 
       {(isFetching || agricProducts.length === 0) && (
-        <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4">
+        <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-8 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
               title="Agricultural Equipments"
@@ -350,7 +350,7 @@ export default function Home() {
             )}
           </div>
 
-          <div className="md:hidden flex justify-center mt-10 md:mt-0 te">
+          <div className="md:hidden flex justify-center mt-10 md:mt-0">
             <TextLink
               text="View all Products"
               link="/shop/agriculture"
@@ -362,7 +362,7 @@ export default function Home() {
       )}
 
       {(isFetching || labProducts.length === 0) && (
-        <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4">
+        <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-8 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
               title="Science Laboratory Equipments"
@@ -421,7 +421,7 @@ export default function Home() {
             )}
           </div>
 
-          <div className="md:hidden flex justify-center mt-10 md:mt-0 te">
+          <div className="md:hidden flex justify-center mt-10 md:mt-0">
             <TextLink
               text="View all Products"
               link="/shop/agriculture"
@@ -433,7 +433,7 @@ export default function Home() {
       )}
 
       {(isFetching || featuredProducts.length === 0) && (
-        <div className="w-full pt-10 pb-20">
+        <div className="w-full pt-10 md:pb-20 pb-14">
           <div className="lg:px-14 md:px-10 px-4 flex items-center justify-between">
             <div>
               <TitleComponent title="Featured Products" color="black" />
@@ -602,7 +602,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full py-20 lg:px-14 md:px-10 px-4">
+      <div className="w-full md:py-20 py-14 lg:px-14 md:px-8 px-4">
         <div className="flex flex-col justify-center items-center relative">
           <CenterTitleComponent
             title="Our Partners Across the Global"
@@ -671,7 +671,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+      <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-10 px-4">
         <TitleComponent title="Blog Posts" color="black" />
 
         <div className="flex items-center justify-between mt-10">
@@ -841,7 +841,7 @@ const CatWrapper = () => {
   };
 
   return (
-    <div className="w-full py-24 lg:px-14 md:px-8 px-4">
+    <div className="w-full md:py-24 py-16 lg:px-14 md:px-8 px-4">
       <TitleComponent color="black" title="Solutions we Provide" />
 
       <MdRender />

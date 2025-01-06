@@ -12,7 +12,7 @@ export const Faq = () => {
         fill
         className="object-cover"
       />
-      <div className="bg-white bg-opacity-100 pt-10 pb-20 lg:px-14 md:px-10 px-4">
+      <div className="bg-white bg-opacity-100 pt-10 md:pb-20 pb-14 lg:px-14 md:px-10 px-4">
         <TitleComponent title="FAQs" color="black" />
         <div className="flex flex-col items-center justify-center mt-5">
           <h4 className="lg:text-3xl text-2xl text-black text-center">
