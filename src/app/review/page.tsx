@@ -73,9 +73,9 @@ const ReviewPage = () => {
 
       <div className="fixed z-40 inset-0 bg-black bg-opacity-80 backdrop-blur-sm flex flex-col h-screen max-h-[100vh] overflow-y-scroll">
         <div className="w-full min-h-[15vh]" />
-        <div className="bg-[#CCCCCC] dark:bg-black w-full flex-grow rounded-t-2xl pb-10 flex flex-col">
-          <div className="flex w-full min-h-20 bg-white items-center justify-center rounded-t-2xl">
-            <div className="xl:w-1/3 lg:w-2/5 md:w-3/5 w-4/5 flex items-center space-x-2">
+        <div className="bg-[#CCC] w-full flex-grow rounded-t-2xl pb-10 flex flex-col">
+          <div className="flex w-full min-h-20 bg-white items-center justify-center rounded-t-2xl px-4">
+            <div className="xl:w-1/3 lg:w-2/5 md:w-3/5 w-full flex items-center space-x-2">
               <Image
                 alt="Oak Scientifics logo"
                 src={"/images/oak_logo.png"}
@@ -85,15 +85,15 @@ const ReviewPage = () => {
               />
               <TitleText
                 weight="bold"
-                className="md:text-2xl text-left text-my-blue"
+                className="md:text-2xl text-lg text-my-blue"
               >
                 Leave a review for us
               </TitleText>
             </div>
           </div>
 
-          <div className="flex w-full justify-center flex-grow bg-[#CCC]">
-            <div className="xl:w-1/3 lg:w-2/5 md:w-3/5 w-4/5 mt-10">
+          <div className="flex w-full justify-center flex-grow bg-[#CCC] px-4">
+            <div className="xl:w-1/3 lg:w-2/5 md:w-3/5 w-full mt-10">
               <BodyText
                 weight="medium"
                 className="text-black md:text-base text-sm mb-5"
@@ -108,7 +108,7 @@ const ReviewPage = () => {
                   <p className="text-black text-lg">
                     Rate your recent experience
                   </p>
-                  <div className="flex items-center space-x-5 mt-4">
+                  <div className="flex items-center md:space-x-5 space-x-2 mt-4">
                     {[...Array(5)].map((_, index) => (
                       <button
                         key={index}
@@ -118,10 +118,10 @@ const ReviewPage = () => {
                         {rating >= index + 1 ? (
                           <TiStarFullOutline
                             color={starColor(index + 1)}
-                            size={45}
+                            size={40}
                           />
                         ) : (
-                          <TiStarOutline color={"rgba(0,0,0,.5)"} size={45} />
+                          <TiStarOutline color={"rgba(0,0,0,.5)"} size={40} />
                         )}
                       </button>
                     ))}
