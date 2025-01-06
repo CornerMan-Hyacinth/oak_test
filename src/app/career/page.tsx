@@ -18,14 +18,14 @@ const CareerPage = () => {
         We are hiring
       </div>
 
-      <div className="flex flex-col items-center mt-5">
+      <div className="flex flex-col items-center mt-10 md:mt-5">
         <BodyText
           weight="medium"
           className="text-center text-black text-xl w-full"
         >
           Be a Part of Our Success
         </BodyText>
-        <p className="mt-10 text-black text-lg text-center xl:w-1/2 md:w-2/3 opacity-70 leading-loose">
+        <p className="md:mt-10 mt-5 text-black md:text-lg text-base text-center xl:w-1/2 md:w-2/3 w-full opacity-70 leading-loose">
           We are searching for passionate individuals to join us on our mission.
           <br />
           We value and appreciate clear communicators, team drivers, leaders and
@@ -33,11 +33,11 @@ const CareerPage = () => {
         </p>
 
         <hr
-          className="bg-black bg-opacity-30 w-full my-20"
+          className="bg-black bg-opacity-30 w-full md:my-20 my-14"
           style={{ height: "2px" }}
         />
 
-        <div className="lg:w-1/2 md:w-2/3">
+        <div className="lg:w-1/2 md:w-2/3 w-full">
           {positionData.map((item, index) => (
             <CareerBox
               key={index}
@@ -64,17 +64,19 @@ const CareerBox = ({
   description: string;
 }) => {
   return (
-    <div className="flex items-center justify-between space-x-8 mb-8">
+    <div className="flex items-center justify-between md:space-x-8 space-x-4 mb-8">
       <div className="flex-grow pb-8 border-b border-black border-opacity-30">
-        <div className="flex items-start space-x-8">
-          <BodyText weight="medium" className="text-black text-xl">
+        <div className="flex items-start md:space-x-8 space-x-2">
+          <BodyText weight="medium" className="text-black md:text-xl text-lg">
             {position}
           </BodyText>
-          <span className="px-4 py-1 rounded-full bg-my-blue text-white text-xs">
+          <span className="px-4 py-1 rounded-full bg-my-blue text-white text-xs text-nowrap">
             {status}
           </span>
         </div>
-        <p className="text-black text-base opacity-70 mt-5">{description}</p>
+        <p className="text-black md:text-base text-sm opacity-70 mt-5">
+          {description}
+        </p>
       </div>
 
       <Link

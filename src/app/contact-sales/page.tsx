@@ -24,8 +24,8 @@ const ContactSales = () => {
   const sendMessage = async () => {};
 
   return (
-    <main className="w-full pb-20">
-      <div className="lg:px-14 md:px-8 px-4">
+    <main className="w-full pb-20 lg:px-14 md:px-8 px-4">
+      <div className="">
         <Breadcrumb />
         <div className="flex flex-col items-center mt-5">
           <CenterTitleComponent isH1 title="Contact Sales" color="black" />
@@ -33,11 +33,11 @@ const ContactSales = () => {
       </div>
 
       <div className="flex flex-col items-center mt-10">
-        <p className="text-black text-lg opacity-70 mt-5 text-center">
+        <p className="text-black md:text-lg text-base opacity-70 md:mt-5 text-center">
           We will give you a response as soon as we receive your message
         </p>
 
-        <div className="lg:w-1/2 md:w-2/3 px-10 py-10 rounded-lg border border-black border-opacity-30 mt-14 flex flex-col items-center">
+        <div className="lg:w-1/2 md:w-2/3 w-full md:px-10 px-4 py-10 rounded-lg border border-black border-opacity-30 mt-14 flex flex-col items-center">
           <div className="w-full">
             <label
               htmlFor="firstName"

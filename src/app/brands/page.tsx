@@ -15,8 +15,8 @@ const Brands = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="grid lg:grid-cols-[1fr_1fr_auto] grid-cols-[1fr_1fr] items-center gap-y-5 gap-x-16 mt-20">
-          <div className="lg:w-[25vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+        <div className="grid lg:grid-cols-[1fr_1fr_auto] md:grid-cols-[1fr_1fr] grid-cols-1 items-center gap-y-5 gap-x-16 mt-20">
+          <div className="lg:w-[25vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
             <Image
               alt="oak scientifics partner logo"
               src={"/images/oak_brand1.png"}
@@ -24,7 +24,7 @@ const Brands = () => {
               className="object-cover"
             />
           </div>
-          <div className="lg:w-[25vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="lg:w-[25vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
             <Image
               alt="oak scientifics partner logo"
               src={"/images/oak_brand2.png"}
@@ -32,7 +32,7 @@ const Brands = () => {
               className="object-cover"
             />
           </div>
-          <div className="lg:w-[25vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="lg:w-[25vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
             <Image
               alt="oak scientifics partner logo"
               src={"/images/oak_brand3.png"}
@@ -40,7 +40,7 @@ const Brands = () => {
               className="object-cover"
             />
           </div>
-          <div className="lg:w-[25vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="lg:w-[25vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
             <Image
               alt="oak scientifics partner logo"
               src={"/images/oak_brand4.png"}
@@ -48,7 +48,7 @@ const Brands = () => {
               className="object-cover"
             />
           </div>
-          <div className="lg:w-[25vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="lg:w-[25vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
             <Image
               alt="oak scientifics partner logo"
               src={"/images/oak_brand5.png"}
@@ -56,7 +56,7 @@ const Brands = () => {
               className="object-cover"
             />
           </div>
-          <div className="lg:w-[25vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="lg:w-[25vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
             <Image
               alt="oak scientifics partner logo"
               src={"/images/oak_brand6.png"}

@@ -83,15 +83,21 @@ const ReviewPage = () => {
                 height={40}
                 className="object-cover"
               />
-              <TitleText weight="bold" className="text-2xl text-my-blue">
+              <TitleText
+                weight="bold"
+                className="md:text-2xl text-left text-my-blue"
+              >
                 Leave a review for us
               </TitleText>
             </div>
           </div>
 
-          <div className="flex w-full justify-center flex-grow">
+          <div className="flex w-full justify-center flex-grow bg-[#CCC]">
             <div className="xl:w-1/3 lg:w-2/5 md:w-3/5 w-4/5 mt-10">
-              <BodyText weight="medium" className="text-black text-base mb-5">
+              <BodyText
+                weight="medium"
+                className="text-black md:text-base text-sm mb-5"
+              >
                 Your patronage means a lot to us and we hope to continually
                 deliver the best of our services to you. Dropping a
                 review/feedback will help us in achieving this mission.

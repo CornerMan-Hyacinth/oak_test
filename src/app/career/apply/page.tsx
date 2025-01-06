@@ -67,7 +67,7 @@ const ApplyPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center mt-10 lg:px-14 md:px-8 px-4">
+      <div className="flex flex-col items-center md:mt-10 mt-5 lg:px-14 md:px-8 px-4">
         <div className="xl:w-1/2 md:w-2/3 w-full md:px-10 px-4 py-10 rounded-lg border border-black border-opacity-30 mt-14 flex flex-col items-center">
           <div className="w-full">
             <label
