@@ -7,13 +7,14 @@ import { useState } from "react";
 import { DetailsModal } from "./Modals";
 import { FaEye, FaMagnifyingGlassArrowRight } from "react-icons/fa6";
 import Link from "next/link";
+import { productSample } from "@/lib/mockups";
 
 export const NCard = ({ product }: { product: any }) => {
   return (
-    <div className="w-[25vw] p-4 rounded-lg hover:shadow-md hover:shadow-gray-600 duration-300 ease-in-out">
+    <div className="md:w-[25vw] w-full p-4 rounded-lg hover:shadow-md hover:shadow-gray-600 duration-300 ease-in-out">
       <div className="w-full h-48 rounded-lg overflow-hidden relative">
         <Image
-          alt={`${product.name} product image`}
+          alt={`${productSample.name} product image`}
           src={"/images/oakProductImg3.png"}
           fill
           className="object-top"
@@ -21,7 +22,7 @@ export const NCard = ({ product }: { product: any }) => {
       </div>
 
       <TitleText weight="bold" className="line-clamp-2 h-14 mt-2">
-        {product.name}
+        {productSample.name}
       </TitleText>
       <hr className="border border-black border-opacity-20 my-4" />
       <button className="bg-my-gray text-sm py-3 text-white rounded-md w-full flex items-center justify-center hover:bg-my-blue duration-300 ease-in-out">
@@ -45,8 +46,8 @@ export const NPCard = ({
     <div
       className={`${
         isSmall
-          ? "lg:w-[20vw] md:w-[27vw] w-[37vw]"
-          : "xl:w-[25vw] lg:w-[30vw] md:w-[35vw] w-[45vw]"
+          ? "lg:w-[20vw] md:w-[27vw] w-[85vw]"
+          : "xl:w-[25vw] lg:w-[30vw] md:w-[35vw] w-full"
       } pb-4 rounded-lg hover:shadow-lg hover:shadow-gray-600 duration-300 ease-in-out overflow-hidden`}
       onMouseEnter={() => setHoveredOn(true)}
       onMouseLeave={() => setHoveredOn(false)}
@@ -59,7 +60,7 @@ export const NPCard = ({
         } relative transition-all duration-300`}
       >
         <Image
-          alt={`${product.name} product image`}
+          alt={`${productSample.name} product image`}
           src={"/images/oakProductImg3.png"}
           fill
           className="object-cover"
@@ -80,7 +81,7 @@ export const NPCard = ({
             </div>
           </div>
           <Link
-            href={`/products/${product.name}`}
+            href={`/products/${productSample.name}`}
             className="p-4 rounded-full bg-my-blue bg-opacity-60 hover:bg-opacity-90 text-white duration-300 ease-in-out relative group"
           >
             <FaMagnifyingGlassArrowRight size={24} />
@@ -98,19 +99,19 @@ export const NPCard = ({
               isSmall ? "lg:text-lg text-base" : "text-xl"
             } line-clamp-1`}
           >
-            <TitleText weight="bold">{product.name}</TitleText>
+            <TitleText weight="bold">{productSample.name}</TitleText>
           </p>
           {!isSmall && (
             <div className={`mt-1 flex items-center`}>
               <div className={`h-1 w-1 rounded-full mr-1 bg-my-yellow`} />
               <span
                 className={`lg:text-base text-sm ${
-                  product.availabilty === "In stock"
+                  productSample.availability === "In stock"
                     ? "text-my-yellow"
                     : "text-red-600"
                 }`}
               >
-                {product.availabilty}
+                {productSample.availability}
               </span>
             </div>
           )}
@@ -120,7 +121,7 @@ export const NPCard = ({
           <div className="flex items-center space-x-1">
             <IoIosStar color="#FFCE31" size={18} />
             <span className="text-black lg:text-base text-sm opacity-70">
-              {product.avgRating}
+              {productSample.reviews.averageRating}
             </span>
           </div>
         )}
@@ -128,15 +129,18 @@ export const NPCard = ({
 
       <div className="flex items-center justify-between mt-4 lg:px-4 px-2">
         <span className="text-my-blue lg:text-lg text-base">
-          $ {product.price}
+          $ {productSample.price}
         </span>
         <button className="bg-my-gray text-xs text-white rounded-md py-3 lg:px-7 px-3 hover:bg-my-blue duration-300 ease-in-out">
-          {product.price > 999 ? "Add to quote" : "Add to cart"}
+          {productSample.price > 999 ? "Add to quote" : "Add to cart"}
         </button>
       </div>
 
       {isDetailsOpen && (
-        <DetailsModal product={product} close={() => setDetailsOpen(false)} />
+        <DetailsModal
+          product={productSample}
+          close={() => setDetailsOpen(false)}
+        />
       )}
     </div>
   );
@@ -144,25 +148,27 @@ export const NPCard = ({
 
 export const NPDCard = ({ product }: { product: any }) => {
   return (
-    <div className="w-[35vw] pt-4 pb-7 px-4 flex items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative">
+    <div className="md:w-[35vw] w-full pt-4 pb-7 px-4 flex items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative">
       <div className="min-h-40 h-full w-2/5 rounded-lg overflow-hidden relative">
         <Image
-          alt={`${product.name} product image`}
+          alt={`${productSample.name} product image`}
           src={"/images/oakProductImg1.png"}
           className="object-cover"
         />
       </div>
       <div className="w-3/5">
-        <p className="text-black text-xs opacity-70 mb-1">{product.category}</p>
+        <p className="text-black text-xs opacity-70 mb-1">
+          {productSample.category}
+        </p>
         <p className="text-my-gray text-xl">
-          <TitleText weight="bold">{product.name}</TitleText>
+          <TitleText weight="bold">{productSample.name}</TitleText>
         </p>
         <p className="text-black opacity-70 mt-2 leading-relaxed text-sm text-justify line-clamp-4">
-          {product.description}
+          {productSample.description}
         </p>
 
         <div className="flex items-center justify-between mt-4">
-          <span className="text-my-blue text-lg">$ {product.price}</span>
+          <span className="text-my-blue text-lg">$ {productSample.price}</span>
           <button className="bg-my-gray text-xs text-white rounded-md py-3 px-7 hover:bg-my-blue duration-300 ease-in-out">
             View Product
           </button>

@@ -13,7 +13,7 @@ const BlogCard = ({
 }) => {
   return (
     <div className="flex items-center justify-between">
-      <div className="xl:w-[25vw] lg:w-[30vw] md:w-[35vw]">
+      <div className="xl:w-[25vw] lg:w-[30vw] md:w-[35vw] w-full">
         <div className="w-full h-52 rounded-lg overflow-hidden relative">
           <Image
             alt="a set of scientific stationeries image"

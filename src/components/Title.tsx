@@ -21,17 +21,17 @@ export const TitleComponent = ({
       onMouseLeave={() => setHoveredOn(false)}
     >
       {isH1 ? (
-        <h1 className={`text-${color} text-2xl`}>
+        <h1 className={`text-${color} md:text-2xl text-xl`}>
           <TitleText weight="regular">{title}</TitleText>
         </h1>
       ) : (
-        <h2 className={`text-${color} text-2xl`}>
+        <h2 className={`text-${color} md:text-2xl text-xl`}>
           <TitleText weight="regular">{title}</TitleText>
         </h2>
       )}
       <div
         style={{ height: "0.15rem" }}
-        className={`w-1/2 ${
+        className={`w-1/2 max-w-28 ${
           color === "white" ? "bg-white" : "bg-my-blue"
         } rounded-full transition-transform mt-1 ${
           isHoveredOn ? "translate-x-full" : ""

@@ -23,11 +23,6 @@ export default function Home() {
   const featuredRef = useRef<HTMLDivElement>(null);
 
   const [slider, setSlider] = useState(0);
-  const [countValues, setCountValues] = useState({
-    first: 0,
-    second: 0,
-    third: 0,
-  });
 
   const [topProducts, setTopProducts] = useState<any[]>([]);
   const [agricProducts, setAgricProducts] = useState<any[]>([]);
@@ -75,26 +70,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const duration = 300,
-      max = 100;
-    const stepTime = Math.floor(duration / max);
-    let current = 0;
-
-    const interval = setInterval(() => {
-      current += 1;
-      current < 10 && setCountValues((prev) => ({ ...prev, first: current }));
-      current < 50 && setCountValues((prev) => ({ ...prev, second: current }));
-      current < 100 && setCountValues((prev) => ({ ...prev, third: current }));
-
-      if (current >= max) {
-        clearInterval(interval); // Stop the interval once the max value is reached
-      }
-    }, stepTime);
-
-    return () => clearInterval(interval); // Clean up interval on component unmount
-  }, []);
-
   useEffect(() => {}, []);
 
   return (
@@ -127,7 +102,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute lg:top-14 md:top-8 lg:right-20 md:right-10 bg-my-blue h-24 w-24 flex items-center justify-center rounded-full bg-opacity-60">
+        <div className="absolute lg:top-14 top-8 lg:right-20 md:right-10 right-4 bg-my-blue h-24 w-24 flex items-center justify-center rounded-full bg-opacity-60">
           <BodyText weight="regular" className="text-center text-sm text-white">
             Best
             <br />
@@ -135,7 +110,7 @@ export default function Home() {
           </BodyText>
         </div>
 
-        <div className="absolute bottom-10 right-10 flex items-center space-x-3">
+        <div className="absolute bottom-10 md:right-10 right-4 flex items-center space-x-3">
           {[...Array(4)].map((_, index) => (
             <button
               key={index}
@@ -298,9 +273,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4 flex items-center justify-center lg:space-x-48 space-x-16">
+      <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4 flex flex-col items-center justify-center lg:space-x-48 space-x-16">
         <div className="relative">
-          <div className="lg:w-[35vw] md:w-[45vw] h-[70vh] relative">
+          <div className="lg:w-[35vw] md:w-[45vw] w-full md:h-[70vh] h-[50vh] relative">
             <div className="absolute w-full h-full rounded-2xl transition-transform lg:-translate-x-8 -translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
 
             <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-md shadow-black">
@@ -322,7 +297,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-[30vw]">
+        <div className="md:w-[30vw] w-full">
           <h3 className="text-black lg:text-3xl text-2xl">
             <TitleText weight="regular">
               We are committed to Educational & Scientific Excellence
@@ -345,21 +320,29 @@ export default function Home() {
 
         <div className="flex items-start justify-center space-x-10 mt-14">
           <div className="flex flex-col items-center">
-            <div className="h-20 w-20 flex justify-center items-center bg-white rounded-full">
+            <div className="h-20 w-20 hidden md:flex justify-center items-center bg-white rounded-full">
               <FaHandshakeSimple color="#0F81B0" size={40} />
             </div>
-            <p className="text-2xl text-white mt-2 mb-1">10+ Years</p>
-            <span className="opacity-80 text-white text-base text-center">
+            <div className="h-16 w-16 flex md:hidden justify-center items-center bg-white rounded-full">
+              <FaHandshakeSimple color="#0F81B0" size={30} />
+            </div>
+            <p className="md:text-2xl text-xl text-white mt-2 mb-1">
+              10+ Years
+            </p>
+            <span className="opacity-80 text-white md:text-base text-sm text-center">
               in Business
             </span>
           </div>
 
-          <div className="flex flex-col items-center px-32">
-            <div className="h-20 w-20 flex justify-center items-center bg-white rounded-full">
+          <div className="flex flex-col items-center md:px-32">
+            <div className="h-20 w-20 hidden md:flex justify-center items-center bg-white rounded-full">
               <PiBuildingOfficeFill color="#0F81B0" size={40} />
             </div>
-            <p className="text-2xl text-white mt-2 mb-1">50+</p>
-            <span className="opacity-80 text-white text-base text-center">
+            <div className="h-16 w-16 flex md:hidden justify-center items-center bg-white rounded-full">
+              <PiBuildingOfficeFill color="#0F81B0" size={30} />
+            </div>
+            <p className="md:text-2xl text-xl text-white mt-2 mb-1">50+</p>
+            <span className="opacity-80 text-white md:text-base text-sm text-center">
               Educational Institutes
               <br />
               Served
@@ -367,23 +350,26 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="h-20 w-20 flex justify-center items-center bg-white rounded-full">
+            <div className="h-20 w-20 hidden md:flex justify-center items-center bg-white rounded-full">
               <MdOutlineEngineering color="#0F81B0" size={40} />
             </div>
-            <p className="text-2xl text-white mt-2 mb-1">100+</p>
-            <span className="opacity-80 text-white text-base text-center">
+            <div className="h-16 w-16 flex md:hidden justify-center items-center bg-white rounded-full">
+              <MdOutlineEngineering color="#0F81B0" size={30} />
+            </div>
+            <p className="md:text-2xl text-xl text-white mt-2 mb-1">100+</p>
+            <span className="opacity-80 text-white md:text-base text-sm text-center">
               Lab Installations
             </span>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-center py-28 lg:px-14 md:px-10 px-4 lg:space-x-40 md:space-x-16">
+      <div className="flex items-center justify-center md:py-28 py-14 lg:px-14 md:px-10 px-4 lg:space-x-40 md:space-x-16">
         <div className="lg:w-[35vw] md:w-[45vw]">
-          <h2 className="text-black lg:text-3xl md:text-2xl mb-2">
+          <h2 className="text-black lg:text-3xl text-2xl mb-2">
             <TitleText weight="regular">Oak Scientifics at a glance</TitleText>
           </h2>
-          <p className="text-black mb-4 opacity-70">
+          <p className="text-black mb-4 opacity-70 text-base">
             Founded in 2024, we are fully engaged in the supply, installtion and
             maintenance of scientific and Agricultural equipments across Africa
             and beyond.
@@ -408,7 +394,7 @@ export default function Home() {
         </div>
 
         <div className="relative">
-          <div className="lg:w-[30vw] md:w-[40vw] h-[70vh] relative">
+          <div className="lg:w-[30vw] md:w-[40vw] w-full h-[70vh] relative">
             <div className="absolute w-full h-full rounded-2xl transition-transform lg:translate-x-8 translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
             <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-md shadow-my-gray">
               <Image
@@ -429,25 +415,28 @@ export default function Home() {
         </div>
       </div>
 
-      {(isFetching || topProducts.length > 0) && (
+      {(isFetching || topProducts.length === 0) && (
         <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
           <div className="flex justify-center items-center">
             <CenterTitleComponent title="Top Selling Products" color="black" />
           </div>
 
-          <div className="grid grid-cols-2 gap-y-3 mt-10 justify-items-center">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-y-3 mt-10 justify-items-center">
             {isFetching
               ? [...Array(4)].map((_, index) => (
-                  <CardLoading key={index} className="w-[35vw] h-40" />
+                  <CardLoading
+                    key={index}
+                    className="md:w-[35vw] w-full h-40"
+                  />
                 ))
-              : topProducts.map((product, index) => (
+              : [...Array(4)].map((product, index) => (
                   <NPDCard key={index} product={product} />
                 ))}
           </div>
         </div>
       )}
 
-      {(isFetching || agricProducts.length > 0) && (
+      {(isFetching || agricProducts.length === 0) && (
         <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
@@ -469,14 +458,14 @@ export default function Home() {
               ? [...Array(3)].map((_, index) => (
                   <CardLoading key={index} className="w-[25vw] h-60" />
                 ))
-              : agricProducts.map((product, index) => (
+              : [...Array(3)].map((product, index) => (
                   <NPCard key={index} product={product} />
                 ))}
           </div>
         </div>
       )}
 
-      {(isFetching || labProducts.length > 0) && (
+      {(isFetching || labProducts.length === 0) && (
         <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
@@ -498,7 +487,7 @@ export default function Home() {
               ? [...Array(3)].map((_, index) => (
                   <CardLoading key={index} className="w-[25vw] h-60" />
                 ))
-              : labProducts.map((product, index) => (
+              : [...Array(3)].map((product, index) => (
                   <NPCard
                     key={index}
                     product={{
@@ -513,18 +502,18 @@ export default function Home() {
         </div>
       )}
 
-      {(isFetching || featuredProducts.length > 0) && (
+      {(isFetching || featuredProducts.length === 0) && (
         <div className="w-full pt-10 pb-20">
           <div className="lg:px-14 md:px-10 px-4 flex items-center justify-between">
             <div>
               <TitleComponent title="Featured Products" color="black" />
-              <p className="text-base w-2/3 lg:w-fit text-black opacity-70 mt-2">
+              <p className="text-base w-full md:w-2/3 lg:w-fit text-black opacity-70 mt-2">
                 These products were carefully selected to showcase the best of
                 our Product lists.
               </p>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               <button
                 className="h-10 w-10 flex items-center justify-center rounded-full bg-my-gray bg-opacity-5 hover:bg-opacity-15 duration-300 ease-in-out"
                 onClick={scrollLeft}
@@ -547,9 +536,12 @@ export default function Home() {
             <div className="flex space-x-4 min-w-max">
               {isFetching
                 ? [...Array(4)].map((_, index) => (
-                    <CardLoading key={index} className="w-[25vw] h-60" />
+                    <CardLoading
+                      key={index}
+                      className="md:w-[25vw] w-full h-60"
+                    />
                   ))
-                : featuredProducts.map((product, index) => (
+                : [...Array(4)].map((product, index) => (
                     <NCard
                       key={index}
                       product={{
@@ -566,15 +558,15 @@ export default function Home() {
         <CenterTitleComponent title="What makes Us the Best" color="black" />
         <BodyText
           weight="medium"
-          className="text-lg text-black opacity-70 lg:w-2/3 md:w-3/4 text-center mt-10"
+          className="md:text-lg text-base text-black opacity-70 lg:w-2/3 md:w-3/4 text-center mt-10"
         >
           Over the years, Oak Scientifics has been a top-leader in supplying
           Scientific and laboratory equipments across Africa and beyond.
         </BodyText>
 
         <div className="flex items-start justify-center space-x-10 mt-10">
-          <div className="flex flex-col items-center max-w-[20vw]">
-            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+          <div className="flex flex-col items-center md:max-w-[20vw] max-w-[35vw]">
+            <div className="lg:h-20 md:h-14 h-12 lg:w-20 md:w-14 w-12 relative overflow-hidden">
               <Image
                 alt="a black medal achievement icon"
                 src={"/icons/medalIcon.svg"}
@@ -582,15 +574,15 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
-            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+            <p className="lg:text-2xl text-xl text-black mt-6 mb-2 text-center">
               Quality Assured
             </p>
-            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-sm text-center">
               Torem ipsum dolor sit amet, consectetur
             </span>
           </div>
 
-          <div className="flex flex-col items-center max-w-[20vw]">
+          <div className="flex flex-col items-center md:max-w-[20vw] max-w-[35vw]">
             <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
               <Image
                 alt="a black van delivery icon"
@@ -608,7 +600,7 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="flex flex-col items-center max-w-[20vw]">
+          <div className="hidden md:flex flex-col items-center max-w-[20vw]">
             <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
               <Image
                 alt="a black bulb innovative icon"
@@ -625,7 +617,43 @@ export default function Home() {
             </span>
           </div>
 
-          <div className="flex flex-col items-center max-w-[20vw]">
+          <div className="hidden md:flex flex-col items-center max-w-[20vw]">
+            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+              <Image
+                alt="a black support center logo"
+                src={"/icons/supportIcon.svg"}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+              Expert Support
+            </p>
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+              Torem ipsum dolor sit amet, consectetur
+            </span>
+          </div>
+        </div>
+
+        <div className="flex md:hidden items-start justify-center space-x-10 mt-5">
+          <div className="flex flex-col items-center max-w-[35vw]">
+            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+              <Image
+                alt="a black bulb innovative icon"
+                src={"/icons/bulbIcon.svg"}
+                fill
+                className="object-contain"
+              />
+            </div>
+            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+              Innovative
+            </p>
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+              Torem ipsum dolor sit amet, consectetur
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center max-w-[35vw]">
             <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
               <Image
                 alt="a black support center logo"
@@ -652,7 +680,7 @@ export default function Home() {
           />
           <BodyText
             weight="medium"
-            className="text-lg text-black opacity-70 lg:w-2/3 md:w-4/5 text-center mt-10"
+            className="md:text-lg text-base text-black opacity-70 lg:w-2/3 md:w-4/5 text-center mt-10"
           >
             We collaborate with top-notch Manufacturers in the industry to give
             you the best of our range of scientific and laboratory equipments
@@ -660,8 +688,8 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className="grid lg:grid-cols-[1fr_1fr_auto] md:grid-cols-[1fr_1fr] items-center gap-x-14 gap-y-5 mt-10">
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="grid lg:grid-cols-[1fr_1fr_auto] md:grid-cols-[1fr_1fr] grid-cols-1 items-center gap-x-14 gap-y-5 mt-10">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand1.png"}
@@ -669,7 +697,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand2.png"}
@@ -677,7 +705,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand3.png"}
@@ -685,7 +713,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand4.png"}
@@ -693,7 +721,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand5.png"}
@@ -701,7 +729,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand6.png"}

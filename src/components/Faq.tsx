@@ -15,7 +15,7 @@ export const Faq = () => {
       <div className="bg-white bg-opacity-100 pt-10 pb-20 lg:px-14 md:px-10 px-4">
         <TitleComponent title="FAQs" color="black" />
         <div className="flex flex-col items-center justify-center mt-5">
-          <h4 className="lg:text-3xl md:text-2xl text-black text-center">
+          <h4 className="lg:text-3xl md:text-2xl text-xl text-black text-center">
             Frequently Asked Questions
           </h4>
 

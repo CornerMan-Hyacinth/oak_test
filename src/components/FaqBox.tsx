@@ -12,7 +12,7 @@ const FaqBox = ({ question, answer }: { question: string; answer: string }) => {
         className="flex items-center justify-between mt-5 cursor-pointer"
         onClick={() => setExpanded((prev) => !prev)}
       >
-        <TitleText weight="regular" className="text-black text-xl">
+        <TitleText weight="regular" className="text-black md:text-xl text-lg">
           {question}
         </TitleText>
         <span
@@ -24,7 +24,9 @@ const FaqBox = ({ question, answer }: { question: string; answer: string }) => {
         </span>
       </div>
       {isExpanded && (
-        <p className="text-black text-base opacity-70 mt-5">{answer}</p>
+        <p className="text-black md:text-base text-sm opacity-70 mt-5">
+          {answer}
+        </p>
       )}
     </div>
   );
