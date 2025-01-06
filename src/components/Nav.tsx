@@ -433,6 +433,7 @@ const MenuPane = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     router.push("/shop");
+                    close();
                   }}
                 >
                   Solutions
@@ -449,6 +450,7 @@ const MenuPane = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     router.push("/services");
+                    close();
                   }}
                 >
                   Services
