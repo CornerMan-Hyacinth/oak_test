@@ -5,7 +5,7 @@ import FaqBox from "./FaqBox";
 
 export const Faq = () => {
   return (
-    <div className="w-full relative pt-20">
+    <div className="w-full relative md:pt-20">
       <Image
         alt="a mesh background image"
         src={"/images/meshBg.png"}

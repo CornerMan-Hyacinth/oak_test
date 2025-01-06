@@ -183,7 +183,7 @@ export const NPDCard = ({ product }: { product: any }) => {
           <span className="text-my-blue text-lg">$ {productSample.price}</span>
           <Link
             href={`/products/${productSample.name}`}
-            className="bg-my-gray text-xs text-white rounded-md py-3 lg:px-7 md:px-3 hover:bg-my-blue duration-300 ease-in-out"
+            className="bg-my-gray text-xs text-white rounded-md py-3 lg:px-7 md:px-3 px-5 hover:bg-my-blue duration-300 ease-in-out"
           >
             View Product
           </Link>

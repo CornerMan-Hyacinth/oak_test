@@ -671,7 +671,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-10 px-4">
+      <div className="w-full pt-10 lg:px-14 md:px-10 px-4">
         <TitleComponent title="Blog Posts" color="black" />
 
         <div className="flex items-center justify-between mt-10">
