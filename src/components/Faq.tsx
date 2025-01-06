@@ -21,14 +21,14 @@ export const Faq = () => {
 
           <BodyText
             weight="medium"
-            className="lg:text-lg text-base text-black opacity-70 lg:w-2/3 md:w-3/4 text-center mt-10"
+            className="lg:text-lg md:text-base text-sm text-black opacity-70 lg:w-2/3 md:w-3/4 text-center mt-3"
           >
             This section is necessary for quick, self service to new and
             first-time visitors to get access to product information,
             specifications and after Sales support.
           </BodyText>
 
-          <div className="lg:w-2/3 md:w-3/4 w-full mt-10 self-center">
+          <div className="lg:w-2/3 md:w-3/4 w-full mt-5 self-center">
             {[...Array(5)].map((item, index) => (
               <FaqBox
                 key={index}

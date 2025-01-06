@@ -584,7 +584,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center max-w-[35vw]">
-            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+            <div className="lg:h-20 md:h-14 h-12 lg:w-20 md:w-14 w-12 relative overflow-hidden">
               <Image
                 alt="a black support center logo"
                 src={"/icons/supportIcon.svg"}
@@ -592,10 +592,10 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
-            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+            <p className="lg:text-2xl text-xl text-black mt-6 mb-2 text-center">
               Expert Support
             </p>
-            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-sm text-center">
               Torem ipsum dolor sit amet, consectetur
             </span>
           </div>
@@ -618,8 +618,8 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className="grid lg:grid-cols-[1fr_1fr_auto] grid-cols-[1fr_1fr] items-center md:gap-x-14 gap-x-7 gap-y-5 mt-10">
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="grid lg:grid-cols-[1fr_1fr_auto] md:grid-cols-[1fr_1fr] grid-cols-1 items-center md:gap-x-14 gap-x-7 gap-y-5 mt-10">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[90vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand1.png"}
@@ -627,7 +627,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[90vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand2.png"}
@@ -635,7 +635,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[90vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand3.png"}
@@ -643,7 +643,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[90vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand4.png"}
@@ -651,7 +651,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[90vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand5.png"}
@@ -659,7 +659,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[90vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand6.png"}

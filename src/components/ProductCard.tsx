@@ -159,8 +159,8 @@ export const NPCard = ({
 
 export const NPDCard = ({ product }: { product: any }) => {
   return (
-    <div className="xl:w-[35vw] lg:w-[40vw] md:w-[42vw] w-full pt-4 pb-7 px-4 flex items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative">
-      <div className="min-h-40 h-full w-2/5 rounded-lg overflow-hidden relative">
+    <div className="xl:w-[35vw] lg:w-[40vw] md:w-[42vw] w-full pt-4 pb-7 px-4 flex flex-col md:flex-row md:items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative overflow-hidden">
+      <div className="min-h-40 h-full md:w-2/5 w-[100%] rounded-lg overflow-hidden relative">
         <Image
           alt={`${productSample.name} product image`}
           src={"/images/oakProductImg1.png"}
@@ -168,7 +168,7 @@ export const NPDCard = ({ product }: { product: any }) => {
           className="object-cover"
         />
       </div>
-      <div className="w-3/5">
+      <div className="md:w-3/5 w-full mt-3 md:mt-0">
         <p className="text-black text-xs opacity-70 mb-1">
           {productSample.category}
         </p>
