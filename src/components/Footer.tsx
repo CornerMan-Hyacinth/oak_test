@@ -156,7 +156,7 @@ const FooterComponent = () => {
             </div>
           </div>
 
-          <div className="hiddden md:flex flex-col items-center max-w-[20vw]">
+          <div className="hidden md:flex flex-col items-center max-w-[20vw]">
             <h5 className="text-lg text-black mb-6">
               <TitleText weight="bold">Contact Us</TitleText>
             </h5>
@@ -211,7 +211,7 @@ const FooterComponent = () => {
           </div>
         </div>
 
-        <div className="w-full flex items-start justify-between md:hidden">
+        <div className="w-full flex items-start justify-between md:hidden mt-5 md:mt-0">
           <div className="flex flex-col items-center max-w-[35vw]">
             <h5 className="text-lg text-black mb-6">
               <TitleText weight="bold">Contact Us</TitleText>

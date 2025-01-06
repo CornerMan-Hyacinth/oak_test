@@ -10,7 +10,6 @@ import { PiBuildingOfficeFill } from "react-icons/pi";
 import { MdOutlineEngineering } from "react-icons/md";
 import { NCard, NPCard, NPDCard } from "@/components/ProductCard";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import FaqBox from "@/components/FaqBox";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -29,7 +28,7 @@ export default function Home() {
   const [labProducts, setLabProducts] = useState<any[]>([]);
   const [featuredProducts, setFeaturedProucts] = useState<any[]>([]);
 
-  const [isFetching, setFetching] = useState(true);
+  const [isFetching, setFetching] = useState(false);
   const [isErrorSet, setErrorSet] = useState(false);
 
   const scrollLeft = () => {
@@ -84,10 +83,10 @@ export default function Home() {
             className="object-cover"
           />
           <div className="w-full h-full bg-black bg-opacity-50 flex flex-col items-center justify-center absolute">
-            <h1 className="text-white lg:text-5xl md:text-4xl mb-10">
+            <h1 className="text-white lg:text-5xl md:text-4xl text-3xl mb-10">
               <TitleText weight="regular">Electrolyte Analyzer e|1</TitleText>
             </h1>
-            <p className="text-white lg:text-3xl md:text-2xl lg:w-1/2 md:w-2/3 text-center opacity-90 mb-10">
+            <p className="text-white lg:text-3xl md:text-2xl text-xl lg:w-1/2 md:w-2/3 text-center opacity-90 mb-10">
               <TitleText weight="light">
                 Electrolyte system for invitro measurements with high accuracy
                 and ease of use.
@@ -102,7 +101,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute lg:top-14 top-8 lg:right-20 md:right-10 right-4 bg-my-blue h-24 w-24 flex items-center justify-center rounded-full bg-opacity-60">
+        <div className="absolute lg:top-14 md:top-8 top-4 lg:right-20 md:right-10 right-4 bg-my-blue h-24 w-24 flex items-center justify-center rounded-full bg-opacity-60">
           <BodyText weight="regular" className="text-center text-sm text-white">
             Best
             <br />
@@ -130,7 +129,7 @@ export default function Home() {
 
       <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4 flex flex-col md:flex-row items-center justify-center lg:space-x-48 md:space-x-16">
         <div className="relative mb-10 md:mb-0">
-          <div className="lg:w-[35vw] md:w-[45vw] w-full md:h-[70vh] h-[50vh] relative">
+          <div className="lg:w-[35vw] md:w-[45vw] w-[85vw] md:h-[70vh] h-[50vh] relative">
             <div className="absolute w-full h-full rounded-2xl transition-transform lg:-translate-x-8 -translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
 
             <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-md shadow-black">
@@ -143,9 +142,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute z-20 bottom-0 right-0 h-40 w-40 transition-transform translate-x-24 translate-y-20">
+          <div className="absolute z-20 bottom-0 right-0 h-40 w-40 transition-transform md:translate-x-24 translate-x-16 translate-y-20">
             <Image
-              alt="A box image effect"
+              alt="A square box mesh image"
               src={"/images/imageEffect.png"}
               fill
             />
@@ -173,7 +172,7 @@ export default function Home() {
       <div className="bg-my-blue rounded-t-3xl py-20 lg:px-14 md:px-10 px-4 flex flex-col justify-center items-center">
         <CenterTitleComponent title="Our Achievements" color="white" />
 
-        <div className="flex items-start justify-center space-x-10 mt-14">
+        <div className="flex items-start justify-center sm:space-x-10 space-x-5 mt-14">
           <div className="flex flex-col items-center">
             <div className="h-20 w-20 hidden md:flex justify-center items-center bg-white rounded-full">
               <FaHandshakeSimple color="#0F81B0" size={40} />
@@ -181,7 +180,7 @@ export default function Home() {
             <div className="h-16 w-16 flex md:hidden justify-center items-center bg-white rounded-full">
               <FaHandshakeSimple color="#0F81B0" size={30} />
             </div>
-            <p className="md:text-2xl text-xl text-white mt-2 mb-1">
+            <p className="md:text-2xl text-xl text-white mt-2 mb-1 text-center">
               10+ Years
             </p>
             <span className="opacity-80 text-white md:text-base text-sm text-center">
@@ -219,8 +218,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center md:py-28 py-14 lg:px-14 md:px-10 px-4 lg:space-x-40 md:space-x-16">
-        <div className="lg:w-[35vw] md:w-[45vw]">
+      <div className="flex flex-col md:flex-row items-center justify-center md:py-28 py-14 lg:px-14 md:px-10 px-4 lg:space-x-40 md:space-x-16">
+        <div className="lg:w-[35vw] md:w-[45vw] w-full">
           <h2 className="text-black lg:text-3xl text-2xl mb-2">
             <TitleText weight="regular">Oak Scientifics at a glance</TitleText>
           </h2>
@@ -248,8 +247,8 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative">
-          <div className="lg:w-[30vw] md:w-[40vw] w-full h-[70vh] relative">
+        <div className="relative mt-14 md:mt-0">
+          <div className="lg:w-[30vw] md:w-[40vw] w-[85vw] md:h-[70vh] h-[50vh] relative">
             <div className="absolute w-full h-full rounded-2xl transition-transform lg:translate-x-8 translate-x-4 lg:-translate-y-8 -translate-y-4 bg-my-blue bg-opacity-60" />
             <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-md shadow-my-gray">
               <Image
@@ -260,9 +259,9 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="absolute z-20 bottom-0 left-0 h-40 w-40 transition-transform -translate-x-24 translate-y-20">
+          <div className="absolute z-20 bottom-0 left-0 h-40 w-40 transition-transform md:-translate-x-24 -translate-x-16 translate-y-20">
             <Image
-              alt="A box image effect"
+              alt="A square box mesh image"
               src={"/images/imageEffect.png"}
               fill
             />
@@ -292,42 +291,84 @@ export default function Home() {
       )}
 
       {(isFetching || agricProducts.length === 0) && (
-        <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+        <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
               title="Agricultural Equipments"
               color="black"
             />
-            <div className="absolute right-0">
+            <div className="hidden md:block absolute right-0">
               <TextLink
                 text="View all Products"
-                link="/"
+                link="/shop/agriculture"
                 isDark={false}
                 className="text-sm tracking-wider"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-3 mt-10 justify-items-center">
-            {isFetching
-              ? [...Array(3)].map((_, index) => (
-                  <CardLoading key={index} className="w-[25vw] h-60" />
-                ))
-              : [...Array(3)].map((product, index) => (
-                  <NPCard key={index} product={product} />
+          <div>
+            {isFetching ? (
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-3 mt-10 justify-items-center">
+                {[...Array(3)].map((_, index) => (
+                  <CardLoading
+                    key={index}
+                    className="xl:w-[25vw] lg:w-[27vw] md:w-[40vw] w-full h-60"
+                  />
                 ))}
+              </div>
+            ) : (
+              <>
+                <div className="hidden lg:grid grid-cols-3 gap-y-5 gap-x-3 mt-10 justify-items-center">
+                  {[...Array(3)].map((product, index) => (
+                    <NPCard
+                      key={index}
+                      product={{
+                        name: "Absograph 500",
+                        availabilty: "In stock",
+                        avgRating: 4.3,
+                        price: 1420,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div className="grid lg:hidden md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-3 mt-10 justify-items-center">
+                  {[...Array(4)].map((product, index) => (
+                    <NPCard
+                      key={index}
+                      product={{
+                        name: "Absograph 500",
+                        availabilty: "In stock",
+                        avgRating: 4.3,
+                        price: 1420,
+                      }}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="md:hidden flex justify-center mt-10 md:mt-0 te">
+            <TextLink
+              text="View all Products"
+              link="/shop/agriculture"
+              isDark={false}
+              className="text-sm tracking-wider"
+            />
           </div>
         </div>
       )}
 
       {(isFetching || labProducts.length === 0) && (
-        <div className="w-full pt-10 pb-20 lg:px-14 md:px-10 px-4">
+        <div className="w-full pt-10 pb-20 lg:px-14 md:px-8 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
               title="Science Laboratory Equipments"
               color="black"
             />
-            <div className="absolute right-0">
+            <div className="hidden md:block absolute right-0">
               <TextLink
                 text="View all Products"
                 link="/"
@@ -337,22 +378,56 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-3 mt-10 justify-items-center">
-            {isFetching
-              ? [...Array(3)].map((_, index) => (
-                  <CardLoading key={index} className="w-[25vw] h-60" />
-                ))
-              : [...Array(3)].map((product, index) => (
-                  <NPCard
+          <div>
+            {isFetching ? (
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-3 mt-10 justify-items-center">
+                {[...Array(3)].map((_, index) => (
+                  <CardLoading
                     key={index}
-                    product={{
-                      name: "Absograph 500",
-                      availabilty: "In stock",
-                      avgRating: 4.3,
-                      price: 1420,
-                    }}
+                    className="xl:w-[25vw] lg:w-[27vw] md:w-[40vw] w-full h-60"
                   />
                 ))}
+              </div>
+            ) : (
+              <>
+                <div className="hidden lg:grid grid-cols-3 gap-y-5 gap-x-3 mt-10 justify-items-center">
+                  {[...Array(3)].map((product, index) => (
+                    <NPCard
+                      key={index}
+                      product={{
+                        name: "Absograph 500",
+                        availabilty: "In stock",
+                        avgRating: 4.3,
+                        price: 1420,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div className="grid lg:hidden md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-3 mt-10 justify-items-center">
+                  {[...Array(4)].map((product, index) => (
+                    <NPCard
+                      key={index}
+                      product={{
+                        name: "Absograph 500",
+                        availabilty: "In stock",
+                        avgRating: 4.3,
+                        price: 1420,
+                      }}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="md:hidden flex justify-center mt-10 md:mt-0 te">
+            <TextLink
+              text="View all Products"
+              link="/shop/agriculture"
+              isDark={false}
+              className="text-sm tracking-wider"
+            />
           </div>
         </div>
       )}
@@ -393,7 +468,7 @@ export default function Home() {
                 ? [...Array(4)].map((_, index) => (
                     <CardLoading
                       key={index}
-                      className="md:w-[25vw] w-full h-60"
+                      className="md:w-[25vw] w-[70vw] h-60"
                     />
                   ))
                 : [...Array(4)].map((product, index) => (
@@ -438,7 +513,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center md:max-w-[20vw] max-w-[35vw]">
-            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+            <div className="lg:h-20 md:h-14 h-12 lg:w-20 md:w-14 w-12 relative overflow-hidden">
               <Image
                 alt="a black van delivery icon"
                 src={"/icons/vanIcon.svg"}
@@ -447,16 +522,16 @@ export default function Home() {
               />
             </div>
 
-            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+            <p className="lg:text-2xl text-xl text-black mt-6 mb-2 text-center">
               Timely Delivery
             </p>
-            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-sm text-center">
               Torem ipsum dolor sit amet, consectetur
             </span>
           </div>
 
           <div className="hidden md:flex flex-col items-center max-w-[20vw]">
-            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+            <div className="lg:h-20 md:h-14 h-12 lg:w-20 md:w-14 w-12 relative overflow-hidden">
               <Image
                 alt="a black bulb innovative icon"
                 src={"/icons/bulbIcon.svg"}
@@ -473,7 +548,7 @@ export default function Home() {
           </div>
 
           <div className="hidden md:flex flex-col items-center max-w-[20vw]">
-            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+            <div className="lg:h-20 md:h-14 h-12 lg:w-20 md:w-14 w-12 relative overflow-hidden">
               <Image
                 alt="a black support center logo"
                 src={"/icons/supportIcon.svg"}
@@ -492,7 +567,7 @@ export default function Home() {
 
         <div className="flex md:hidden items-start justify-center space-x-10 mt-5">
           <div className="flex flex-col items-center max-w-[35vw]">
-            <div className="lg:h-20 md:h-14 lg:w-20 md:w-14 relative overflow-hidden">
+            <div className="lg:h-20 md:h-14 h-12 lg:w-20 md:w-14 w-12 relative overflow-hidden">
               <Image
                 alt="a black bulb innovative icon"
                 src={"/icons/bulbIcon.svg"}
@@ -500,10 +575,10 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
-            <p className="lg:text-2xl md:text-xl text-black mt-6 mb-2 text-center">
+            <p className="lg:text-2xl text-xl text-black mt-6 mb-2 text-center">
               Innovative
             </p>
-            <span className="opacity-70 text-black lg:text-lg md:text-base text-center">
+            <span className="opacity-70 text-black lg:text-lg md:text-base text-sm text-center">
               Torem ipsum dolor sit amet, consectetur
             </span>
           </div>
@@ -543,8 +618,8 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className="grid lg:grid-cols-[1fr_1fr_auto] md:grid-cols-[1fr_1fr] grid-cols-1 items-center gap-x-14 gap-y-5 mt-10">
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+          <div className="grid lg:grid-cols-[1fr_1fr_auto] grid-cols-[1fr_1fr] items-center md:gap-x-14 gap-x-7 gap-y-5 mt-10">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand1.png"}
@@ -552,7 +627,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand2.png"}
@@ -560,7 +635,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand3.png"}
@@ -568,7 +643,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand4.png"}
@@ -576,7 +651,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand5.png"}
@@ -584,7 +659,7 @@ export default function Home() {
                 className="object-cover"
               />
             </div>
-            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
+            <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] h-40 rounded-lg overflow-hidden bg-my-gray bg-opacity-10 border border-black border-opacity-10 relative">
               <Image
                 alt="oak scientifics partner logo"
                 src={"/images/oak_brand6.png"}

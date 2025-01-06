@@ -8,10 +8,18 @@ import { DetailsModal } from "./Modals";
 import { FaEye, FaMagnifyingGlassArrowRight } from "react-icons/fa6";
 import Link from "next/link";
 import { productSample } from "@/lib/mockups";
+import { useRouter } from "next/navigation";
 
 export const NCard = ({ product }: { product: any }) => {
+  const router = useRouter();
+
+  const handleBtn = async () => {};
+
   return (
-    <div className="md:w-[25vw] w-full p-4 rounded-lg hover:shadow-md hover:shadow-gray-600 duration-300 ease-in-out">
+    <div
+      className="xl:w-[25vw] lg:w-[30vw] md:w-[40vw] w-full p-4 rounded-lg hover:shadow-md hover:shadow-gray-600 duration-300 ease-in-out"
+      onClick={() => router.push(`/shop/${product.name}`)}
+    >
       <div className="w-full h-48 rounded-lg overflow-hidden relative">
         <Image
           alt={`${productSample.name} product image`}
@@ -25,7 +33,10 @@ export const NCard = ({ product }: { product: any }) => {
         {productSample.name}
       </TitleText>
       <hr className="border border-black border-opacity-20 my-4" />
-      <button className="bg-my-gray text-sm py-3 text-white rounded-md w-full flex items-center justify-center hover:bg-my-blue duration-300 ease-in-out">
+      <button
+        className="bg-my-gray text-sm py-3 text-white rounded-md w-full flex items-center justify-center hover:bg-my-blue duration-300 ease-in-out"
+        onClick={handleBtn}
+      >
         Add to quote
       </button>
     </div>
@@ -47,14 +58,14 @@ export const NPCard = ({
       className={`${
         isSmall
           ? "lg:w-[20vw] md:w-[27vw] w-[85vw]"
-          : "xl:w-[25vw] lg:w-[30vw] md:w-[35vw] w-full"
+          : "xl:w-[25vw] lg:w-[27vw] md:w-[40vw] w-full"
       } pb-4 rounded-lg hover:shadow-lg hover:shadow-gray-600 duration-300 ease-in-out overflow-hidden`}
       onMouseEnter={() => setHoveredOn(true)}
       onMouseLeave={() => setHoveredOn(false)}
     >
       <div
         className={`w-full ${
-          isSmall ? "lg:h-52 md:h-44 h-52" : "lg:h-80 h-60"
+          isSmall ? "lg:h-52 md:h-44 h-52" : "xl:h-80 h-60"
         } overflow-hidden ${
           isHoveredOn ? "rounded-t-lg" : "rounded-lg"
         } relative transition-all duration-300`}
@@ -148,11 +159,12 @@ export const NPCard = ({
 
 export const NPDCard = ({ product }: { product: any }) => {
   return (
-    <div className="md:w-[35vw] w-full pt-4 pb-7 px-4 flex items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative">
+    <div className="xl:w-[35vw] lg:w-[40vw] md:w-[42vw] w-full pt-4 pb-7 px-4 flex items-center space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative">
       <div className="min-h-40 h-full w-2/5 rounded-lg overflow-hidden relative">
         <Image
           alt={`${productSample.name} product image`}
           src={"/images/oakProductImg1.png"}
+          fill
           className="object-cover"
         />
       </div>
@@ -169,9 +181,12 @@ export const NPDCard = ({ product }: { product: any }) => {
 
         <div className="flex items-center justify-between mt-4">
           <span className="text-my-blue text-lg">$ {productSample.price}</span>
-          <button className="bg-my-gray text-xs text-white rounded-md py-3 px-7 hover:bg-my-blue duration-300 ease-in-out">
+          <Link
+            href={`/products/${productSample.name}`}
+            className="bg-my-gray text-xs text-white rounded-md py-3 lg:px-7 md:px-3 hover:bg-my-blue duration-300 ease-in-out"
+          >
             View Product
-          </button>
+          </Link>
         </div>
       </div>
 
