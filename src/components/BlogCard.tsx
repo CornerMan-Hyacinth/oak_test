@@ -34,12 +34,9 @@ const BlogCard = ({
           {desc}
         </p>
         <hr className="border border-black border-opacity-20 my-4" />
-        <Link
-          href={`/blog/${title}`}
-          className="w-full py-3 flex items-center justify-center rounded-md bg-my-gray text-white text-base hover:bg-my-blue duration-300 ease-in-out"
-        >
+        <button className="w-full py-3 flex items-center justify-center rounded-md bg-my-gray text-white text-base hover:bg-my-blue duration-300 ease-in-out">
           Read Article
-        </Link>
+        </button>
       </div>
     </div>
   );

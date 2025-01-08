@@ -27,7 +27,7 @@ const SubCat = ({ category }: { category: string }) => {
   };
 
   return (
-    <div className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-3 gap-y-10 xl:gap-x-20 lg:gap-x-14 md:gap-x-7 gap-x-4 justify-items-center mt-5">
+    <div className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-2 gap-y-10 xl:gap-x-20 lg:gap-x-14 md:gap-x-7 gap-x-4 justify-items-center mt-5">
       {renderSubCat()}
     </div>
   );
@@ -199,7 +199,7 @@ const SubCatBox = ({
   return (
     <Link href={link}>
       <div
-        className="lg:w-52 md:w-44 w-36 cursor-pointer"
+        className="lg:w-52 md:w-44 w-40 cursor-pointer"
         onMouseEnter={() => setHoveredOn(true)}
         onMouseLeave={() => setHoveredOn(false)}
       >

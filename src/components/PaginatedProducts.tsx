@@ -153,7 +153,7 @@ const PaginatedProducts = ({
 
         <div className="flex items-center space-x-6">
           <button
-            className="min-w-32 h-10 px-4 rounded-md bg-my-gray bg-opacity-30 flex items-center justify-between lg:hidden"
+            className="min-w-32 h-10 px-4 rounded-md bg-my-gray bg-opacity-30 hidden md:flex items-center justify-between lg:hidden"
             onClick={() => setPriceFilterOpen(true)}
           >
             <span className="text-sm text-black">Price</span>
@@ -162,7 +162,7 @@ const PaginatedProducts = ({
 
           {!noBrandFilter && (
             <button
-              className="min-w-32 h-10 px-4 rounded-md bg-my-gray bg-opacity-30 flex items-center justify-between lg:hidden"
+              className="min-w-32 h-10 px-4 rounded-md bg-my-gray bg-opacity-30 hidden md:flex items-center justify-between lg:hidden"
               onClick={() => setBrandFilterOpen(true)}
             >
               <span className="text-sm text-black">Brands</span>
@@ -247,10 +247,13 @@ const PaginatedProducts = ({
       {/* Products Display */}
       {isFetching || sortedProducts.length === 0 ? (
         <div className="flex items-center justify-center">
-          <div className="grid md:grid-cols-3 grid-cols-2 gap-y-10 gap-x-5 mt-10 justify-items-stretch">
+          <div className="grid xl:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-y-10 gap-x-5 mt-10 justify-items-stretch">
             {isFetching
               ? [...Array(9)].map((_, index) => (
-                  <CardLoading key={index} className="w-[20vw] h-60" />
+                  <CardLoading
+                    key={index}
+                    className="lg:w-[20vw] md:w-[27vw] w-[85vw] h-60"
+                  />
                 ))
               : [...Array(12)].map((product, index) => (
                   <NPCard

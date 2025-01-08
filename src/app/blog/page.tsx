@@ -223,10 +223,13 @@ const BlogPage = () => {
         {/* Products Display */}
         {isFetching || sortedBlogs.length === 0 ? (
           <div className="flex items-center justify-center">
-            <div className="grid md:grid-cols-3 grid-cols-2 gap-10 mt-10 justify-items-stretch">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 mt-10 justify-items-stretch">
               {isFetching
                 ? [...Array(9)].map((_, index) => (
-                    <CardLoading key={index} className="w-[25vw] h-60" />
+                    <CardLoading
+                      key={index}
+                      className="xl:w-[25vw] lg:w-[30vw] md:w-[35vw] w-full h-60"
+                    />
                   ))
                 : [...Array(5)].map((blog, index) => (
                     <BlogCard

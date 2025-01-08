@@ -57,7 +57,7 @@ export const NPCard = ({
     <div
       className={`${
         isSmall
-          ? "lg:w-[20vw] md:w-[27vw] w-[85vw]"
+          ? "xl:w-[20vw] lg:w-[21vw] md:w-[27vw] w-[85vw]"
           : "xl:w-[25vw] lg:w-[27vw] md:w-[40vw] w-full"
       } pb-4 rounded-lg hover:shadow-lg hover:shadow-gray-600 duration-300 ease-in-out overflow-hidden`}
       onMouseEnter={() => setHoveredOn(true)}
@@ -103,7 +103,7 @@ export const NPCard = ({
         </div>
       </div>
 
-      <div className="flex items-start justify-between border-b border-black border-opacity-20 mt-4 pb-4 lg:px-4 px-2">
+      <div className="flex items-start justify-between border-b border-black border-opacity-20 mt-4 pb-4 xl:px-4 px-2">
         <div>
           <p
             className={`text-my-gray ${
@@ -138,11 +138,11 @@ export const NPCard = ({
         )}
       </div>
 
-      <div className="flex items-center justify-between mt-4 lg:px-4 px-2">
+      <div className="flex items-center justify-between mt-4 xl:px-4 px-2">
         <span className="text-my-blue lg:text-lg text-base">
           $ {productSample.price}
         </span>
-        <button className="bg-my-gray text-xs text-white rounded-md py-3 lg:px-7 px-3 hover:bg-my-blue duration-300 ease-in-out">
+        <button className="bg-my-gray text-xs text-white rounded-md py-3 xl:px-7 px-3 hover:bg-my-blue duration-300 ease-in-out">
           {productSample.price > 999 ? "Add to quote" : "Add to cart"}
         </button>
       </div>

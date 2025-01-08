@@ -67,17 +67,16 @@ export const ShopFilter = () => {
 
         <div
           className={`overflow-hidden transition-all duration-700 ease-in-out ${
-            isPriceFilterOpen ? "max-h-32" : "max-h-0"
+            isPriceFilterOpen ? "max-h-36" : "max-h-0"
           }`}
         >
-          <hr className="border border-black w-full my-3" />
-
-          <BodyText
-            weight="regular"
-            className="text-base text-my-blue text-center w-full block"
-          >
-            $90 &ndash; $980
-          </BodyText>
+          <PriceRangeSlider
+            min={priceFilter.min}
+            max={priceFilter.max}
+            onChange={(v) => setPriceFilter({ min: v[0], max: v[1] })}
+            // step={50}
+            enableFunc
+          />
         </div>
       </div>
 
@@ -463,7 +462,7 @@ export const PriceFilterModal = ({ close }: { close: () => void }) => {
     const newSearchParams = new URLSearchParams(restParams);
 
     // Using replace instead of push, with scroll: false
-    router.replace(`/shop?${newSearchParams.toString()}`, {
+    router.replace(`?${newSearchParams.toString()}`, {
       scroll: false,
     });
 
@@ -547,6 +546,7 @@ interface PriceRangeSliderProps {
   max: number;
   onChange?: (values: [number, number]) => void;
   step?: number;
+  enableFunc?: boolean;
 }
 
 function PriceRangeSlider({
@@ -554,6 +554,7 @@ function PriceRangeSlider({
   max,
   onChange,
   step = 100,
+  enableFunc,
 }: PriceRangeSliderProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -575,15 +576,6 @@ function PriceRangeSlider({
 
   const [values, setValues] = useState<[number, number]>(initialValues);
   const [minValue, maxValue] = values;
-
-  const updateURL = useCallback(
-    (newValues: [number, number]) => {
-      const current = new URLSearchParams(searchParams.toString());
-      current.set("priceRange", `${newValues[0]}-${newValues[1]}`);
-      router.replace(`?${current.toString()}`, { scroll: false });
-    },
-    [router, searchParams]
-  );
 
   // Calculate percentage position for thumbs
   const getPercentage = (value: number) => {
@@ -691,14 +683,33 @@ function PriceRangeSlider({
       </div>
 
       {/* Values display */}
-      <div className="flex justify-between mt-4">
-        <div className="px-7 py-2 min-w-28 text-black text-base border border-black border-opacity-50 rounded-lg">
-          ${minValue.toLocaleString()}
+      {enableFunc ? (
+        <div className="flex justify-between mt-4">
+          <div className="text-black text-base">
+            ${minValue.toLocaleString()}
+          </div>
+          <div className="text-black text-base">
+            ${maxValue.toLocaleString()}
+          </div>
         </div>
-        <div className="px-7 py-2 min-w-28 text-black text-base border border-black border-opacity-50 rounded-lg">
-          ${maxValue.toLocaleString()}
+      ) : (
+        <div className="flex justify-between mt-4">
+          <div className="px-7 py-2 min-w-28 text-black text-base border border-black border-opacity-50 rounded-lg">
+            ${minValue.toLocaleString()}
+          </div>
+          <div className="px-7 py-2 min-w-28 text-black text-base border border-black border-opacity-50 rounded-lg">
+            ${maxValue.toLocaleString()}
+          </div>
         </div>
-      </div>
+      )}
+
+      {enableFunc && (
+        <div className="flex justify-center mt-5 mb-10">
+          <button className="w-3/4 flex self-center items-center justify-center py-1 rounded-md bg-my-gray hover:bg-my-blue text-white duration-300 ease-in-out">
+            Set
+          </button>
+        </div>
+      )}
     </div>
   );
 }

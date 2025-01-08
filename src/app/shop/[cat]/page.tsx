@@ -86,12 +86,12 @@ const Category = ({ params }: { params: Promise<{ cat: string }> }) => {
         )}
       </div>
 
-      {(isFetching || data.length > 0) && (
+      {(isFetching || data.length === 0) && (
         <div className="mt-20">
           <div className="lg:px-14 md:px-8 px-4 flex items-center justify-between">
             <TitleComponent title="Top Sellers" color="black" />
 
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               <button
                 className="h-10 w-10 flex items-center justify-center rounded-full bg-my-gray bg-opacity-5 hover:bg-opacity-15 duration-300 ease-in-out"
                 onClick={scrollLeft}
@@ -115,10 +115,10 @@ const Category = ({ params }: { params: Promise<{ cat: string }> }) => {
               {isFetching
                 ? [...Array(5)].map((_, index) => (
                     <div key={index} className="flex items-center">
-                      <CardLoading className="w-[20vw] h-52" />
+                      <CardLoading className="lg:w-[20vw] md:w-[27vw] w-[85vw] h-52" />
                     </div>
                   ))
-                : data.map((product, index) => (
+                : [...Array(5)].map((product, index) => (
                     <NPCard key={index} isSmall product={product} />
                   ))}
             </div>

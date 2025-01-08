@@ -18,7 +18,7 @@ const AboutUs = () => {
 
       <div className="flex flex-col items-center lg:px-14 md:px-10 px-4">
         <div className="flex flex-col lg:flex-row items-center justify-center lg:space-x-10 mt-16 w-full">
-          <h2 className="text-black text-3xl lg:w-1/3 w-1/2 text-center lg:text-start mb-5 lg:mb-0">
+          <h2 className="text-black md:text-3xl text-2xl lg:w-1/3 md:w-1/2 w-full text-center lg:text-start mb-5 lg:mb-0">
             <TitleText weight="bold">
               We are a Company Dedicated to Serving you
             </TitleText>
@@ -33,7 +33,7 @@ const AboutUs = () => {
           </p>
         </div>
 
-        <div className="lg:w-3/5 md:w-4/5 lg:h-[70vh] md:h-[55vh] rounded-2xl overflow-hidden relative mt-20 flex self-center">
+        <div className="lg:w-3/5 md:w-4/5 w-full lg:h-[70vh] md:h-[55vh] h-[50vh] rounded-2xl overflow-hidden relative mt-20 flex self-center">
           <Image
             alt="about us team image"
             src={"/images/team-vision.jpg"}
@@ -107,7 +107,7 @@ const AboutUs = () => {
         <h3 className="text-xl">
           <CenterTitleComponent title="Join Our Team" color="black" />
         </h3>
-        <p className="mt-10 text-black lg:text-xl text-lg xl:w-2/5 lg:w-3/5 md:w-4/5 text-center leading-relaxed opacity-70">
+        <p className="mt-10 text-black lg:text-xl md:text-lg text-base xl:w-2/5 lg:w-3/5 md:w-4/5 w-full text-center leading-relaxed opacity-70">
           We are looking for Professionals to help drive the vision of Oak
           Scientifics. We are particular about the best and highly-skilled
           individuals to fill in these open positions.
@@ -138,7 +138,7 @@ const TeamBox = ({
 }) => {
   return (
     <div className="xl:w-[20vw] lg:w-[23vw] md:w-[27vw] w-[35vw]">
-      <div className="w-full h-60 rounded-xl overflow-hidden relative">
+      <div className="w-full md:h-60 h-44 rounded-xl overflow-hidden relative">
         <Image
           alt="oak scientific team member"
           src={img}
@@ -147,10 +147,10 @@ const TeamBox = ({
         />
       </div>
 
-      <p className="text-lg text-black mt-4 line-clamp-1 text-ellipsis overflow-hidden text-nowrap">
+      <p className="md:text-lg text-base text-black mt-4 line-clamp-1 text-ellipsis overflow-hidden text-nowrap">
         {name}
       </p>
-      <p className="text-base text-black mt-2 opacity-70">{role}</p>
+      <p className="md:text-base text-sm text-black mt-2 opacity-70">{role}</p>
     </div>
   );
 };
