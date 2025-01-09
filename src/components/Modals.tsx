@@ -24,10 +24,10 @@ export const DetailsModal = ({
       onClick={close}
     >
       <div
-        className="bg-white dark:bg-black xl:w-[50vw] lg:w-[75vw] w-[90vw] rounded-lg px-5 py-5 max-h-[90vh] shadow-xl shadow-my-gray flex items-center justify-between space-x-10"
+        className="bg-white xl:w-[50vw] lg:w-[75vw] w-[90vw] rounded-lg px-5 py-5 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col md:flex-row items-center justify-between space-x-10"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="w-1/3 h-64 rounded-md relative">
+        <div className="w-full md:w-1/3 h-64 rounded-md relative">
           <Image
             alt={`${product.name} image`}
             src={"/images/oakProductImg2.png"}
@@ -36,7 +36,7 @@ export const DetailsModal = ({
           />
         </div>
 
-        <div className="flex flex-col w-2/3">
+        <div className="flex flex-col w-full md:w-2/3 mt-7 md:mt-0">
           <button
             className="self-end text-black hover:text-my-blue hover:scale-110 duration-300 ease-in-out"
             onClick={close}

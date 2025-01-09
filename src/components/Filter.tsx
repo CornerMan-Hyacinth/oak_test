@@ -18,11 +18,6 @@ import { ToolTip } from "./ToolTip";
 export const ShopFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const [priceFilter, setPriceFilter] = useState({
-    min: 0,
-    max: 10000,
-  });
   const [brandFilter, setBrandFilter] = useState("all");
 
   const [isPriceFilterOpen, setPriceFilterOpen] = useState(false);
@@ -32,13 +27,11 @@ export const ShopFilter = () => {
   useEffect(() => {
     const params = new URLSearchParams(searchParams?.toString() || "");
 
-    // Set the `priceRange` filter
-    params.set("priceRange", `${priceFilter.min}-${priceFilter.max}`);
     // Set the `brand` filter
     params.set("brand", brandFilter);
 
     router.push(`?${params.toString()}`);
-  }, [priceFilter, brandFilter]);
+  }, [brandFilter]);
 
   return (
     <div className="w-[20vw] hidden lg:block">
@@ -67,16 +60,10 @@ export const ShopFilter = () => {
 
         <div
           className={`overflow-hidden transition-all duration-700 ease-in-out ${
-            isPriceFilterOpen ? "max-h-36" : "max-h-0"
+            isPriceFilterOpen ? "max-h-44 mb-10" : "max-h-0"
           }`}
         >
-          <PriceRangeSlider
-            min={priceFilter.min}
-            max={priceFilter.max}
-            onChange={(v) => setPriceFilter({ min: v[0], max: v[1] })}
-            // step={50}
-            enableFunc
-          />
+          <PriceRangePane />
         </div>
       </div>
 
@@ -225,6 +212,90 @@ export const ShopFilter = () => {
   );
 };
 
+const PriceRangePane = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const priceRange = searchParams.get("priceRange");
+
+  const [selectedRanges, setSelectedRanges] = useState({
+    min: 0,
+    max: 0,
+  });
+
+  const handleChange = (values: [number, number]) => {
+    setSelectedRanges({ min: values[0], max: values[1] });
+  };
+
+  const handleSet = () => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+
+    const restParams = {
+      ...currentParams,
+      priceRange: `${selectedRanges.min}-${selectedRanges.max}`,
+    };
+
+    const newSearchParams = new URLSearchParams(restParams);
+
+    // Using replace instead of push, with scroll: false
+    router.replace(`?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+
+    close();
+  };
+
+  const handleClear = () => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+
+    const restParams = {
+      ...currentParams,
+      priceRange: `0-100000`,
+    };
+
+    const newSearchParams = new URLSearchParams(restParams);
+
+    // Using replace instead of push, with scroll: false
+    router.replace(`/shop?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+
+    close();
+  };
+
+  useEffect(() => {
+    const [min, max] =
+      priceRange?.split("-").map(Number) || "0-100000".split("-").map(Number);
+
+    setSelectedRanges({ min, max });
+  }, []);
+
+  return (
+    <div
+      className="bg-white dark:bg-black w-[20vw] max-h-[20vh]"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="w-full transition-transform -translate-x-0">
+        <PriceRangeSlider
+          min={0}
+          max={100000}
+          step={50}
+          onChange={handleChange}
+          isLg
+        />
+      </div>
+
+      <div className="flex justify-center">
+        <button
+          className="w-32 py-2 flex items-center justify-center bg-my-gray text-white text-sm rounded-md"
+          onClick={handleSet}
+        >
+          Set
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export const PriceFilter = () => {
   const [priceFilter, setPriceFilter] = useState({
     min: 0,
@@ -264,18 +335,17 @@ export const PriceFilter = () => {
 
         <div
           className={`overflow-hidden transition-all duration-700 ease-in-out ${
-            isPriceFilterOpen ? "max-h-32" : "max-h-0"
+            isPriceFilterOpen ? "max-h-44 mb-10" : "max-h-0"
           }`}
         >
-          <hr className="border border-black w-full my-3" />
-
-          <BodyText
-            weight="regular"
-            className="text-base text-my-blue text-center w-full block"
-          >
-            $90 &ndash; $980
-          </BodyText>
+          <PriceRangePane />
         </div>
+      </div>
+
+      <div className="w-full flex items-center justify-center my-3 py-6 border-y border-black border-opacity-30">
+        <button className="w-2/3 py-2 rounded-md bg-my-gray hover:bg-my-blue text-white text-base duration-300 ease-in-out">
+          Reset
+        </button>
       </div>
     </div>
   );
@@ -546,7 +616,7 @@ interface PriceRangeSliderProps {
   max: number;
   onChange?: (values: [number, number]) => void;
   step?: number;
-  enableFunc?: boolean;
+  isLg?: boolean;
 }
 
 function PriceRangeSlider({
@@ -554,27 +624,18 @@ function PriceRangeSlider({
   max,
   onChange,
   step = 100,
-  enableFunc,
+  isLg,
 }: PriceRangeSliderProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null);
 
-  // Get initial values from URL or use defaults
-  const initialValues: [number, number] = useMemo(() => {
-    const priceRange = searchParams.get("priceRange");
-    if (priceRange) {
-      const [minPrice, maxPrice] = priceRange.split("-").map(Number);
-      return [
-        Math.max(min, Math.min(maxPrice, minPrice)),
-        Math.min(max, Math.max(maxPrice, minPrice)),
-      ];
-    }
-    return [min, max];
-  }, [min, max, searchParams]);
+  const [values, setValues] = useState<[number, number]>([min, max]);
 
-  const [values, setValues] = useState<[number, number]>(initialValues);
+  // Update values when props change
+  useEffect(() => {
+    setValues([min, max]);
+  }, [min, max]);
+
   const [minValue, maxValue] = values;
 
   // Calculate percentage position for thumbs
@@ -654,10 +715,12 @@ function PriceRangeSlider({
   }, [isDragging, handleMove, handleEnd]);
 
   return (
-    <div className="w-full px-4 py-6">
+    <div className={`w-full ${isLg ? "pr-3" : "px-4"} py-6`}>
       <div
         ref={sliderRef}
-        className="relative w-full h-2 bg-gray-200 rounded-full"
+        className={`relative w-full ${
+          isLg ? "h-1" : "h-2"
+        } bg-gray-200 rounded-full`}
       >
         {/* Progress Bar */}
         <div
@@ -667,7 +730,9 @@ function PriceRangeSlider({
 
         {/* Min Thumb */}
         <div
-          className="absolute w-5 h-5 bg-white border-2 border-blue-500 rounded-full -mt-1.5 cursor-pointer"
+          className={`absolute ${
+            isLg ? "w-3 h-3" : "w-5 h-5"
+          } bg-white border-2 border-blue-500 rounded-full -mt-1.5 cursor-pointer`}
           style={minThumbStyle}
           onMouseDown={() => setIsDragging("min")}
           onTouchStart={() => setIsDragging("min")}
@@ -675,7 +740,9 @@ function PriceRangeSlider({
 
         {/* Max Thumb */}
         <div
-          className="absolute w-5 h-5 bg-white border-2 border-blue-500 rounded-full -mt-1.5 cursor-pointer"
+          className={`absolute ${
+            isLg ? "w-3 h-3" : "w-5 h-5"
+          } bg-white border-2 border-blue-500 rounded-full -mt-1.5 cursor-pointer`}
           style={maxThumbStyle}
           onMouseDown={() => setIsDragging("max")}
           onTouchStart={() => setIsDragging("max")}
@@ -683,12 +750,12 @@ function PriceRangeSlider({
       </div>
 
       {/* Values display */}
-      {enableFunc ? (
+      {isLg ? (
         <div className="flex justify-between mt-4">
-          <div className="text-black text-base">
+          <div className="text-black text-sm xl:text-base">
             ${minValue.toLocaleString()}
           </div>
-          <div className="text-black text-base">
+          <div className="text-black text-sm xl:text-base">
             ${maxValue.toLocaleString()}
           </div>
         </div>
@@ -700,14 +767,6 @@ function PriceRangeSlider({
           <div className="px-7 py-2 min-w-28 text-black text-base border border-black border-opacity-50 rounded-lg">
             ${maxValue.toLocaleString()}
           </div>
-        </div>
-      )}
-
-      {enableFunc && (
-        <div className="flex justify-center mt-5 mb-10">
-          <button className="w-3/4 flex self-center items-center justify-center py-1 rounded-md bg-my-gray hover:bg-my-blue text-white duration-300 ease-in-out">
-            Set
-          </button>
         </div>
       )}
     </div>

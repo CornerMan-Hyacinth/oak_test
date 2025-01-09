@@ -113,7 +113,7 @@ const AboutUs = () => {
           individuals to fill in these open positions.
         </p>
         <Link
-          href={"/careers"}
+          href={"/career"}
           className="text-my-blue text-lg hover:underline mt-10"
         >
           See Open Positions
