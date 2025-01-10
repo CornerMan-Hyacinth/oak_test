@@ -271,7 +271,7 @@ const PriceRangePane = () => {
 
   return (
     <div
-      className="bg-white dark:bg-black w-[20vw] max-h-[20vh]"
+      className="bg-white w-[20vw] max-h-[20vh]"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="w-full transition-transform -translate-x-0">
@@ -410,7 +410,7 @@ export const BrandFilterModal = ({ close }: { close: () => void }) => {
       onClick={close}
     >
       <div
-        className="bg-white dark:bg-black md:w-[50vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
+        className="bg-white md:w-[50vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <TitleText weight="bold" className="text-black text-2xl">
@@ -570,7 +570,7 @@ export const PriceFilterModal = ({ close }: { close: () => void }) => {
       onClick={close}
     >
       <div
-        className="bg-white dark:bg-black md:w-[50vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
+        className="bg-white md:w-[50vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <TitleText weight="bold" className="text-black text-2xl">

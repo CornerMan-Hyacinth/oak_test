@@ -95,7 +95,7 @@ export const CatalogueModal = ({ close }: { close: () => void }) => {
       onClick={close}
     >
       <div
-        className="bg-white dark:bg-black xl:w-[50vw] lg:w-[75vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
+        className="bg-white xl:w-[50vw] lg:w-[75vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <FaFilePdf color="rgba(0,0,0,.5)" size={50} />
@@ -168,7 +168,7 @@ export const ReviewModal = ({ close }: { close: () => void }) => {
       onClick={close}
     >
       <div
-        className="bg-[#F3F9FB] dark:bg-black w-full min-h-[90vh] rounded-t-2xl overflow-hidden pb-10 flex flex-col"
+        className="bg-[#F3F9FB] w-full min-h-[90vh] rounded-t-2xl overflow-hidden pb-10 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex w-full min-h-20 bg-white items-center justify-center">
@@ -315,7 +315,7 @@ export const LogoutModal = ({ close }: { close: () => void }) => {
       onClick={close}
     >
       <div
-        className="bg-white dark:bg-black xl:w-[50vw] lg:w-[75vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
+        className="bg-white xl:w-[50vw] lg:w-[75vw] w-[90vw] rounded-lg px-5 py-10 max-h-[90vh] shadow-xl shadow-my-gray flex flex-col items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         <h3>

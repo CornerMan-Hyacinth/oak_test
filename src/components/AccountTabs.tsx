@@ -450,7 +450,7 @@ const OrderTab = () => {
         <div className="overflow-x-auto max-w-[100vw] border mt-10 relative scrollbar-thin scrollbar-thumb-[#3D3A3A] scrollbar-track-[#C5C4C4] scrollable-content">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="md:text-base text-sm bg-my-gray bg-opacity-20 text-black dark:text-white text-nowrap">
+              <tr className="md:text-base text-sm bg-my-gray bg-opacity-20 text-black text-nowrap">
                 <th className="py-3 pl-6 pr-6">Order ID</th>
                 <th className="py-3 pr-6">Products</th>
                 <th className="py-3 pr-6">Payment Status</th>
@@ -463,7 +463,7 @@ const OrderTab = () => {
               {filteredData.map((item, index) => (
                 <tr
                   key={index}
-                  className={`text-black dark:text-white md:text-base text-sm border-b border-black border-opacity-20 duration-300 ease-in-out cursor-default relative`}
+                  className={`text-black md:text-base text-sm border-b border-black border-opacity-20 duration-300 ease-in-out cursor-default relative`}
                 >
                   <td className="py-3 pl-6 pr-6">#430902</td>
                   <td className="py-3 pr-6 flex items-center space-x-1">

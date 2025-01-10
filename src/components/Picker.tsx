@@ -55,14 +55,14 @@ const Picker = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black dark:bg-white bg-opacity-30 flex justify-center items-center"
+      className="fixed inset-0 z-50 bg-black bg-opacity-30 flex justify-center items-center"
       onClick={close}
     >
       <div
-        className="bg-white dark:bg-black xl:w-[25vw] lg:w-[30vw] md:w-[40vw] w-[80vw] rounded-lg px-5 py-7 max-h-[90vh] overflow-y-scroll hide-scrollbar"
+        className="bg-white xl:w-[25vw] lg:w-[30vw] md:w-[40vw] w-[80vw] rounded-lg px-5 py-7 max-h-[90vh] overflow-y-scroll hide-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="text-xl text-black dark:text-white mb-5">
+        <h3 className="text-xl text-black mb-5">
           <TitleText weight="bold">{title}</TitleText>
         </h3>
 
@@ -97,7 +97,7 @@ const Picker = ({
               className={`${
                 option === currentValue
                   ? "bg-my-blue"
-                  : "bg-transparent hover:bg-black hover:dark:bg-white hover:bg-opacity-5"
+                  : "bg-transparent hover:bg-black hover:bg-opacity-5"
               } bg-opacity-10 px-5 py-3 flex items-center space-x-4 w-full cursor-pointer`}
               onClick={() => {
                 updateValue(option);
@@ -119,9 +119,7 @@ const Picker = ({
               </div>
               <span
                 className={`${
-                  option === currentValue
-                    ? "text-my-blue"
-                    : "text-black dark:text-white"
+                  option === currentValue ? "text-my-blue" : "text-black"
                 } text-sm`}
               >
                 {option}
