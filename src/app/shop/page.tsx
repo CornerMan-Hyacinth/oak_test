@@ -24,11 +24,8 @@ const ShopPage = () => {
 
 const Shop = () => {
   const searchParams = useSearchParams();
-  const priceRange = searchParams.get("priceRange");
-  const brand = searchParams.get("brand");
 
   const [data, setData] = useState<any[]>([]);
-  const [filteredData, setFilteredData] = useState<any[]>([]);
   const [isFetching, setFetching] = useState(true);
   const [isErrorModalOn, setErrorModalOn] = useState(false);
 
@@ -39,7 +36,6 @@ const Shop = () => {
       const response = await axios.get("/api/product");
       if (response.data.success) {
         setData(response.data.products);
-        await handleFilter(response.data.products);
       }
     } catch (error) {
       setErrorModalOn(true);
@@ -48,38 +44,9 @@ const Shop = () => {
     }
   };
 
-  const handleFilter = async (d: any[]) => {
-    const newData: any[] = [];
-
-    // filter brand
-    if (brand && brand !== "all") {
-      const result = d.filter((item) => item.brand === brand);
-      newData.push(...result);
-    } else {
-      newData.push(...d);
-    }
-
-    // filter price
-    if (priceRange) {
-      const [min, max] = priceRange.split("-").map(Number);
-
-      const result =
-        max === 10000
-          ? d.filter((item) => item.price >= min)
-          : d.filter((item) => item.price >= min && item.price <= max);
-      newData.push(...result);
-    }
-
-    setFilteredData(newData);
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    handleFilter(data);
-  }, [priceRange, brand, data]);
 
   return (
     <main className="w-full min-h-screen lg:px-14 md:px-10 px-4">
@@ -96,7 +63,7 @@ const Shop = () => {
         <ShopFilter />
         <PaginatedProducts
           isFetching={isFetching}
-          products={filteredData}
+          products={data}
           itemsPerPage={12}
         />
       </div>

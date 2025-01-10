@@ -7,6 +7,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import NetworkStatus from "@/components/NetworkStatus";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { Toast } from "@/components/Toast";
+import CreateGuest from "@/components/CreateGuest";
 
 // InriaSans fonts
 const inriaBold = localFont({
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body
         className={`${inriaBold.variable} ${inriaRegular.variable} ${inriaLight.variable} ${interLight.variable} ${interRegular.variable} ${interBold.variable} ${interMedium.variable} antialiased bg-white`}
       >
+        <CreateGuest />
         <ToastProvider>
           <Nav />
           <div className={`font-[family-name:var(--font-inter-regular)] pt-28`}>

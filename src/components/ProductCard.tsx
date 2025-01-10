@@ -71,8 +71,8 @@ export const NPCard = ({
         } relative transition-all duration-300`}
       >
         <Image
-          alt={`${productSample.name} product image`}
-          src={"/images/oakProductImg3.png"}
+          alt={`${product.name} product`}
+          src={product.imageUrls[0]}
           fill
           className="object-cover"
         />
@@ -84,7 +84,10 @@ export const NPCard = ({
         >
           <div
             className="p-4 rounded-full bg-my-blue bg-opacity-60 hover:bg-opacity-90 text-white duration-300 ease-in-out cursor-pointer relative group"
-            onClick={() => setDetailsOpen(true)}
+            onClick={() => {
+              setDetailsOpen(true);
+              setHoveredOn(false);
+            }}
           >
             <FaEye size={24} />
             <div className="absolute -translate-x-1/3 -bottom-10 hidden group-hover:block bg-white text-my-gray text-sm px-2 py-1 rounded shadow text-nowrap">
@@ -92,7 +95,7 @@ export const NPCard = ({
             </div>
           </div>
           <Link
-            href={`/products/${productSample.name}`}
+            href={`/products/${product.name}`}
             className="p-4 rounded-full bg-my-blue bg-opacity-60 hover:bg-opacity-90 text-white duration-300 ease-in-out relative group"
           >
             <FaMagnifyingGlassArrowRight size={24} />
@@ -110,19 +113,19 @@ export const NPCard = ({
               isSmall ? "lg:text-lg text-base" : "text-xl"
             } line-clamp-1`}
           >
-            <TitleText weight="bold">{productSample.name}</TitleText>
+            <TitleText weight="bold">{product.name}</TitleText>
           </p>
           {!isSmall && (
             <div className={`mt-1 flex items-center`}>
               <div className={`h-1 w-1 rounded-full mr-1 bg-my-yellow`} />
               <span
                 className={`lg:text-base text-sm ${
-                  productSample.availability === "In stock"
+                  product.availability === "In stock"
                     ? "text-my-yellow"
                     : "text-red-600"
                 }`}
               >
-                {productSample.availability}
+                {product.availability}
               </span>
             </div>
           )}
@@ -132,7 +135,7 @@ export const NPCard = ({
           <div className="flex items-center space-x-1">
             <IoIosStar color="#FFCE31" size={18} />
             <span className="text-black lg:text-base text-sm opacity-70">
-              {productSample.reviews.averageRating}
+              {product.reviews.averageRating}
             </span>
           </div>
         )}
@@ -140,18 +143,15 @@ export const NPCard = ({
 
       <div className="flex items-center justify-between mt-4 xl:px-4 px-2">
         <span className="text-my-blue lg:text-lg text-base">
-          $ {productSample.price}
+          $ {product.price}
         </span>
         <button className="bg-my-gray text-xs text-white rounded-md py-3 xl:px-7 px-3 hover:bg-my-blue duration-300 ease-in-out">
-          {productSample.price > 999 ? "Add to quote" : "Add to cart"}
+          {product.price > 999 ? "Add to quote" : "Add to cart"}
         </button>
       </div>
 
       {isDetailsOpen && (
-        <DetailsModal
-          product={productSample}
-          close={() => setDetailsOpen(false)}
-        />
+        <DetailsModal product={product} close={() => setDetailsOpen(false)} />
       )}
     </div>
   );

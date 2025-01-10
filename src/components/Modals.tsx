@@ -30,7 +30,7 @@ export const DetailsModal = ({
         <div className="w-full md:w-1/3 h-64 rounded-md relative">
           <Image
             alt={`${product.name} image`}
-            src={"/images/oakProductImg2.png"}
+            src={product.imageUrls[0]}
             fill
             className="object-cover bg-my-gray bg-opacity-20"
           />
@@ -46,7 +46,7 @@ export const DetailsModal = ({
           <h3 className="text-lg text-black mt-2 mb-4">
             <TitleText weight="bold">{product.name}</TitleText>
           </h3>
-          <p className="text-sm text-black opacity-70 mb-6">
+          <p className="text-sm text-black opacity-70 mb-6 line-clamp-5 text-ellipsis">
             {product.description}
           </p>
           <span className="text-black text-sm">SKU - {product.sku}</span>

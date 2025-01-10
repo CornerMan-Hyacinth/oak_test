@@ -18,4 +18,5 @@ export interface SessionProps {
     name: string;
     email: string;
   };
+  guestId: string | null;
 }

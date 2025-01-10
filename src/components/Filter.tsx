@@ -18,20 +18,68 @@ import { ToolTip } from "./ToolTip";
 export const ShopFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [brandFilter, setBrandFilter] = useState("all");
+  const [brandFilter, setBrandFilter] = useState<string[]>([]);
 
   const [isPriceFilterOpen, setPriceFilterOpen] = useState(false);
   const [isBrandFilterOpen, setBrandFilterOpen] = useState(false);
   const [isCatFilterOpen, setCatFilterOpen] = useState(false);
 
+  const handleBrandSelect = (b: string) => {
+    let newSelect;
+
+    if (brandFilter.includes(b)) {
+      newSelect = brandFilter.filter((item) => item !== b);
+      setBrandFilter(newSelect);
+    } else {
+      newSelect = [...brandFilter];
+      newSelect.push(b);
+      setBrandFilter(newSelect);
+    }
+
+    // set the searchparam
+    const currentParams = Object.fromEntries(searchParams.entries());
+
+    const restParams = {
+      ...currentParams,
+      brand: newSelect.length > 0 ? newSelect.join(",") : "all",
+    };
+
+    const newSearchParams = new URLSearchParams(restParams);
+
+    // Using replace instead of push, with scroll: false
+    router.replace(`?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  };
+
+  const handleReset = () => {
+    const defaultParams = {
+      brand: "all",
+      priceRange: `0-49999`,
+    };
+
+    const newSearchParams = new URLSearchParams(defaultParams);
+
+    // Using replace instead of push, with scroll: false
+    router.replace(`?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  };
+
   useEffect(() => {
-    const params = new URLSearchParams(searchParams?.toString() || "");
+    // Set the default filters
+    const params = {
+      brand: "all",
+      priceRange: `${0}-${49999}`,
+    };
 
-    // Set the `brand` filter
-    params.set("brand", brandFilter);
+    const newSearchParams = new URLSearchParams(params);
 
-    router.push(`?${params.toString()}`);
-  }, [brandFilter]);
+    // Using replace instead of push, with scroll: false
+    router.replace(`?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  }, []);
 
   return (
     <div className="w-[20vw] hidden lg:block">
@@ -91,53 +139,85 @@ export const ShopFilter = () => {
           } flex flex-col space-y-3`}
         >
           <button
-            className={`flex items-center space-x-4 text-sm hover:text-my-blue duration-300 ease-in-out ${
-              brandFilter === "all"
-                ? "text-my-blue opacity-100"
-                : "text-black opacity-70"
+            className={`flex items-center justify-between space-x-4 text-sm hover:text-my-blue duration-300 ease-in-out ${
+              brandFilter.includes("Eppendorf") ? "opacity-100" : "opacity-70"
             }`}
-            onClick={() => setBrandFilter("all")}
+            onClick={() => handleBrandSelect("Eppendorf")}
           >
-            All
+            <span
+              className={`${
+                brandFilter.includes("Eppendorf")
+                  ? "text-my-blue"
+                  : "text-black"
+              }`}
+            >
+              Eppendorf
+            </span>
+
+            <div
+              className={`border rounded-full h-3 w-3 ${
+                brandFilter.includes("Eppendorf")
+                  ? "bg-my-blue border-my-blue"
+                  : "border-black bg-transparent"
+              }`}
+            />
           </button>
 
           <button
-            className={`flex items-center space-x-4 text-sm hover:text-my-blue duration-300 ease-in-out ${
-              brandFilter === "Eppendorf"
-                ? "text-my-blue opacity-100"
-                : "text-black opacity-70"
+            className={`flex items-center justify-between space-x-4 text-sm hover:text-my-blue duration-300 ease-in-out ${
+              brandFilter.includes("Medtronic") ? "opacity-100" : "opacity-70"
             }`}
-            onClick={() => setBrandFilter("Eppendorf")}
+            onClick={() => handleBrandSelect("Medtronic")}
           >
-            Eppendorf
+            <span
+              className={`${
+                brandFilter.includes("Medtronic")
+                  ? "text-my-blue"
+                  : "text-black"
+              }`}
+            >
+              Medtronic
+            </span>
+
+            <div
+              className={`border rounded-full h-3 w-3 ${
+                brandFilter.includes("Medtronic")
+                  ? "bg-my-blue border-my-blue"
+                  : "border-black bg-transparent"
+              }`}
+            />
           </button>
 
           <button
-            className={`flex items-center space-x-4 text-sm hover:text-my-blue duration-300 ease-in-out ${
-              brandFilter === "Medtronic"
-                ? "text-my-blue opacity-100"
-                : "text-black opacity-70"
-            }`}
-            onClick={() => setBrandFilter("Medtronic")}
+            className={`flex items-center justify-between space-x-4 text-sm hover:text-my-blue ${
+              brandFilter.includes("Biobase") ? "text-my-blue" : "text-black"
+            } duration-300 ease-in-out`}
+            onClick={() => handleBrandSelect("Biobase")}
           >
-            Medtronic
-          </button>
+            <span
+              className={`${
+                brandFilter.includes("Biobase") ? "text-my-blue" : "text-black"
+              }`}
+            >
+              Biobase
+            </span>
 
-          <button
-            className={`flex items-center space-x-4 text-sm hover:text-my-blue duration-300 ease-in-out ${
-              brandFilter === "Biobase"
-                ? "text-my-blue opacity-100"
-                : "text-black opacity-70"
-            }`}
-            onClick={() => setBrandFilter("Biobase")}
-          >
-            Biobase
+            <div
+              className={`border rounded-full h-3 w-3 ${
+                brandFilter.includes("Biobase")
+                  ? "bg-my-blue border-my-blue"
+                  : "border-black bg-transparent"
+              }`}
+            />
           </button>
         </div>
       </div>
 
       <div className="w-full flex items-center justify-center my-3 py-6 border-y border-black border-opacity-30">
-        <button className="w-2/3 py-2 rounded-md bg-my-gray hover:bg-my-blue text-white text-base duration-300 ease-in-out">
+        <button
+          className="w-2/3 py-2 rounded-md bg-my-gray hover:bg-my-blue text-white text-base duration-300 ease-in-out"
+          onClick={handleReset}
+        >
           Reset
         </button>
       </div>
@@ -244,27 +324,9 @@ const PriceRangePane = () => {
     close();
   };
 
-  const handleClear = () => {
-    const currentParams = Object.fromEntries(searchParams.entries());
-
-    const restParams = {
-      ...currentParams,
-      priceRange: `0-100000`,
-    };
-
-    const newSearchParams = new URLSearchParams(restParams);
-
-    // Using replace instead of push, with scroll: false
-    router.replace(`/shop?${newSearchParams.toString()}`, {
-      scroll: false,
-    });
-
-    close();
-  };
-
   useEffect(() => {
     const [min, max] =
-      priceRange?.split("-").map(Number) || "0-100000".split("-").map(Number);
+      priceRange?.split("-").map(Number) || "0-49999".split("-").map(Number);
 
     setSelectedRanges({ min, max });
   }, []);
@@ -277,7 +339,7 @@ const PriceRangePane = () => {
       <div className="w-full transition-transform -translate-x-0">
         <PriceRangeSlider
           min={0}
-          max={100000}
+          max={49999}
           step={50}
           onChange={handleChange}
           isLg
@@ -297,11 +359,23 @@ const PriceRangePane = () => {
 };
 
 export const PriceFilter = () => {
-  const [priceFilter, setPriceFilter] = useState({
-    min: 0,
-    max: 10000,
-  });
+  const router = useRouter();
+
   const [isPriceFilterOpen, setPriceFilterOpen] = useState(false);
+
+  const handleClear = () => {
+    const defaultParams = {
+      brand: "all",
+      priceRange: `0-100000`,
+    };
+
+    const newSearchParams = new URLSearchParams(defaultParams);
+
+    // Using replace instead of push, with scroll: false
+    router.replace(`?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  };
 
   return (
     <div className="w-[20vw] hidden lg:block">
@@ -310,9 +384,6 @@ export const PriceFilter = () => {
         <TitleText weight="bold" className="text-base text-black">
           Filter by
         </TitleText>
-        <button className="text-black text-sm opacity-70 hover:text-my-blue hover:underline duration-300 ease-in-out">
-          Reset
-        </button>
       </div>
 
       {/** Price filter */}
@@ -343,7 +414,10 @@ export const PriceFilter = () => {
       </div>
 
       <div className="w-full flex items-center justify-center my-3 py-6 border-y border-black border-opacity-30">
-        <button className="w-2/3 py-2 rounded-md bg-my-gray hover:bg-my-blue text-white text-base duration-300 ease-in-out">
+        <button
+          className="w-2/3 py-2 rounded-md bg-my-gray hover:bg-my-blue text-white text-base duration-300 ease-in-out"
+          onClick={handleClear}
+        >
           Reset
         </button>
       </div>
@@ -376,7 +450,7 @@ export const BrandFilterModal = ({ close }: { close: () => void }) => {
       const newSearchParams = new URLSearchParams(restParams);
 
       // Using replace instead of push, with scroll: false
-      router.replace(`/shop?${newSearchParams.toString()}`, {
+      router.replace(`?${newSearchParams.toString()}`, {
         scroll: false,
       });
 
@@ -390,9 +464,12 @@ export const BrandFilterModal = ({ close }: { close: () => void }) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const { brand, ...restParams } = currentParams;
 
-    const newSearchParams = new URLSearchParams(restParams);
+    const newSearchParams = new URLSearchParams({
+      brand: "all",
+      ...restParams,
+    });
 
-    router.replace(`/shop?${newSearchParams.toString()}`, {
+    router.replace(`?${newSearchParams.toString()}`, {
       scroll: false,
     });
 
@@ -544,7 +621,7 @@ export const PriceFilterModal = ({ close }: { close: () => void }) => {
 
     const restParams = {
       ...currentParams,
-      priceRange: `0-100000`,
+      priceRange: `0-49999`,
     };
 
     const newSearchParams = new URLSearchParams(restParams);
@@ -559,7 +636,7 @@ export const PriceFilterModal = ({ close }: { close: () => void }) => {
 
   useEffect(() => {
     const [min, max] =
-      priceRange?.split("-").map(Number) || "0-100000".split("-").map(Number);
+      priceRange?.split("-").map(Number) || "0-49999".split("-").map(Number);
 
     setSelectedRanges({ min, max });
   }, []);
@@ -587,7 +664,7 @@ export const PriceFilterModal = ({ close }: { close: () => void }) => {
 
         <PriceRangeSlider
           min={0}
-          max={100000}
+          max={49999}
           step={50}
           onChange={handleChange}
         />
@@ -757,6 +834,7 @@ function PriceRangeSlider({
           </div>
           <div className="text-black text-sm xl:text-base">
             ${maxValue.toLocaleString()}
+            {maxValue === 49999 && "+"}
           </div>
         </div>
       ) : (
@@ -766,6 +844,7 @@ function PriceRangeSlider({
           </div>
           <div className="px-7 py-2 min-w-28 text-black text-base border border-black border-opacity-50 rounded-lg">
             ${maxValue.toLocaleString()}
+            {maxValue === 49999 && "+"}
           </div>
         </div>
       )}

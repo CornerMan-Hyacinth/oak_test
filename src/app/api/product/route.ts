@@ -40,6 +40,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
     }
 
     const products = await ProductModel.find();
+    console.log("products:", products);
     return NextResponse.json({ success: true, products }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ success: false }, { status: 500 });

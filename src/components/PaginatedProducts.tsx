@@ -25,15 +25,17 @@ const PaginatedProducts = ({
   itemsPerPage: number;
   noBrandFilter?: boolean;
 }) => {
+  const searchParams = useSearchParams();
+
   const sortRef = useRef<HTMLDivElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
 
   const { elementRef, isAboveThreshold } = useScrollPosition(100);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [sort, setSort] = useState("Latest");
+  const [sort, setSort] = useState("Newest");
   const [isSortOpen, setSortOpen] = useState(false);
-  const [sortedProducts, setSortedProducts] = useState<any[]>([]);
+  const [fileredProducts, setFilteredProducts] = useState<any[]>([]);
 
   const [isBrandFilterOpen, setBrandFilterOpen] = useState(false);
   const [isPriceFilterOpen, setPriceFilterOpen] = useState(false);
@@ -44,7 +46,7 @@ const PaginatedProducts = ({
   const getCurrentPageProducts = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return sortedProducts.slice(startIndex, endIndex);
+    return fileredProducts.slice(startIndex, endIndex);
   };
 
   // Generate pagination range
@@ -83,50 +85,78 @@ const PaginatedProducts = ({
     }
   };
 
+  const handleSortSelect = (s: string) => {
+    setSort(s);
+    setSortOpen(false);
+  };
+
+  const sortProducts = (data: any[]) => {
+    let result;
+
+    switch (sort) {
+      case "Newest":
+        result = data.sort((a, b) => {
+          const dateA = new Date(a.dateAdded).getTime();
+          const dateB = new Date(b.dateAdded).getTime();
+
+          return dateB - dateA;
+        });
+
+        return result;
+
+      case "Oldest":
+        result = data.sort((a, b) => {
+          const dateA = new Date(a.dateAdded).getTime();
+          const dateB = new Date(b.dateAdded).getTime();
+
+          return dateA - dateB;
+        });
+
+        return result;
+
+      case "A - Z":
+        result = data.sort((a, b) => a.name.localCompare(b.name));
+        return result;
+
+      case "Z - A":
+        result = data.sort((a, b) => b.name.localCompare(a.name));
+        return result;
+
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
-    const handleSort = () => {
-      let result;
+    const filterProducts = () => {
+      let filtered = [...products];
 
-      switch (sort) {
-        case "Latest":
-          result = products.sort((a, b) => {
-            const dateA = new Date(a.dateAdded).getTime();
-            const dateB = new Date(b.dateAdded).getTime();
-
-            return dateB - dateA;
-          });
-
-          setSortedProducts(result);
-          break;
-
-        case "Earliest":
-          result = products.sort((a, b) => {
-            const dateA = new Date(a.dateAdded).getTime();
-            const dateB = new Date(b.dateAdded).getTime();
-
-            return dateA - dateB;
-          });
-
-          setSortedProducts(result);
-          break;
-
-        case "A - Z":
-          result = products.sort((a, b) => a.name.localCompare(b.name));
-          setSortedProducts(result);
-          break;
-
-        case "Z - A":
-          result = products.sort((a, b) => b.name.localCompare(a.name));
-          setSortedProducts(result);
-          break;
-
-        default:
-          break;
+      // Handle price range filter
+      const priceRange = searchParams.get("priceRange");
+      if (priceRange) {
+        const [minPrice, maxPrice] = priceRange.split("-").map(Number);
+        filtered = filtered.filter(
+          (product) => product.price >= minPrice && product.price <= maxPrice
+        );
       }
+
+      // Handle brand filter
+      const brand = searchParams.get("brand");
+      if (brand && brand !== "all") {
+        const brandArray = brand.split(",");
+
+        filtered = filtered.filter((product) =>
+          brandArray.map(
+            (brand) => brand.toLowerCase() === product.brand.toLowerCase()
+          )
+        );
+      }
+
+      setFilteredProducts(filtered);
     };
 
-    handleSort();
-  }, [sort]);
+    filterProducts();
+  }, [searchParams, products]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -185,30 +215,24 @@ const PaginatedProducts = ({
               <div className="flex flex-col items-start absolute bottom-0 w-full bg-white shadow-md shadow-gray-500 transform-all translate-y-full rounded-md z-20">
                 <button
                   className={`px-4 py-2 bg-black text-black text-start text-sm w-full ${
-                    sort === "Latest"
+                    sort === "Newest"
                       ? "bg-opacity-30"
                       : "bg-opacity-0 hover:bg-opacity-20"
                   }`}
-                  onClick={() => {
-                    setSort("Latest");
-                    setSortOpen(false);
-                  }}
+                  onClick={() => handleSortSelect("Newest")}
                 >
-                  Latest
+                  Newest
                 </button>
 
                 <button
                   className={`px-4 py-2 bg-black text-black text-start text-sm w-full ${
-                    sort === "Earliest"
+                    sort === "Oldest"
                       ? "bg-opacity-30"
                       : "bg-opacity-0 hover:bg-opacity-20"
                   }`}
-                  onClick={() => {
-                    setSort("Earliest");
-                    setSortOpen(false);
-                  }}
+                  onClick={() => handleSortSelect("Oldest")}
                 >
-                  Earliest
+                  Oldest
                 </button>
 
                 <button
@@ -217,10 +241,7 @@ const PaginatedProducts = ({
                       ? "bg-opacity-30"
                       : "bg-opacity-0 hover:bg-opacity-20"
                   }`}
-                  onClick={() => {
-                    setSort("A - Z");
-                    setSortOpen(false);
-                  }}
+                  onClick={() => handleSortSelect("A - Z")}
                 >
                   A - Z
                 </button>
@@ -231,10 +252,7 @@ const PaginatedProducts = ({
                       ? "bg-opacity-30"
                       : "bg-opacity-0 hover:bg-opacity-20"
                   }`}
-                  onClick={() => {
-                    setSort("Z - A");
-                    setSortOpen(false);
-                  }}
+                  onClick={() => handleSortSelect("Z - A")}
                 >
                   Z - A
                 </button>
@@ -245,7 +263,7 @@ const PaginatedProducts = ({
       </div>
 
       {/* Products Display */}
-      {isFetching || sortedProducts.length === 0 ? (
+      {isFetching || fileredProducts.length > 0 ? (
         <div className="flex items-center justify-center">
           <div className="grid xl:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-y-10 gap-x-5 mt-10 justify-items-stretch">
             {isFetching
@@ -255,19 +273,9 @@ const PaginatedProducts = ({
                     className="lg:w-[20vw] md:w-[27vw] w-[85vw] h-60"
                   />
                 ))
-              : [...Array(12)].map((product, index) => (
-                  <NPCard
-                    key={index}
-                    isSmall
-                    product={{
-                      imageUrl: "/images/oakProductImg3.png",
-                      name: "A health machine like that",
-                      availability: "In stock",
-                      avgRating: 3.8,
-                      price: 34.99,
-                    }}
-                  />
-                ))}
+              : getCurrentPageProducts().map((product, index) => (
+                  <NPCard key={index} isSmall product={product} />
+                )) || <div />}
           </div>
         </div>
       ) : (
