@@ -27,7 +27,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
 
     // get similar products (by category and field)
     // get categories && ids
-    let cats: string[] = [],
+    const cats: string[] = [],
       ids: string[] = [];
 
     await Promise.all(
@@ -48,7 +48,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         _id: { $nin: uniqueIds },
         category,
       });
-      let randomNumbers: number[] = [];
+      const randomNumbers: number[] = [];
 
       while (randomNumbers.length === count) {
         const randomNumber =
