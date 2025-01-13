@@ -269,7 +269,7 @@ export default function Home() {
         </div>
       </div>
 
-      {(isFetching || topProducts.length === 0) && (
+      {(isFetching || topProducts.length > 0) && (
         <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-10 px-4">
           <div className="flex justify-center items-center">
             <CenterTitleComponent title="Top Selling Products" color="black" />
@@ -283,14 +283,14 @@ export default function Home() {
                     className="md:w-[35vw] w-full h-40"
                   />
                 ))
-              : [...Array(4)].map((product, index) => (
+              : topProducts.map((product, index) => (
                   <NPDCard key={index} product={product} />
                 ))}
           </div>
         </div>
       )}
 
-      {(isFetching || agricProducts.length === 0) && (
+      {(isFetching || agricProducts.length > 0) && (
         <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-8 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
@@ -320,7 +320,7 @@ export default function Home() {
             ) : (
               <>
                 <div className="hidden lg:grid grid-cols-3 gap-y-5 gap-x-3 mt-10 justify-items-center">
-                  {[...Array(3)].map((product, index) => (
+                  {agricProducts.map((product, index) => (
                     <NPCard
                       key={index}
                       product={{
@@ -334,7 +334,7 @@ export default function Home() {
                 </div>
 
                 <div className="grid lg:hidden md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-3 mt-10 justify-items-center">
-                  {[...Array(4)].map((product, index) => (
+                  {agricProducts.map((product, index) => (
                     <NPCard
                       key={index}
                       product={{
@@ -361,7 +361,7 @@ export default function Home() {
         </div>
       )}
 
-      {(isFetching || labProducts.length === 0) && (
+      {(isFetching || labProducts.length > 0) && (
         <div className="w-full pt-10 md:pb-20 pb-14 lg:px-14 md:px-8 px-4">
           <div className="flex justify-center items-center relative">
             <CenterTitleComponent
@@ -391,30 +391,14 @@ export default function Home() {
             ) : (
               <>
                 <div className="hidden lg:grid grid-cols-3 gap-y-5 gap-x-3 mt-10 justify-items-center">
-                  {[...Array(3)].map((product, index) => (
-                    <NPCard
-                      key={index}
-                      product={{
-                        name: "Absograph 500",
-                        availabilty: "In stock",
-                        avgRating: 4.3,
-                        price: 1420,
-                      }}
-                    />
+                  {labProducts.map((product, index) => (
+                    <NPCard key={index} product={product} />
                   ))}
                 </div>
 
                 <div className="grid lg:hidden md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-3 mt-10 justify-items-center">
-                  {[...Array(4)].map((product, index) => (
-                    <NPCard
-                      key={index}
-                      product={{
-                        name: "Absograph 500",
-                        availabilty: "In stock",
-                        avgRating: 4.3,
-                        price: 1420,
-                      }}
-                    />
+                  {labProducts.map((product, index) => (
+                    <NPCard key={index} product={product} />
                   ))}
                 </div>
               </>
@@ -432,7 +416,7 @@ export default function Home() {
         </div>
       )}
 
-      {(isFetching || featuredProducts.length === 0) && (
+      {(isFetching || featuredProducts.length > 0) && (
         <div className="w-full pt-10 md:pb-20 pb-14">
           <div className="lg:px-14 md:px-10 px-4 flex items-center justify-between">
             <div>
@@ -471,13 +455,8 @@ export default function Home() {
                       className="md:w-[25vw] w-[70vw] h-60"
                     />
                   ))
-                : [...Array(4)].map((product, index) => (
-                    <NCard
-                      key={index}
-                      product={{
-                        name: "Radiation Alert Inspection Exp+ Insp. Model Rubber Boot, Ls,",
-                      }}
-                    />
+                : featuredProducts.map((product, index) => (
+                    <NCard key={index} product={product} />
                   ))}
             </div>
           </div>

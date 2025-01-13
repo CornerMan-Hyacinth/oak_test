@@ -2,14 +2,21 @@
 
 import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
+import { LoadingModal } from "@/components/LazyLoading";
+import Picker from "@/components/Picker";
+import Portal from "@/components/Portal";
 import { BodyText, TitleText } from "@/components/Text";
 import { CenterTitleComponent } from "@/components/Title";
+import { locationData } from "@/lib/locationData";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowRoundForward, IoMdArrowDropdown } from "react-icons/io";
 
 const Checkout = () => {
+  const [isGuest, setIsGuest] = useState(false);
+  const [statesData, setStatesData] = useState<string[]>([]);
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "",
     lastName: "",
@@ -22,46 +29,90 @@ const Checkout = () => {
     country: "",
   });
   const [shippingMethod, setShippingMethod] = useState("regular");
-  const [orderItems, setOrderItems] = useState<any[]>(["", ""]);
+  const [cartData, setCartData] = useState<any[]>([]);
   const [promoInput, setPromoInput] = useState("");
 
-  const [isCountryPickerOn, setCountryPickerOpen] = useState(false);
-  const [isRegionPickerOn, setRegionPickerOpen] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
+  const [promoDiscount, setPromoDiscount] = useState(0);
+  const [expressFee, setExpressFee] = useState(0);
+  const [regularFee, setRegularFee] = useState(0);
 
-  const isBtnEnabled = () => {
-    const {
-      firstName,
-      lastName,
-      email,
-      phone,
-      street,
-      zip,
-      city,
-      region,
-      country,
-    } = shippingAddress;
+  const [isProcessing, setProcessing] = useState(true);
+  const [isShippingFeeCalc, setIsShippingFeeCalc] = useState(false);
+  const [isCountryPickerOpen, setCountryPickerOpen] = useState(false);
+  const [isRegionPickerOpen, setRegionPickerOpen] = useState(false);
+  const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
+  const [isFailed, setFailed] = useState<string>();
 
-    if (
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
-      phone === "" ||
-      street === "" ||
-      zip === "" ||
-      city === "" ||
-      region === "" ||
-      country === ""
-    )
-      return false;
+  const isBtnEnabled =
+    shippingAddress.firstName !== "" &&
+    shippingAddress.lastName !== "" &&
+    shippingAddress.email !== "" &&
+    shippingAddress.phone !== "" &&
+    shippingAddress.street !== "" &&
+    shippingAddress.zip !== "" &&
+    shippingAddress.city !== "" &&
+    shippingAddress.region !== "" &&
+    shippingAddress.country !== "";
 
-    return true;
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setShippingAddress((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleInput = () => {};
+  const handleLocationInput = async (name: string, value: string) => {
+    setShippingAddress((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "country") {
+      try {
+        const response = await axios.post(
+          "https://countriesnow.space/api/v0.1/countries/states",
+          { country: value }
+        );
+
+        const { states } = response.data.data;
+        console.log("Response states:", states);
+
+        const statesList = states.map((state: any) => state.name);
+        setStatesData(statesList);
+      } catch (error) {
+        console.error("Error getting states:", error);
+      }
+    }
+  };
+
+  const calculateShippingFee = async () => {
+    if (!isBtnEnabled) return null;
+    setIsShippingFeeCalc(true);
+  };
 
   const handlePayment = async () => {
-    if (!isBtnEnabled()) return null;
+    if (!isShippingFeeCalc) return;
+    setPaymentModalOpen(true);
   };
+
+  const fetchData = async () => {
+    setProcessing(true);
+
+    try {
+      const response = await axios.get("/api/cart?isCart=true");
+      if (response.data.success) {
+        const { carts } = response.data.data;
+        setCartData(carts);
+      }
+    } catch (error) {
+      setFailed("Failed to retrieve order items.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  useEffect(() => {
+    const guestId = localStorage.getItem("guestId");
+    guestId && setIsGuest(true);
+
+    fetchData();
+  }, []);
 
   return (
     <main className="w-full min-h-screen lg:px-14 md:px-8 px-4 pb-20">
@@ -244,66 +295,77 @@ const Checkout = () => {
           </div>
         </form>
 
-        <div className="lg:w-3/5 w-4/5 mt-10">
-          <h2 className="text-black text-lg mb-5">
-            <TitleText weight="regular">Shipping Method</TitleText>
-          </h2>
-          <div className="flex items-center justify-between">
-            <div className="flex items-start space-x-4">
-              <div
-                className="w-3 h-3 rounded-full border border-my-blue flex items-center justify-center mt-2"
-                onClick={() => setShippingMethod("regular")}
-              >
-                {shippingMethod === "regular" && (
-                  <div className="h-2 w-2 bg-my-blue rounded-full" />
-                )}
-              </div>
-              <div>
-                <BodyText
-                  weight="medium"
-                  className="text-base text-black mb-1 block"
+        {!isShippingFeeCalc ? (
+          <div className="mt-10">
+            <Button
+              text="Calculate Shipping Fee"
+              isDark
+              handleClick={calculateShippingFee}
+              notEnabled={!isBtnEnabled}
+            />
+          </div>
+        ) : (
+          <div className="lg:w-3/5 w-4/5 mt-10">
+            <h2 className="text-black text-lg mb-5">
+              <TitleText weight="regular">Shipping Method</TitleText>
+            </h2>
+            <div className="flex items-center justify-between">
+              <div className="flex items-start space-x-4">
+                <div
+                  className="w-3 h-3 rounded-full border border-my-blue flex items-center justify-center mt-2"
+                  onClick={() => setShippingMethod("regular")}
                 >
-                  Regular
-                </BodyText>
-                <span className="text-black text-sm opacity-70 block">
-                  15-30 business days
-                </span>
+                  {shippingMethod === "regular" && (
+                    <div className="h-2 w-2 bg-my-blue rounded-full" />
+                  )}
+                </div>
+                <div>
+                  <BodyText
+                    weight="medium"
+                    className="text-base text-black mb-1 block"
+                  >
+                    Regular
+                  </BodyText>
+                  <span className="text-black text-sm opacity-70 block">
+                    15-30 business days
+                  </span>
+                </div>
               </div>
+
+              <BodyText weight="regular" className="text-base text-black">
+                $10
+              </BodyText>
             </div>
 
-            <BodyText weight="regular" className="text-base text-black">
-              $10
-            </BodyText>
-          </div>
-
-          <div className="flex items-center justify-between mt-3">
-            <div className="flex items-start space-x-4">
-              <div
-                className="w-3 h-3 rounded-full border border-my-blue flex items-center justify-center mt-2"
-                onClick={() => setShippingMethod("express")}
-              >
-                {shippingMethod === "express" && (
-                  <div className="h-2 w-2 bg-my-blue rounded-full" />
-                )}
-              </div>
-              <div>
-                <BodyText
-                  weight="medium"
-                  className="text-base text-black block mb-1"
+            <div className="flex items-center justify-between mt-3">
+              <div className="flex items-start space-x-4">
+                <div
+                  className="w-3 h-3 rounded-full border border-my-blue flex items-center justify-center mt-2"
+                  onClick={() => setShippingMethod("express")}
                 >
-                  Express
-                </BodyText>
-                <span className="text-black text-sm opacity-70 block">
-                  7-15 business days
-                </span>
+                  {shippingMethod === "express" && (
+                    <div className="h-2 w-2 bg-my-blue rounded-full" />
+                  )}
+                </div>
+                <div>
+                  <BodyText
+                    weight="medium"
+                    className="text-base text-black block mb-1"
+                  >
+                    Express
+                  </BodyText>
+                  <span className="text-black text-sm opacity-70 block">
+                    7-15 business days
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <BodyText weight="regular" className="text-base text-black">
-              $20
-            </BodyText>
+              <BodyText weight="regular" className="text-base text-black">
+                $20
+              </BodyText>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="lg:w-3/5 w-4/5 mt-10">
           <div className="flex items-center justify-between">
@@ -318,26 +380,8 @@ const Checkout = () => {
             </Link>
           </div>
 
-          {orderItems.map((_, index) => (
-            <div key={index} className="flex items-center justify-between mb-5">
-              <div className="flex items-center space-x-4">
-                <div className="h-10 w-10 rounded-md overflow-hidden relative border border-black border-opacity-50">
-                  <Image
-                    src={"/images/oakProductImg6.png"}
-                    alt="product image"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <p className="text-base text-black opacity-70">
-                  Microcomputer Digital pH Meter
-                </p>
-              </div>
-
-              <BodyText weight="regular" className="text-base text-black">
-                $78
-              </BodyText>
-            </div>
+          {cartData.map((item, index) => (
+            <ItemWrapper key={index} item={item} />
           ))}
         </div>
 
@@ -355,42 +399,49 @@ const Checkout = () => {
             </button>
           </div>
 
-          <BodyText weight="medium" className="text-xs">
-            New Customer?{" "}
-            <Link href={"/register"} className="text-my-blue hover:underline">
-              Register
-            </Link>
-          </BodyText>
+          {isGuest && (
+            <BodyText weight="medium" className="text-xs">
+              New Customer?{" "}
+              <Link href={"/register"} className="text-my-blue hover:underline">
+                Register
+              </Link>
+            </BodyText>
+          )}
         </div>
 
         <div className="mt-14 lg:w-3/5 w-4/5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-black text-base opacity-70">Subtotal</span>
-            <BodyText weight="bold" className="text-base text-black">
-              $560
+            <BodyText weight="medium" className="text-base text-black">
+              ${subtotal}
             </BodyText>
           </div>
           <div className="flex items-center justify-between mb-3">
             <span className="text-black text-base opacity-70">
               Promo Discount
             </span>
-            <BodyText weight="bold" className="text-base text-red-700">
-              - $60
+            <BodyText weight="medium" className="text-base text-red-700">
+              - ${promoDiscount}
             </BodyText>
           </div>
           <div className="flex items-center justify-between mb-3">
             <span className="text-black text-base opacity-70">
               Shipping Fee
             </span>
-            <BodyText weight="bold" className="text-base text-black">
-              $138
+            <BodyText weight="medium" className="text-base text-black">
+              {isShippingFeeCalc
+                ? `$${shippingMethod === "regular" ? regularFee : expressFee}`
+                : "TBD"}
             </BodyText>
           </div>
           <hr className="w-full bg-black bg-opacity-80 my-5" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-black text-base opacity-70">Total</span>
-            <BodyText weight="bold" className="text-base text-black">
-              $638
+            <BodyText weight="medium" className="text-base text-black">
+              $
+              {subtotal - promoDiscount + shippingMethod === "regular"
+                ? regularFee
+                : expressFee}
             </BodyText>
           </div>
         </div>
@@ -400,11 +451,66 @@ const Checkout = () => {
             text="Continue to Payment"
             isDark
             handleClick={handlePayment}
+            notEnabled={!isShippingFeeCalc}
           />
         </div>
       </div>
+
+      {isCountryPickerOpen && (
+        <Portal>
+          <Picker
+            title="Select country"
+            enableSearch
+            options={[...locationData.map((item) => item.name)]}
+            currentValue={shippingAddress.country}
+            updateValue={(v) => handleLocationInput("country", v)}
+            close={() => setCountryPickerOpen(false)}
+          />
+        </Portal>
+      )}
+
+      {isRegionPickerOpen && (
+        <Portal>
+          <Picker
+            title="Select region/state"
+            enableSearch
+            options={statesData}
+            currentValue={shippingAddress.region}
+            updateValue={(v) => handleLocationInput("region", v)}
+            close={() => setRegionPickerOpen(false)}
+          />
+        </Portal>
+      )}
+
+      {isProcessing && (
+        <Portal>
+          <LoadingModal />
+        </Portal>
+      )}
     </main>
   );
 };
 
 export default Checkout;
+
+const ItemWrapper = ({ item }: { item: any }) => {
+  return (
+    <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center space-x-4">
+        <div className="h-10 w-10 rounded-md overflow-hidden relative border border-black border-opacity-50">
+          <Image
+            src={item.imageUrl}
+            alt={`${item.productName} product`}
+            fill
+            className="object-cover"
+          />
+        </div>
+        <p className="text-base text-black opacity-70">{item.productName}</p>
+      </div>
+
+      <BodyText weight="regular" className="text-base text-black">
+        ${item.amount}
+      </BodyText>
+    </div>
+  );
+};

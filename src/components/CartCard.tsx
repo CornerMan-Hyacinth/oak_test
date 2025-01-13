@@ -17,8 +17,8 @@ const CartCard = ({
 }: {
   item: any;
   isQuote?: boolean;
-  editQuantity: (id: number, q: number) => void;
-  handleDelete: (id: number) => void;
+  editQuantity: (id: string, q: number) => void;
+  handleDelete: (id: string) => void;
 }) => {
   const [isDeleteClicked, setDeleteClicked] = useState(false);
 
@@ -27,7 +27,7 @@ const CartCard = ({
       <div className="md:w-[25vw] flex-grow flex items-center md:space-x-8 space-x-4">
         <div className="h-14 w-14 rounded-lg overflow-hidden relative border border-black border-opacity-50">
           <Image
-            alt={`${item.name} product image`}
+            alt={`${item.productName} product image`}
             src={item.imageUrl}
             fill
             className="object-cover"
@@ -35,7 +35,7 @@ const CartCard = ({
         </div>
         <div>
           <TitleText weight="bold" className="md:text-xl text-lg text-black">
-            {item.name}
+            {item.productName}
           </TitleText>
           <span
             className={`${
@@ -126,7 +126,7 @@ const CartCard = ({
       {isDeleteClicked && (
         <Portal>
           <DeleteCartModal
-            name={item.name}
+            name={item.productName}
             handleDelete={() => handleDelete(item._id)}
             close={() => setDeleteClicked(false)}
           />

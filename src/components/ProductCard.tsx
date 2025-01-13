@@ -3,17 +3,53 @@
 import Image from "next/image";
 import { TitleText } from "./Text";
 import { IoIosStar } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DetailsModal } from "./Modals";
 import { FaEye, FaMagnifyingGlassArrowRight } from "react-icons/fa6";
 import Link from "next/link";
 import { productSample } from "@/lib/mockups";
 import { useRouter } from "next/navigation";
+import Portal from "./Portal";
+import { OpErrorModal } from "./ErrorModals";
+import axios from "axios";
+import { LoadingModal } from "./LazyLoading";
 
 export const NCard = ({ product }: { product: any }) => {
   const router = useRouter();
 
-  const handleBtn = async () => {};
+  const [isAdded, setIsAdded] = useState(false);
+  const [isProcessing, setProcessing] = useState(false);
+  const [isFailed, setFailed] = useState<string>();
+
+  const handleAdd = async () => {
+    if (isAdded) return;
+
+    setProcessing(true);
+    const { name: productName, imageUrls, price } = product;
+
+    try {
+      const response = await axios.post("/api/cart", {
+        productName,
+        price,
+        imageUrl: imageUrls[0],
+        quantity: 1,
+        isCart: false,
+      });
+
+      if (response.data.success) {
+        setIsAdded(response.data.isAdded);
+      }
+    } catch (error) {
+      setFailed(`Failed to add to quote.`);
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  useEffect(() => {
+    const { isAdded } = product;
+    isAdded && setIsAdded(product.isAdded);
+  });
 
   return (
     <div
@@ -34,11 +70,27 @@ export const NCard = ({ product }: { product: any }) => {
       </TitleText>
       <hr className="border border-black border-opacity-20 my-4" />
       <button
-        className="bg-my-gray text-sm py-3 text-white rounded-md w-full flex items-center justify-center hover:bg-my-blue duration-300 ease-in-out"
-        onClick={handleBtn}
+        className={`text-sm py-3 text-white rounded-md w-full ${
+          isAdded
+            ? "bg-my-blue cursor-not-allowed"
+            : "bg-my-gray hover:bg-my-blue"
+        } flex items-center justify-center duration-300 ease-in-out`}
+        onClick={handleAdd}
       >
         Add to quote
       </button>
+
+      {isFailed && (
+        <Portal>
+          <OpErrorModal msg={isFailed} close={() => setFailed(undefined)} />
+        </Portal>
+      )}
+
+      {isProcessing && (
+        <Portal>
+          <LoadingModal />
+        </Portal>
+      )}
     </div>
   );
 };
@@ -50,8 +102,44 @@ export const NPCard = ({
   product: any;
   isSmall?: boolean;
 }) => {
+  const [isAdded, setIsAdded] = useState(false);
+
   const [isDetailsOpen, setDetailsOpen] = useState(false);
   const [isHoveredOn, setHoveredOn] = useState(false);
+  const [isProcessing, setProcessing] = useState(false);
+  const [isFailed, setFailed] = useState<string>();
+
+  const handleAdd = async () => {
+    if (isAdded) return;
+
+    setProcessing(true);
+    const { name: productName, imageUrls, price } = product;
+
+    try {
+      const response = await axios.post("/api/cart", {
+        productName,
+        price,
+        imageUrl: imageUrls[0],
+        quantity: 1,
+        isCart: price < 1000,
+      });
+
+      if (response.data.success) {
+        setIsAdded(response.data.isAdded);
+      }
+    } catch (error) {
+      setFailed(
+        `Failed to add to ${product.price >= 1000 ? "quote" : "cart"}.`
+      );
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  useEffect(() => {
+    const { isAdded } = product;
+    isAdded && setIsAdded(product.isAdded);
+  });
 
   return (
     <div
@@ -145,13 +233,32 @@ export const NPCard = ({
         <span className="text-my-blue lg:text-lg text-base">
           $ {product.price}
         </span>
-        <button className="bg-my-gray text-xs text-white rounded-md py-3 xl:px-7 px-3 hover:bg-my-blue duration-300 ease-in-out">
-          {product.price > 999 ? "Add to quote" : "Add to cart"}
+        <button
+          className={`text-xs text-white rounded-md py-3 xl:px-7 px-3 duration-300 ease-in-out ${
+            isAdded
+              ? "bg-my-blue cursor-not-allowed"
+              : "bg-my-gray hover:bg-my-blue"
+          }`}
+          onClick={handleAdd}
+        >
+          Add{isAdded && "ed"} to {product.price > 999 ? "quote" : "cart"}
         </button>
       </div>
 
       {isDetailsOpen && (
         <DetailsModal product={product} close={() => setDetailsOpen(false)} />
+      )}
+
+      {isFailed && (
+        <Portal>
+          <OpErrorModal msg={isFailed} close={() => setFailed(undefined)} />
+        </Portal>
+      )}
+
+      {isProcessing && (
+        <Portal>
+          <LoadingModal />
+        </Portal>
       )}
     </div>
   );
@@ -162,27 +269,25 @@ export const NPDCard = ({ product }: { product: any }) => {
     <div className="xl:w-[35vw] lg:w-[40vw] md:w-[42vw] w-full pt-4 pb-7 px-4 flex flex-col md:flex-row items-center md:space-x-4 rounded-lg bg-white hover:shadow-md hover:shadow-black duration-300 ease-in-out relative overflow-hidden">
       <div className="min-h-40 h-full md:w-2/5 w-[100%] rounded-lg overflow-hidden relative">
         <Image
-          alt={`${productSample.name} product image`}
+          alt={`${product.name} product image`}
           src={"/images/oakProductImg1.png"}
           fill
           className="object-cover"
         />
       </div>
       <div className="md:w-3/5 w-full mt-3 md:mt-0">
-        <p className="text-black text-xs opacity-70 mb-1">
-          {productSample.category}
-        </p>
+        <p className="text-black text-xs opacity-70 mb-1">{product.category}</p>
         <p className="text-my-gray text-xl">
-          <TitleText weight="bold">{productSample.name}</TitleText>
+          <TitleText weight="bold">{product.name}</TitleText>
         </p>
         <p className="text-black opacity-70 mt-2 leading-relaxed text-sm text-justify line-clamp-4">
-          {productSample.description}
+          {product.description}
         </p>
 
         <div className="flex items-center justify-between mt-4">
-          <span className="text-my-blue text-lg">$ {productSample.price}</span>
+          <span className="text-my-blue text-lg">$ {product.price}</span>
           <Link
-            href={`/products/${productSample.name}`}
+            href={`/products/${product.name}`}
             className="bg-my-gray text-xs text-white rounded-md py-3 lg:px-7 md:px-3 px-5 hover:bg-my-blue duration-300 ease-in-out"
           >
             View Product

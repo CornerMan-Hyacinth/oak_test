@@ -11,6 +11,7 @@ import { BrandFilterModal, PriceFilterModal } from "./Filter";
 import { useSearchParams } from "next/navigation";
 import { TitleText } from "./Text";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
+import { IoFilter } from "react-icons/io5";
 
 const PaginatedProducts = ({
   isFetching,
@@ -171,7 +172,7 @@ const PaginatedProducts = ({
   }, []);
 
   return (
-    <div ref={elementRef} className="lg:w-[65vw] w-full">
+    <div ref={elementRef} className="lg:w-[65vw] w-full relative">
       {/** Top product list */}
       <div
         ref={topRef}
@@ -288,7 +289,7 @@ const PaginatedProducts = ({
       )}
 
       {/* Pagination Controls */}
-      <div className="flex justify-center mt-20 space-x-2">
+      <div className="flex justify-center mt-20 mb-10 space-x-2">
         {/* Page Numbers */}
         {getPaginationRange().map((page, index) => (
           <button
@@ -304,6 +305,31 @@ const PaginatedProducts = ({
             {page}
           </button>
         ))}
+      </div>
+
+      <div className="sticky bottom-10 inset-x-0 mx-auto flex items-center space-x-4 bg-my-gray rounded-full h-14 px-8 w-fit md:hidden">
+        <div className="flex items-center space-x-2 opacity-70">
+          <IoFilter color="white" size={18} />
+          <span className="text-white text-base">Filter by</span>
+        </div>
+
+        <div className="h-4 bg-white bg-opacity-20" style={{ width: "2px" }} />
+
+        <button
+          className="text-white text-base"
+          onClick={() => setPriceFilterOpen(true)}
+        >
+          Price Range
+        </button>
+
+        <div className="h-4 bg-white bg-opacity-20" style={{ width: "2px" }} />
+
+        <button
+          className="text-white text-base"
+          onClick={() => setBrandFilterOpen(true)}
+        >
+          Brand
+        </button>
       </div>
 
       {isAboveThreshold && (

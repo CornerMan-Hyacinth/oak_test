@@ -59,7 +59,7 @@ const Picker = ({
       onClick={close}
     >
       <div
-        className="bg-white xl:w-[25vw] lg:w-[30vw] md:w-[40vw] w-[80vw] rounded-lg px-5 py-7 max-h-[90vh] overflow-y-scroll hide-scrollbar"
+        className="bg-white xl:w-[30vw] lg:w-[35vw] md:w-[40vw] w-[80vw] rounded-lg px-5 py-7 max-h-[90vh] overflow-y-scroll hide-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-xl text-black mb-5">

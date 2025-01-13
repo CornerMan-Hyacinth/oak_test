@@ -2,9 +2,8 @@ import { model, models, Schema } from "mongoose";
 
 const orderSchema = new Schema(
   {
-    customerName: { type: String, required: true },
-    customerEmail: { type: String, required: true },
-    customerPhone: { type: String, required: true },
+    customerId: { type: String },
+    guestId: { type: String },
     recipientName: { type: String, required: true },
     recipientEmail: { type: String, required: true },
     recipientPhone: { type: String, required: true },
@@ -20,7 +19,7 @@ const orderSchema = new Schema(
     orderDate: { type: Date, default: Date.now },
     status: {
       type: String,
-      enum: ["pending", "shipped", "delivered", "cancelled"],
+      enum: ["pending", "shipped", "delivered", "canceled"],
       default: "pending",
     },
     totalAmount: { type: Number, required: true },

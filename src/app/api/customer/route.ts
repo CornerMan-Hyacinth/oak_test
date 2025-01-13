@@ -4,9 +4,7 @@ import CustomerModel from "@/models/customerModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
-  const baseUrl = process.env.BASE_URL;
-  const { searchParams } = new URL(req.url, baseUrl);
-  const email = searchParams.get("email");
+  const { email } = (await getSession()).user;
 
   try {
     await connectDb();
@@ -16,8 +14,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
       return NextResponse.json({ success: true, customer }, { status: 200 });
     }
 
-    const customers = await CustomerModel.find();
-    return NextResponse.json({ success: true, customers }, { status: 200 });
+    return NextResponse.json({ success: false }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ success: false, error }, { status: 500 });
   }

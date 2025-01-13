@@ -86,7 +86,7 @@ const Category = ({ params }: { params: Promise<{ cat: string }> }) => {
         )}
       </div>
 
-      {(isFetching || data.length === 0) && (
+      {(isFetching || data.length > 0) && (
         <div className="mt-20">
           <div className="lg:px-14 md:px-8 px-4 flex items-center justify-between">
             <TitleComponent title="Top Sellers" color="black" />
@@ -118,7 +118,7 @@ const Category = ({ params }: { params: Promise<{ cat: string }> }) => {
                       <CardLoading className="lg:w-[20vw] md:w-[27vw] w-[85vw] h-52" />
                     </div>
                   ))
-                : [...Array(5)].map((product, index) => (
+                : data.map((product, index) => (
                     <NPCard key={index} isSmall product={product} />
                   ))}
             </div>

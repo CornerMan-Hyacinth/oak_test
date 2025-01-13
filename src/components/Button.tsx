@@ -8,10 +8,12 @@ export const Button = ({
   isDark,
   isBig,
   text,
+  notEnabled,
   handleClick,
 }: {
   isDark: boolean;
   isBig?: boolean;
+  notEnabled?: boolean;
   text: string;
   handleClick: () => void;
 }) => {
@@ -25,6 +27,10 @@ export const Button = ({
         isDark
           ? "bg-my-gray text-white hover:bg-my-blue"
           : "bg-white text-black"
+      } ${
+        notEnabled
+          ? "cursor-not-allowed opacity-50"
+          : "cursor-pointer opacity-100"
       } duration-300 ease-in-out relative`}
       onMouseEnter={() => setHoveredOn(true)}
       onMouseLeave={() => setHoveredOn(false)}

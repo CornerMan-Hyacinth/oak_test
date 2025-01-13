@@ -627,7 +627,7 @@ export const PriceFilterModal = ({ close }: { close: () => void }) => {
     const newSearchParams = new URLSearchParams(restParams);
 
     // Using replace instead of push, with scroll: false
-    router.replace(`/shop?${newSearchParams.toString()}`, {
+    router.replace(`?${newSearchParams.toString()}`, {
       scroll: false,
     });
 

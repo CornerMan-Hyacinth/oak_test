@@ -20,20 +20,28 @@ import Picker from "./Picker";
 import { locationData } from "@/lib/locationData";
 import axios from "axios";
 
+type AccountDataType = {
+  userDetails: any;
+  orderData: any[];
+  shippingAddress: any;
+};
+
 const AccountTabs = ({
   tab,
   switchTab,
+  data,
 }: {
   tab: string;
   switchTab: (tab: string) => void;
+  data: AccountDataType;
 }) => {
   const renderTabs = () => {
     switch (tab) {
       case "account":
-        return <MyAccountTab switchTab={switchTab} />;
+        return <MyAccountTab switchTab={switchTab} data={data} />;
 
       case "orders":
-        return <OrderTab />;
+        return <OrderTab data={data.orderData} />;
 
       case "details":
         return <DetailsTab />;
@@ -54,87 +62,89 @@ const AccountTabs = ({
 
 export default AccountTabs;
 
-const MyAccountTab = ({ switchTab }: { switchTab: (tab: string) => void }) => {
-  const [isIncognito, setIncognito] = useState(true);
-  const [isFetching, setFetching] = useState(true);
-
+const MyAccountTab = ({
+  switchTab,
+  data,
+}: {
+  switchTab: (tab: string) => void;
+  data: AccountDataType;
+}) => {
   return (
     <>
       <h1 className="text-2xl text-black mt-10">
         <TitleText weight="regular">
-          Welcome, <span className="text-my-blue">John</span>
+          Welcome,{" "}
+          <span className="text-my-blue">
+            {data.userDetails.name.split(" ")[0]}
+          </span>
         </TitleText>
       </h1>
-      {!isFetching ? (
-        <div className="flex justify-center space-x-10 mt-10">
-          {[...Array(3)].map((_, index) => (
-            <CardLoading key={index} className="w-[25vw] h-60" />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-wrap lg:justify-center lg:space-x-10 mt-10">
-          <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] min-h-60 px-4 py-6 rounded-lg bg-my-gray bg-opacity-20 lg:mr-0 md:mr-8 mr-4">
-            <div className="flex items-center justify-between">
-              <span className="text-black text-lg">Account Details</span>
-              <button
-                className="text-black hover:scale-110 duration-300 ease-in-out"
-                onClick={() => switchTab("details")}
-              >
-                <FaRegEdit size={20} />
-              </button>
-            </div>
 
-            <div className="flex items-center space-x-4 mt-5">
-              <FaUserAlt color="black" size={16} />
-              <span className="text-black text-base opacity-70">John Doe</span>
-            </div>
-            <div className="flex items-center space-x-4 mt-3">
-              <MdEmail color="black" size={16} />
-              <span className="text-black text-base opacity-70">
-                johndoe@gmail.com
-              </span>
-            </div>
-            <div className="flex items-center space-x-4 mt-3">
-              <MdLocalPhone color="black" size={16} />
-              <span className="text-black text-base opacity-70">
-                +2348083784933
-              </span>
-            </div>
+      <div className="flex flex-wrap lg:justify-center lg:space-x-10 space-y-5 md:space-y-0 mt-10">
+        <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full min-h-60 px-4 py-6 rounded-lg bg-my-gray bg-opacity-20 lg:mr-0 md:mr-8">
+          <div className="flex items-center justify-between">
+            <span className="text-black text-lg">Account Details</span>
+            <button
+              className="text-black hover:scale-110 duration-300 ease-in-out"
+              onClick={() => switchTab("details")}
+            >
+              <FaRegEdit size={20} />
+            </button>
           </div>
 
-          <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-[40vw] min-h-60 px-4 py-6 rounded-lg bg-my-gray bg-opacity-20 lg:mr-0 md:mr-8 mr-4">
-            <div className="flex items-center justify-between">
-              <span className="text-black text-lg">Shipping Info</span>
-              <button
-                className="text-black hover:scale-110 duration-300 ease-in-out"
-                onClick={() => switchTab("shipping")}
-              >
-                <FaRegEdit size={20} />
-              </button>
-            </div>
-            <div className="flex items-start space-x-4 mt-5">
-              <div>
-                <MdLocationPin color="black" size={16} className="mt-1" />
-              </div>
-              <p className="text-black text-base flex-grow opacity-70">
-                3 Grace Avenue, off Obiwali Road, Port-Harcourt 500111, Rivers
-              </p>
-            </div>
-            <div className="flex items-center space-x-4 mt-3">
-              <MdEmail color="black" size={16} />
-              <span className="text-black text-base opacity-70">
-                johndoe@gmail.com
-              </span>
-            </div>
-            <div className="flex items-center space-x-4 mt-3">
-              <MdLocalPhone color="black" size={16} />
-              <span className="text-black text-base opacity-70">
-                +2348083784933
-              </span>
-            </div>
+          <div className="flex items-center space-x-4 mt-5">
+            <FaUserAlt color="black" size={16} />
+            <span className="text-black text-base opacity-70">
+              {data.userDetails.name}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4 mt-3">
+            <MdEmail color="black" size={16} />
+            <span className="text-black text-base opacity-70">
+              {data.userDetails.email}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4 mt-3">
+            <MdLocalPhone color="black" size={16} />
+            <span className="text-black text-base opacity-70">
+              {data.userDetails.phone || "No saved phone contact."}
+            </span>
           </div>
         </div>
-      )}
+
+        <div className="xl:w-[25vw] lg:w-[26vw] md:w-[35vw] w-full min-h-60 px-4 py-6 rounded-lg bg-my-gray bg-opacity-20 lg:mr-0 md:mr-8">
+          <div className="flex items-center justify-between">
+            <span className="text-black text-lg">Shipping Info</span>
+            <button
+              className="text-black hover:scale-110 duration-300 ease-in-out"
+              onClick={() => switchTab("shipping")}
+            >
+              <FaRegEdit size={20} />
+            </button>
+          </div>
+          <div className="flex items-start space-x-4 mt-5">
+            <div>
+              <MdLocationPin color="black" size={16} className="mt-1" />
+            </div>
+            <p className="text-black text-base flex-grow opacity-70">
+              {data.shippingAddress.street}, {data.shippingAddress.city}{" "}
+              {data.shippingAddress.zip}, {data.shippingAddress.region}
+            </p>
+          </div>
+          <div className="flex items-center space-x-4 mt-3">
+            <MdEmail color="black" size={16} />
+            <span className="text-black text-base opacity-70">
+              {data.shippingAddress.email}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4 mt-3">
+            <MdLocalPhone color="black" size={16} />
+            <span className="text-black text-base opacity-70">
+              {data.shippingAddress.phone}
+            </span>
+          </div>
+        </div>
+      </div>
 
       <div className="flex items-center justify-between mt-20">
         <h2 className="text-2xl text-black">
@@ -147,50 +157,78 @@ const MyAccountTab = ({ switchTab }: { switchTab: (tab: string) => void }) => {
           See more info
         </button>
       </div>
-
-      {!isFetching ? (
-        <div className="flex justify-center space-x-10 mt-10">
-          {[...Array(4)].map((_, index) => (
-            <CardLoading key={index} className="w-[15vw] h-32" />
-          ))}
-        </div>
-      ) : (
+      <>
         <div className="flex justify-center md:space-x-10 space-x-5 mt-10">
-          <div className="py-4 px-8 xl:w-[15vw] lg:w-[17vw] w-[22vw]  border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+          <div className="py-4 px-4 md:px-8 xl:w-[15vw] lg:w-[17vw] w-[40vw]  border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
             <span className="text-black lg:text-lg text-base text-center opacity-70">
               Total Orders
             </span>
-            <span className="text-black text-3xl">12</span>
+            <span className="text-black text-3xl">{data.orderData.length}</span>
           </div>
-          <div className="py-4 px-8 xl:w-[15vw] lg:w-[17vw] w-[22vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+          <div className="py-4 px-4 md:px-8 xl:w-[15vw] lg:w-[17vw] w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
             <span className="text-black lg:text-lg text-base text-center opacity-70">
               In Progress
             </span>
-            <span className="text-black text-3xl">1</span>
+            <span className="text-black text-3xl">
+              {
+                data.orderData.filter((item) => item.status === "pending")
+                  .length
+              }
+            </span>
           </div>
-          <div className="py-4 px-8 xl:w-[15vw] lg:w-[17vw] w-[22vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+          <div className="py-4 px-8 xl:w-[15vw] lg:w-[17vw] border border-black border-opacity-20 rounded-md hidden md:flex flex-col space-y-4 justify-center items-center ">
             <span className="text-black lg:text-lg text-base text-center opacity-70">
               Delivered
             </span>
-            <span className="text-black text-3xl">8</span>
+            <span className="text-black text-3xl">
+              {
+                data.orderData.filter((item) => item.status === "delivered")
+                  .length
+              }
+            </span>
           </div>
-          <div className="py-4 px-8 xl:w-[15vw] lg:w-[17vw] w-[22vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+          <div className="py-4 px-8 xl:w-[15vw] lg:w-[17vw] border border-black border-opacity-20 rounded-md hidden md:flex flex-col space-y-4 justify-center items-center">
             <span className="text-black lg:text-lg text-base text-center opacity-70">
               Canceled
             </span>
-            <span className="text-black text-3xl">3</span>
+            <span className="text-black text-3xl"></span>
+            {data.orderData.filter((item) => item.status === "canceled").length}
           </div>
         </div>
-      )}
+
+        <div className="flex justify-center space-x-5 mt-5 md:hidden">
+          <div className="py-4 px-4 w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center ">
+            <span className="text-black lg:text-lg text-base text-center opacity-70">
+              Delivered
+            </span>
+            <span className="text-black text-3xl">
+              {
+                data.orderData.filter((item) => item.status === "delivered")
+                  .length
+              }
+            </span>
+          </div>
+          <div className="py-4 px-4 w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+            <span className="text-black lg:text-lg text-base text-center opacity-70">
+              Canceled
+            </span>
+            <span className="text-black text-3xl">
+              {
+                data.orderData.filter((item) => item.status === "canceled")
+                  .length
+              }
+            </span>
+          </div>
+        </div>
+      </>
     </>
   );
 };
 
-const OrderTab = () => {
+const OrderTab = ({ data }: { data: any[] }) => {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
 
-  const [data, setData] = useState<any[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>([]);
 
   const [search, setSearch] = useState("");
@@ -200,7 +238,50 @@ const OrderTab = () => {
   const [isFetching, setFetching] = useState(false);
   const [isSortOpen, setSortOpen] = useState(false);
 
-  useEffect(() => {}, [filter, sort]);
+  const sortData = () => {
+    switch (sort) {
+      case "all":
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    const filterData = () => {
+      switch (filter) {
+        case "all":
+          setFilteredData(data);
+          break;
+
+        case "progress":
+          setFilteredData([
+            ...data.filter(
+              (item) => item.status === "pending" || item.status === "shipped"
+            ),
+          ]);
+          break;
+
+        case "delivered":
+          setFilteredData([
+            ...data.filter((item) => item.status === "delivered"),
+          ]);
+          break;
+
+        case "canceled":
+          setFilteredData([
+            ...data.filter((item) => item.status === "canceled"),
+          ]);
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    filterData();
+  }, [filter, data]);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -221,52 +302,78 @@ const OrderTab = () => {
       </h1>
 
       {isFetching ? (
-        <div className="flex justify-center space-x-10 mt-10">
+        <div className="flex justify-center space-x-5 md:space-x-10 mt-10">
           {[...Array(5)].map((_, index) => (
             <CardLoading key={index} className="w-[25vw] h-32" />
           ))}
         </div>
       ) : (
         <>
-          <div className="flex justify-center space-x-10 mt-10">
-            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
-              <span className="text-black text-base opacity-70">
+          <div className="flex justify-center space-x-5 md:space-x-10 mt-10">
+            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
                 Total Orders
               </span>
               <span className="text-black text-xl">12</span>
             </div>
-            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
-              <span className="text-black text-base opacity-70">Delivered</span>
+            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
+                Delivered
+              </span>
               <span className="text-black text-xl">10</span>
             </div>
-            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
-              <span className="text-black text-base opacity-70">
+            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] border border-black border-opacity-20 rounded-md hidden md:flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
                 Total Returned
               </span>
               <span className="text-black text-xl">2</span>
             </div>
-            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md hidden lg:flex flex-col space-y-4 justify-center items-center">
-              <span className="text-black text-base opacity-70">
+            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] border border-black border-opacity-20 rounded-md hidden lg:flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
                 Total Order Value
               </span>
               <span className="text-black text-xl">$1500</span>
             </div>
-            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md hidden lg:flex flex-col space-y-4 justify-center items-center">
-              <span className="text-black text-base opacity-70">
+            <div className="py-4 px-4 xl:w-[15vw] lg:w-[18vw] md:w-[25vw] border border-black border-opacity-20 rounded-md hidden lg:flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
                 Average Order Value
               </span>
               <span className="text-black text-xl">$450</span>
             </div>
           </div>
 
-          <div className="flex lg:hidden justify-center space-x-10 mt-5">
-            <div className="py-4 px-4 md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+          <div className="hidden md:flex lg:hidden justify-center space-x-10 mt-5">
+            <div className="py-4 px-4 w-[25vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
               <span className="text-black text-base opacity-70 text-center">
                 Total Order Value
               </span>
               <span className="text-black text-xl">$1500</span>
             </div>
-            <div className="py-4 px-4 md:w-[25vw] w-[27vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+            <div className="py-4 px-4 w-[25vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
+                Average Order Value
+              </span>
+              <span className="text-black text-xl">$450</span>
+            </div>
+          </div>
+
+          <div className="flex md:hidden justify-center space-x-5 mt-5">
+            <div className="py-4 px-4 w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
+                Canceled
+              </span>
+              <span className="text-black text-xl">2</span>
+            </div>
+            <div className="py-4 px-4 w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
+              <span className="text-black text-base opacity-70 text-center">
+                Total Order Value
+              </span>
+              <span className="text-black text-xl">$1500</span>
+            </div>
+          </div>
+
+          <div className="flex md:hidden lg:hidden justify-center space-x-5 mt-5">
+            <div className="py-4 px-4 w-[40vw] border border-black border-opacity-20 rounded-md flex flex-col space-y-4 justify-center items-center">
               <span className="text-black text-base opacity-70 text-center">
                 Average Order Value
               </span>
@@ -276,9 +383,9 @@ const OrderTab = () => {
         </>
       )}
 
-      <div className="w-full flex justify-evenly items-center mt-20">
+      <div className="w-full flex justify-evenly items-center mt-20 overflow-x-auto hide-scrollbar">
         <div
-          className={`flex-grow flex items-center space-x-4 justify-center pb-4 ${
+          className={`flex-grow flex items-center space-x-2 md:space-x-4 justify-center px-4 pb-4 ${
             filter === "all"
               ? "opacity-100 border-my-blue border-opacity-100"
               : "opacity-50 border-black border-opacity-20 hover:opacity-70"
@@ -286,7 +393,9 @@ const OrderTab = () => {
           style={{ borderBottomWidth: "4px" }}
           onClick={() => setFilter("all")}
         >
-          <span className="lg:text-xl md:text-lg text-base">All Orders</span>
+          <span className="lg:text-xl md:text-lg text-sm text-nowrap text-black">
+            All Orders
+          </span>
           <div
             className={`md:px-2 px-1 py-1 min-w-6 flex justify-center items-center rounded-md text-white text-xs ${
               filter === "all" ? "bg-my-blue" : "bg-my-gray"
@@ -297,7 +406,7 @@ const OrderTab = () => {
         </div>
 
         <div
-          className={`flex-grow flex items-center space-x-4 justify-center pb-4 ${
+          className={`flex-grow flex items-center space-x-2 md:space-x-4 justify-center px-4 pb-4 ${
             filter === "progress"
               ? "opacity-100 border-my-blue border-opacity-100"
               : "opacity-50 border-black border-opacity-20 hover:opacity-70"
@@ -305,7 +414,9 @@ const OrderTab = () => {
           style={{ borderBottomWidth: "4px" }}
           onClick={() => setFilter("progress")}
         >
-          <span className="lg:text-xl md:text-lg text-base">In Progress</span>
+          <span className="lg:text-xl md:text-lg text-sm text-nowrap text-black">
+            In Progress
+          </span>
           <div
             className={`md:px-2 px-1 py-1 min-w-6 flex justify-center items-center rounded-md text-white text-xs ${
               filter === "progress" ? "bg-my-blue" : "bg-my-gray"
@@ -316,7 +427,7 @@ const OrderTab = () => {
         </div>
 
         <div
-          className={`flex-grow flex items-center space-x-4 justify-center pb-4 ${
+          className={`flex-grow flex items-center space-x-2 md:space-x-4 justify-center px-4 pb-4 ${
             filter === "delivered"
               ? "opacity-100 border-my-blue border-opacity-100"
               : "opacity-50 border-black border-opacity-20 hover:opacity-70"
@@ -324,7 +435,9 @@ const OrderTab = () => {
           style={{ borderBottomWidth: "4px" }}
           onClick={() => setFilter("delivered")}
         >
-          <span className="lg:text-xl md:text-lg text-base">Delivered</span>
+          <span className="lg:text-xl md:text-lg text-sm text-nowrap text-black">
+            Delivered
+          </span>
           <div
             className={`md:px-2 px-1 py-1 min-w-6 flex justify-center items-center rounded-md text-white text-xs ${
               filter === "delivered" ? "bg-my-blue" : "bg-my-gray"
@@ -335,7 +448,7 @@ const OrderTab = () => {
         </div>
 
         <div
-          className={`flex-grow flex items-center space-x-4 justify-center pb-4 ${
+          className={`flex-grow flex items-center space-x-2 md:space-x-4 justify-center px-4 pb-4 ${
             filter === "canceled"
               ? "opacity-100 border-my-blue border-opacity-100"
               : "opacity-50 border-black border-opacity-20 hover:opacity-70"
@@ -343,7 +456,9 @@ const OrderTab = () => {
           style={{ borderBottomWidth: "4px" }}
           onClick={() => setFilter("canceled")}
         >
-          <span className="lg:text-xl md:text-lg text-base">Canceled</span>
+          <span className="lg:text-xl md:text-lg text-sm text-nowrap text-black">
+            Canceled
+          </span>
           <div
             className={`md:px-2 px-1 py-1 min-w-6 flex justify-center items-center rounded-md text-white text-xs ${
               filter === "canceled" ? "bg-my-blue" : "bg-my-gray"
@@ -354,8 +469,8 @@ const OrderTab = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-end mt-5 space-x-4">
-        <div className="flex items-center space-x-4 lg:w-[25vw] md:w-[35vw] w-[50vw] px-4 py-2 rounded-full border border-black border-opacity-30 focus-within:border-opacity-100 duration-300 ease-in-out">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-end mt-5 md:space-x-4">
+        <div className="flex items-center space-x-4 lg:w-[25vw] md:w-[35vw] w-full px-4 py-2 rounded-full border border-black border-opacity-30 focus-within:border-opacity-100 duration-300 ease-in-out">
           <FiSearch color="rgba(0,0,0,.5)" size={16} />
           <input
             type="search"
@@ -366,7 +481,7 @@ const OrderTab = () => {
           />
         </div>
 
-        <div ref={ref} className="relative">
+        <div ref={ref} className="relative w-fit mt-3 md:mt-0 self-end">
           <div
             className="flex min-w-28 items-center space-x-4 px-4 py-2 rounded-full border border-black border-opacity-30 focus-within:border-opacity-100 duration-300 ease-in-out cursor-pointer"
             onClick={(e) => {
@@ -381,16 +496,16 @@ const OrderTab = () => {
             <div className="flex flex-col items-start absolute bottom-0 w-full bg-white shadow-md shadow-gray-500 transform-all translate-y-full rounded-md z-20">
               <button
                 className={`px-4 py-2 bg-black text-black text-start text-sm w-full ${
-                  sort === "All Periods"
+                  sort === "All"
                     ? "bg-opacity-30"
                     : "bg-opacity-0 hover:bg-opacity-20"
                 }`}
                 onClick={() => {
-                  setSort("All Periods");
+                  setSort("All");
                   setSortOpen(false);
                 }}
               >
-                All Periods
+                All
               </button>
 
               <button
@@ -442,7 +557,7 @@ const OrderTab = () => {
       {isFetching ? (
         <div className="h-40 w-full flex flex-col justify-center items-center opacity-50">
           <FiLoader size={50} color="black" />
-          <span className="text-xl text-black mt-5">
+          <span className="md:text-xl text-lg text-black mt-5">
             Fetching Your Orders...
           </span>
         </div>
@@ -501,7 +616,7 @@ const OrderTab = () => {
           {filteredData.length === 0 && (
             <div className="h-72 w-full flex flex-col justify-center items-center">
               <FaFolderOpen size={40} color="rgba(0,0,0,.5)" />
-              <span className="text-xl text-black opacity-50 mt-5">
+              <span className="md:text-xl text-lg text-black opacity-50 mt-5">
                 You have no orders yet.
               </span>
               <Button
@@ -515,10 +630,10 @@ const OrderTab = () => {
       )}
 
       <div className="w-full mt-20 flex flex-col items-center justify-center">
-        <TitleText weight="bold" className="text-2xl text-my-blue">
+        <TitleText weight="bold" className="md:text-2xl text-xl text-my-blue">
           Having issues with your order?
         </TitleText>
-        <p className="text-black text-lg opacity-50 mt-3 lg:w-1/3 md:w-3/4 w-full text-center mb-5">
+        <p className="text-black md:text-lg text-base opacity-50 mt-3 lg:w-1/3 md:w-3/4 w-full text-center mb-5">
           Contact our support team to help attend to your enquiries or solve
           your problem.
         </p>

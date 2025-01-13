@@ -8,7 +8,7 @@ const SpecificationSchema = new Schema({
 const productSchema = new Schema({
   name: { type: String, required: true, unique: true },
   sku: { type: String, required: true, unique: true },
-  subCategory: { type: String },
+  category: { type: [String] },
   description: { type: String, required: true },
   availability: {
     type: String,

@@ -3,10 +3,13 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import { Button } from "@/components/Button";
 import CartCard from "@/components/CartCard";
-import { CardLoading } from "@/components/LazyLoading";
+import { OpErrorModal } from "@/components/ErrorModals";
+import { CardLoading, LoadingModal } from "@/components/LazyLoading";
+import Portal from "@/components/Portal";
 import { NCard, NPCard } from "@/components/ProductCard";
 import { BodyText } from "@/components/Text";
 import { CenterTitleComponent, TitleComponent } from "@/components/Title";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -17,9 +20,11 @@ const QuoteList = () => {
   const router = useRouter();
   const prodRef = useRef<HTMLDivElement>(null);
 
-  const [isFetching, setFetching] = useState(false);
-  const [cartData, setCartData] = useState<any[]>([]);
+  const [isFetching, setFetching] = useState(true);
+  const [isProcessing, setProcessing] = useState(false);
+  const [quoteData, setQuoteData] = useState<any[]>([]);
   const [productData, setProductData] = useState<any[]>([]);
+  const [isFailed, setFailed] = useState<string>();
 
   const scrollLeft = () => {
     if (prodRef.current) {
@@ -39,18 +44,84 @@ const QuoteList = () => {
     }
   };
 
-  const editItemQuantity = async (id: number, quantity: number) => {};
+  const editItemQuantity = async (
+    id: string,
+    quantity: number,
+    index: number
+  ) => {
+    setProcessing(true);
 
-  const deleteItem = async (id: number) => {};
+    const quoteItem = quoteData[index];
+    const amount = (quantity * quoteItem.price).toFixed(2);
 
-  const fetchCart = async () => {};
+    try {
+      const response = await axios.put("/api/cart", {
+        id,
+        data: { quantity, amount },
+      });
+      if (response.data.success) {
+        const updatedQuotes = [...quoteData];
+        updatedQuotes[index] = { ...updatedQuotes[index], quantity, amount };
+        setQuoteData(updatedQuotes);
+      }
+    } catch (error) {
+      setFailed("Failed to update item's quantity.");
+    } finally {
+      setProcessing(false);
+    }
+  };
 
-  const fetchProducts = async () => {};
+  const deleteItem = async (id: string, index: number) => {
+    setProcessing(true);
+
+    try {
+      const response = await axios.delete(`/api/cart?id=${id}`);
+      if (response.data.success) {
+        const updatedQuotes = [...quoteData];
+        updatedQuotes.splice(index, 1);
+        setQuoteData(updatedQuotes);
+      }
+    } catch (error) {
+      setFailed("Failed to delete quote item.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const deleteAll = async () => {
+    setProcessing(true);
+
+    try {
+      const response = await axios.delete(`/api/cart?isAll=yes`);
+      if (response.data.success) {
+        setQuoteData([]);
+      }
+    } catch (error) {
+      setFailed("Failed to delete quote list.");
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const fetchQuotes = async () => {
+    setFetching(true);
+
+    try {
+      const response = await axios.get("/api/cart");
+      if (response.data.success) {
+        const { carts, products } = response.data.data;
+        setQuoteData(carts);
+        setProductData(products);
+      }
+    } catch (error) {
+      setFailed("Failed to fetch cart.");
+    } finally {
+      setFetching(false);
+    }
+  };
 
   useEffect(() => {
-    // setFetching(true);
-    fetchCart();
-    fetchProducts();
+    fetchQuotes();
   }, []);
 
   return (
@@ -69,7 +140,7 @@ const QuoteList = () => {
               <CardLoading key={index} className="w-1/2 h-[20vh]" />
             ))}
           </div>
-        ) : cartData.length > 0 ? (
+        ) : quoteData.length <= 0 ? (
           <div className="flex flex-col items-center">
             <MdOutlineRemoveShoppingCart color="rgba(0,0,0,.5)" size={80} />
             <BodyText weight="medium" className="text-black text-2xl mt-10">
@@ -84,26 +155,15 @@ const QuoteList = () => {
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <CartCard
-              item={{
-                name: "Pipette Tips (Racked)",
-                imageUrl: "/images/oakProductImg4.png",
-                quantity: 1,
-              }}
-              isQuote
-              editQuantity={editItemQuantity}
-              handleDelete={deleteItem}
-            />
-            <CartCard
-              item={{
-                name: "Microcomputer Digital pH Meter",
-                imageUrl: "/images/oakProductImg2.png",
-                quantity: 2,
-              }}
-              isQuote
-              editQuantity={editItemQuantity}
-              handleDelete={deleteItem}
-            />
+            {quoteData.map((item, index) => (
+              <CartCard
+                key={index}
+                item={item}
+                isQuote
+                editQuantity={(id, q) => editItemQuantity(id, q, index)}
+                handleDelete={(id) => deleteItem(id, index)}
+              />
+            ))}
 
             <div className="mt-7 xl:w-2/3 lg:w-3/4 w-full flex items-center justify-between">
               <Link
@@ -112,7 +172,10 @@ const QuoteList = () => {
               >
                 <BodyText weight="medium">Add more items to list</BodyText>
               </Link>
-              <button className="text-base text-my-blue opacity-70 hover:opacity-100 hover:underline">
+              <button
+                className="text-base text-my-blue opacity-70 hover:opacity-100 hover:underline"
+                onClick={deleteAll}
+              >
                 <BodyText weight="medium">Clear list</BodyText>
               </button>
             </div>
@@ -128,7 +191,7 @@ const QuoteList = () => {
         )}
       </div>
 
-      {(isFetching || productData.length === 0) && (
+      {(isFetching || productData.length > 0) && (
         <div className="w-full mt-20 pb-20">
           <div className="lg:px-14 md:px-10 px-4 flex items-center justify-between">
             <div>
@@ -160,20 +223,24 @@ const QuoteList = () => {
                 ? [...Array(4)].map((_, index) => (
                     <CardLoading key={index} className="w-[25vw] h-60" />
                   ))
-                : [...Array(5)].map((product, index) => (
-                    <NPCard
-                      key={index}
-                      product={{
-                        name: "Absograph 500",
-                        availabilty: "In stock",
-                        avgRating: 4.3,
-                        price: 1420,
-                      }}
-                    />
+                : productData.map((product, index) => (
+                    <NPCard key={index} product={product} />
                   ))}
             </div>
           </div>
         </div>
+      )}
+
+      {isFailed && (
+        <Portal>
+          <OpErrorModal msg={isFailed} close={() => setFailed(undefined)} />
+        </Portal>
+      )}
+
+      {isProcessing && (
+        <Portal>
+          <LoadingModal />
+        </Portal>
       )}
     </main>
   );
